@@ -1,25 +1,3 @@
 <resources>
     <string name="app_name">KS Farm</string>
-    <string name="prod_server_url">https://ksfarm.co</string>
-    <string name="scan_qr">Scan QR</string>
-    <string name="iot_id">IOT ID</string>
-    <string name="ip_address">IP Address</string>
-    <string name="last_update">Last update</string>
-    <string name="first_floor">ชั้นล่าง</string>
-    <string name="second_floor">ระเบียงชั้นสอง</string>
-    <string name="temp">อุณหภูมิ</string>
-    <string name="humid">ความชื้น</string>
-    <string name="pressure">ความกดอากาศ</string>
-    <string name="air_con">เครื่องปรับอากาศ</string>
-    <string name="light">หลอดไฟ</string>
-    <string name="relay" />
-    <string name="refresh">Refresh</string>
-    <string name="overhead_lamp">ไฟเพดานโต๊ะทำงาน</string>
-    <string name="desk_lamp">โคมไฟโต๊ะทำงาน</string>
-    <string name="standing_desk_lamp">โคมไฟโต๊ะยืน</string>
-    <string name="bed_side_lamp">โคมไฟหัวเตียง</string>
-    <string name="bed_room_air_con">แอร์ห้องนอน</string>
-    <string name="bed_room">ห้องนอน</string>
-    <string name="desk">โต๊ะทำงาน</string>
-    <string name="ks_farm_weather_label">สภาพอากาศ</string>
 </resources>
