@@ -22,14 +22,11 @@ public class MainActivity extends AppCompatActivity {
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
         options.setPrompt("Scan a barcode");
         options.setCameraId(0);  // Use a specific camera of the device
-        options.setBeepEnabled(false);
-        options.setBarcodeImageEnabled(true);
+        options.setBeepEnabled(true);
 
         Button button = findViewById(R.id.button);
 
-        button.setOnClickListener(v -> {
-            barcodeLauncher.launch(options);
-        });
+        button.setOnClickListener(v -> barcodeLauncher.launch(options));
     }
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
