@@ -12,29 +12,30 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final ScanOptions options = new ScanOptions();
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+            result -> {
+                if (result.getContents() != null) {
+                    processScanResult(result.getContents());
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ScanOptions options = new ScanOptions();
+
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
-        options.setPrompt("Scan a barcode");
+        options.setPrompt("Scan QR code");
         options.setCameraId(0);  // Use a specific camera of the device
         options.setBeepEnabled(true);
 
-        Button button = findViewById(R.id.button);
-
-        button.setOnClickListener(v -> barcodeLauncher.launch(options));
+        findViewById(R.id.qr_scan_button).setOnClickListener(v -> barcodeLauncher.launch(options));
     }
 
-    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
-            result -> {
-                if (result.getContents() == null) {
-                    Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                }
-            });
+    private void processScanResult(String scannedText) {
+
+        Toast.makeText(MainActivity.this, "Scanned: " + scannedText, Toast.LENGTH_LONG).show();
+    }
 }
