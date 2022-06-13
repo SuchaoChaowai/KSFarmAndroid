@@ -7,27 +7,21 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.cyberello.ksfarm.util.QRCodeUtil;
-import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
-                result -> {
-                    if (result.getContents() != null) {
-                        processScanResult(result.getContents());
-                    }
-                });
+        ActivityResultLauncher<ScanOptions> qrcodeLauncher = QRCodeUtil.getQRCodeLauncher(this, this);
 
-        findViewById(R.id.qr_scan_button).setOnClickListener(v -> barcodeLauncher.launch(QRCodeUtil.getScanOptions()));
+        findViewById(R.id.qr_scan_button).setOnClickListener(v -> qrcodeLauncher.launch(QRCodeUtil.getScanOptions()));
     }
 
-    private void processScanResult(String scannedText) {
+    public void processQRCodeString(String scannedText) {
 
         Toast.makeText(MainActivity.this, "Scanned: " + QRCodeUtil.getKSFarmQRString(scannedText), Toast.LENGTH_LONG).show();
     }
