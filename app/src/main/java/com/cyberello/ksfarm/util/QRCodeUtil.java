@@ -9,9 +9,16 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 public class QRCodeUtil {
 
+    private static ScanOptions options;
+
     public static ScanOptions getScanOptions() {
 
-        ScanOptions options = new ScanOptions();
+        if (options != null) {
+
+            return options;
+        }
+
+        options = new ScanOptions();
 
         options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
         options.setPrompt("Scan QR code");
@@ -25,6 +32,7 @@ public class QRCodeUtil {
 
         return activity.registerForActivityResult(new ScanContract(),
                 result -> {
+
                     if (result.getContents() != null) {
                         listener.processQRCodeString(result.getContents());
                     }
