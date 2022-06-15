@@ -11,14 +11,29 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener {
 
+    private static ActivityResultLauncher<ScanOptions> qrcodeLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityResultLauncher<ScanOptions> qrcodeLauncher = QRCodeUtil.getQRCodeLauncher(this, this);
+        initQRCodeLauncher();
 
-        findViewById(R.id.qr_scan_button).setOnClickListener(v -> qrcodeLauncher.launch(QRCodeUtil.getScanOptions()));
+        findViewById(R.id.qr_scan_button).setOnClickListener(v -> scanQR());
+    }
+
+    private void initQRCodeLauncher() {
+
+        if (qrcodeLauncher == null) {
+
+            qrcodeLauncher = QRCodeUtil.getQRCodeLauncher(this, this);
+        }
+    }
+
+    private void scanQR() {
+
+        qrcodeLauncher.launch(QRCodeUtil.getScanOptions());
     }
 
     public void processQRCodeString(String scannedText) {
