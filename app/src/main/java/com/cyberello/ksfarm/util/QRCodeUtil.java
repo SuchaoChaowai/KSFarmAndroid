@@ -24,6 +24,7 @@ public class QRCodeUtil {
         options.setPrompt("Scan QR code");
         options.setCameraId(0);
         options.setBeepEnabled(true);
+        options.setOrientationLocked(false);
 
         return options;
     }
