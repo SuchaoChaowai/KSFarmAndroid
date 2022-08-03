@@ -4,12 +4,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.cyberello.ksfarm.util.QRCodeUtil;
+import com.cyberello.ksfarm.webService.IOTService;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener {
+import org.json.JSONObject;
+
+public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener {
 
     private static ActivityResultLauncher<ScanOptions> qrcodeLauncher;
 
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         initQRCodeLauncher();
 
         findViewById(R.id.qr_scan_button).setOnClickListener(v -> scanQR());
+
+        IOTService.getIOTData(this, this);
     }
 
     private void initQRCodeLauncher() {
@@ -39,5 +45,16 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     public void processQRCodeString(String scannedText) {
 
         Toast.makeText(MainActivity.this, "Scanned: " + QRCodeUtil.getKSFarmQRString(scannedText), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void processWebServiceResult(JSONObject response) {
+
+
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+
     }
 }
