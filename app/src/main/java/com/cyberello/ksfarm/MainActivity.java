@@ -7,15 +7,22 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.cyberello.ksfarm.data.json.IOTTempJSON;
+import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
 import com.cyberello.ksfarm.webService.IOTService;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONObject;
 
+import com.cyberello.ksfarm.data.json.IOTJSON;
+
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener {
 
     private static ActivityResultLauncher<ScanOptions> qrcodeLauncher;
+
+    private IOTJSON iotJSON;
+    private IOTTempJSON iotTempJSON;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,12 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processWebServiceResult(JSONObject response) {
 
+        iotJSON = KSFarmUtil.gson().fromJson(response.toString(), IOTJSON.class);
 
+        if (iotJSON.type.equals("temp")) {
+
+            iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+        }
     }
 
     @Override
