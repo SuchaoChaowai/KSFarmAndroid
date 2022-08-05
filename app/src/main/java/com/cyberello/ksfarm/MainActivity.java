@@ -4,8 +4,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,22 +42,16 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         textViewTemp = findViewById(R.id.textViewTemp);
         textViewHumid = findViewById(R.id.textViewHumid);
 
-        findViewById(R.id.qr_scan_button).setOnClickListener(v -> scanQR());
+        findViewById(R.id.button_qr_scan).setOnClickListener(v -> scanQR());
+
+        MainActivity self = this;
+        findViewById(R.id.button_refresh).setOnClickListener(v -> IOTService.getIOTData(this, this));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         IOTService.getIOTData(this, this);
-
-        MainActivity self = this;
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                IOTService.getIOTData(self, self);
-            }
-        }, 210000);
     }
 
     private void initQRCodeLauncher() {
