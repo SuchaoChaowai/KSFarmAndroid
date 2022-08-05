@@ -3,4 +3,9 @@
     <string name="prod_server_url">https://ksfarm.co</string>
     <string name="dev_server_url">http://192.168.0.104:8080</string>
     <string name="scan_qr">Scan QR</string>
+    <string name="iot_id">IOT ID</string>
+    <string name="ip_address">IP Address</string>
+    <string name="last_update">Last update</string>
+    <string name="temp">Temperature</string>+
+    <string name="humid">Humidity</string>
 </resources>

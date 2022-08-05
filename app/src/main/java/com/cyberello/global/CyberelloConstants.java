@@ -1,12 +1,12 @@
-package com.cyberello;
+package com.cyberello.global;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class CyberelloContants {
+public class CyberelloConstants {
 
-    public static final String SERVER_DATE_FORMAT_STRING = "yyyy-MM-dd";
-    public static final SimpleDateFormat SERVER_DATE_FORMAT = new SimpleDateFormat(SERVER_DATE_FORMAT_STRING, Locale.ENGLISH);
+    public static final String DATE_TIME_FORMAT_STRING			  = "dd/MM/yyyy kk:mm:ss";
+    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat(DATE_TIME_FORMAT_STRING, Locale.ENGLISH);
 
     public static final String SERVER_DATE_TIME_FORMAT_STRING = "yyyy-MM-dd'[T]'HH:mm:ss.SSS'[Z]'";
     public static final SimpleDateFormat SERVER_DATE_TIME_FORMAT = new SimpleDateFormat(SERVER_DATE_TIME_FORMAT_STRING, Locale.ENGLISH);
@@ -16,6 +16,7 @@ public class CyberelloContants {
     public static final String STATUS_CODE_SUCCESS = "success";
     public static final String STATUS_CODE_ERROR = "error";
 
+    public static final String STATUS_CODE_UPDATE = "update";
     public static final String STATUS_CODE_ACTIVE = "active";
     public static final String STATUS_CODE_DISABLED = "disabled";
     public static final String STATUS_CODE_DELETE = "delete";
@@ -24,6 +25,8 @@ public class CyberelloContants {
     public static final String STATUS_CODE_NOT_AUTHORIZED = "not_authorized";
     public static final String STATUS_CODE_QUERY = "query";
     public static final String STATUS_CODE_LIST_NOT_FOUND = "List not found!";
+
+    public static final String JSON_DATA_TYPE_TEMP = "temp";
 
     public static final String ROLE_ADMIN = "admin";
 
