@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class CyberelloConstants {
 
-    public static final String DATE_TIME_FORMAT_STRING = "dd/MM/yyyy kk:mm:ss";
+    public static final String DATE_TIME_FORMAT_STRING			  = "dd/MM/yyyy kk:mm:ss";
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat(DATE_TIME_FORMAT_STRING, Locale.ENGLISH);
 
     public static final String SERVER_DATE_TIME_FORMAT_STRING = "yyyy-MM-dd'[T]'HH:mm:ss.SSS'[Z]'";
@@ -27,8 +27,6 @@ public class CyberelloConstants {
     public static final String STATUS_CODE_LIST_NOT_FOUND = "List not found!";
 
     public static final String JSON_DATA_TYPE_TEMP = "temp";
-    public static final String JSON_DATA_TYPE_AIR_CON = "air-con";
-    public static final String JSON_DATA_TYPE_RELAY = "relay";
 
     public static final String ROLE_ADMIN = "admin";
 
