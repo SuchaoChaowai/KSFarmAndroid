@@ -79,8 +79,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
                 TextView textViewHumid = findViewById(R.id.textViewHumid);
                 TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
 
-                textViewTemp.setText(iotTempJSON.temperature + " C");
-                textViewHumid.setText(iotTempJSON.humidity + " %");
+                String textString = iotTempJSON.temperature + " C";
+                textViewTemp.setText(textString);
+
+                textString = iotTempJSON.humidity + " %";
+                textViewHumid.setText(textString);
 
                 try {
                     textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
@@ -97,8 +100,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
                 TextView textViewHumid = findViewById(R.id.textViewAirConHumid);
                 TextView textViewLastUpdate = findViewById(R.id.textViewAirConLastUpdate);
 
-                textViewTemp.setText(iotAirConJSON.temperature + " C");
-                textViewHumid.setText(iotAirConJSON.humidity + " %");
+                String textString = iotAirConJSON.temperature + " C";
+                textViewTemp.setText(textString);
+
+                textString = iotAirConJSON.humidity + " %";
+                textViewHumid.setText(textString);
 
                 try {
                     textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
