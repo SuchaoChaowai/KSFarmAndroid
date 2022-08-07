@@ -7,8 +7,6 @@ import android.os.Bundle;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import android.util.Log;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
