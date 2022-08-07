@@ -6,11 +6,11 @@
     <string name="iot_id">IOT ID</string>
     <string name="ip_address">IP Address</string>
     <string name="last_update">Last update</string>
-    <string name="first_floor">First floor</string>
-    <string name="temp">Temperature</string>
-    <string name="humid">Humidity</string>
-    <string name="air_con">Air Con</string>
-    <string name="light">Light</string>
-    <string name="relay">Relay</string>
+    <string name="first_floor">ชั้นล่าง</string>
+    <string name="temp">อุณหภูมิ</string>
+    <string name="humid">ความชื้น</string>
+    <string name="air_con">เครื่องปรับอากาศ</string>
+    <string name="light">หลอดไฟ</string>
+    <string name="relay">รีเลย์</string>
     <string name="refresh">Refresh</string>
 </resources>
