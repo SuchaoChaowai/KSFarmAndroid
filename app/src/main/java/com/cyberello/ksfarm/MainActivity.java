@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
 import com.cyberello.ksfarm.data.json.IOTTempJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
@@ -14,8 +15,6 @@ import com.cyberello.ksfarm.webService.IOTService;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONObject;
-
-import com.cyberello.ksfarm.data.json.IOTJSON;
 
 import java.text.ParseException;
 
@@ -75,24 +74,25 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processWebServiceResult(JSONObject response) {
 
-        IOTTempJSON iotTempJSON = new IOTTempJSON();
+        IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
 
-        IOTJSON iotJSON = KSFarmUtil.gson().fromJson(response.toString(), IOTJSON.class);
+        iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
 
-        if (iotJSON.type.equals("temp")) {
+            if (iotJSON.type.equals("temp")) {
 
-            iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
-        }
+                IOTTempJSON iotTempJSON = iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
-        textViewIOT_ID.setText(iotJSON.id);
-        textViewIP_Address.setText(iotJSON.deviceIP);
-        try {
-            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        textViewTemp.setText(iotTempJSON.temperature + " C");
-        textViewHumid.setText(iotTempJSON.humidity + " %");
+                textViewIOT_ID.setText(iotJSON.id);
+                textViewIP_Address.setText(iotJSON.deviceIP);
+                try {
+                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                textViewTemp.setText(iotTempJSON.temperature + " C");
+                textViewHumid.setText(iotTempJSON.humidity + " %");
+            }
+        });
     }
 
     @Override
