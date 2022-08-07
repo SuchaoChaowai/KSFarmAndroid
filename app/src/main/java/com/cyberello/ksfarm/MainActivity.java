@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cyberello.global.CyberelloConstants;
 import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
 import com.cyberello.ksfarm.data.json.IOTTempJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
@@ -78,9 +79,10 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
 
-            if (iotJSON.type.equals("temp")) {
+            if (iotJSON.type.equals(CyberelloConstants.JSON_DATA_TYPE_TEMP)) {
 
-                IOTTempJSON iotTempJSON = iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+                IOTTempJSON iotTempJSON;
+                iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
                 textViewIOT_ID.setText(iotJSON.id);
                 textViewIP_Address.setText(iotJSON.deviceIP);
