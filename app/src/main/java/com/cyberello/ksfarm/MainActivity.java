@@ -4,15 +4,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import android.util.Log;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cyberello.ksfarm.data.json.IOTAirConJSON;
+import com.cyberello.global.CyberelloConstants;
 import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
 import com.cyberello.ksfarm.data.json.IOTTempJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
@@ -28,12 +23,24 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private static ActivityResultLauncher<ScanOptions> qrcodeLauncher;
 
+    private TextView textViewIOT_ID;
+    private TextView textViewIP_Address;
+    private TextView textViewLastUpdate;
+    private TextView textViewTemp;
+    private TextView textViewHumid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initQRCodeLauncher();
+
+        textViewIOT_ID = findViewById(R.id.textViewIOT_ID);
+        textViewIP_Address = findViewById(R.id.textViewIP_Address);
+        textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
+        textViewTemp = findViewById(R.id.textViewTemp);
+        textViewHumid = findViewById(R.id.textViewHumid);
 
         findViewById(R.id.button_qr_scan).setOnClickListener(v -> scanQR());
 
@@ -72,86 +79,22 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
 
-            if (iotJSON.type.equals("temp")) {
+            if (iotJSON.type.equals(CyberelloConstants.JSON_DATA_TYPE_TEMP)) {
 
-                IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+                IOTTempJSON iotTempJSON;
+                iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
-                TextView textViewTemp = findViewById(R.id.textViewTemp);
-                TextView textViewHumid = findViewById(R.id.textViewHumid);
-                TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
-
+                textViewIOT_ID.setText(iotJSON.id);
+                textViewIP_Address.setText(iotJSON.deviceIP);
+                try {
+                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 textViewTemp.setText(iotTempJSON.temperature + " C");
                 textViewHumid.setText(iotTempJSON.humidity + " %");
-
-                try {
-                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
             }
-
-            if (iotJSON.type.equals("air_con")) {
-
-                IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
-
-                TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
-                TextView textViewHumid = findViewById(R.id.textViewAirConHumid);
-                TextView textViewLastUpdate = findViewById(R.id.textViewAirConLastUpdate);
-
-                textViewTemp.setText(iotAirConJSON.temperature + " C");
-                textViewHumid.setText(iotAirConJSON.humidity + " %");
-
-                try {
-                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
-
-                if (iotAirConJSON.relay1.equals("on")) {
-
-                    relaySwitch.setChecked(true);
-                }
-
-                relaySwitch.setOnCheckedChangeListener(
-                        (buttonView, isChecked) -> SwitchRelay(iotJSON.deviceIP, isChecked));
-            }
-
-            if (iotJSON.type.equals("relay")) {
-
-                IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
-
-                TextView textViewLastUpdate = findViewById(R.id.textViewLightLastUpdate);
-
-                try {
-                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                SwitchMaterial relaySwitch = findViewById(R.id.switchLightRelay);
-
-                if (iotAirConJSON.relay1.equals("on")) {
-
-                    relaySwitch.setChecked(true);
-                }
-
-                relaySwitch.setOnCheckedChangeListener(
-                        (buttonView, isChecked) -> SwitchRelay(iotJSON.deviceIP, isChecked));
-            }
-
         });
-    }
-
-    private void SwitchRelay(String ipAddress, boolean isChecked) {
-
-        String state = "off";
-
-        if (isChecked) {
-            state = "on";
-        }
-
     }
 
     @Override
