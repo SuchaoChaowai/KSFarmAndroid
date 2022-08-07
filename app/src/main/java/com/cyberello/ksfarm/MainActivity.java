@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.cyberello.ksfarm.webService.IOTControl;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener {
+public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, IOTControl.IOTControlResultListener {
 
     private static ActivityResultLauncher<ScanOptions> qrcodeLauncher;
 
@@ -34,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         initQRCodeLauncher();
 
         findViewById(R.id.button_qr_scan).setOnClickListener(v -> scanQR());
-
-        MainActivity self = this;
         findViewById(R.id.button_refresh).setOnClickListener(v -> IOTService.getIOTData(this, this));
     }
 
@@ -67,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     public void processWebServiceResult(JSONObject response) {
 
         IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
+
+        MainActivity self = this;
 
         iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
                 }
 
                 relaySwitch.setOnCheckedChangeListener(
-                        (buttonView, isChecked) -> SwitchRelay(iotJSON.deviceIP, isChecked));
+                        (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
             }
 
             if (iotJSON.type.equals("relay")) {
@@ -136,24 +137,26 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
                 }
 
                 relaySwitch.setOnCheckedChangeListener(
-                        (buttonView, isChecked) -> SwitchRelay(iotJSON.deviceIP, isChecked));
+                        (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
             }
-
         });
-    }
-
-    private void SwitchRelay(String ipAddress, boolean isChecked) {
-
-        String state = "off";
-
-        if (isChecked) {
-            state = "on";
-        }
-
     }
 
     @Override
     public void onErrorResponse(String errorMessage) {
+
+    }
+
+    @Override
+    public void processIOTControlResult(String response) {
+
+        if (response.equals("200")) {
+            IOTService.getIOTData(this, this);
+        }
+    }
+
+    @Override
+    public void onIOTControlErrorResponse(String errorMessage) {
 
     }
 }
