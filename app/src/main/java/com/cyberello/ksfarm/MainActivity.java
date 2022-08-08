@@ -114,10 +114,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                 SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
 
-                if (iotAirConJSON.relay1.equals("on")) {
-
-                    relaySwitch.setChecked(true);
-                }
+                relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
 
                 relaySwitch.setOnCheckedChangeListener(
                         (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
@@ -137,10 +134,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                 SwitchMaterial relaySwitch = findViewById(R.id.switchLightRelay);
 
-                if (iotAirConJSON.relay1.equals("on")) {
-
-                    relaySwitch.setChecked(true);
-                }
+                relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
 
                 relaySwitch.setOnCheckedChangeListener(
                         (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
