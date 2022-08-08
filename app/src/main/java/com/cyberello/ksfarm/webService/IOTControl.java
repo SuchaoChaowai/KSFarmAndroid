@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyberello.global.CyberelloConstants;
 
 import java.nio.charset.StandardCharsets;
 
@@ -36,9 +37,8 @@ public class IOTControl {
     private static void updateIOTData(String iotDataString, Activity activity, IOTControlResultListener listener) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        String url = "http://192.168.0.104:8080/KSFarm-Server/iotService";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, CyberelloConstants.IOT_WEB_SERVICE_URL,response -> {
             if (listener != null) {
                 listener.processIOTControlResult(response);
             }
