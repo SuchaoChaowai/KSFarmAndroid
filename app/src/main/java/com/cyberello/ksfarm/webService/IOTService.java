@@ -17,7 +17,7 @@ public class IOTService {
     public static void getIOTData(Activity activity, WebServiceResultListener listener) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        String url = "http://192.168.0.104:8080/KSFarm-Server/iotService";
+        String url = "http://192.168.0.168:8080/KSFarm-Server/iotService";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,
