@@ -2,18 +2,14 @@ package com.cyberello.ksfarm.webService;
 
 import android.app.Activity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 public class IOTControl {
@@ -64,7 +60,7 @@ public class IOTControl {
 
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                String responseString = "";
+                String responseString;
                 if (response != null) {
                     responseString = String.valueOf(response.statusCode);
                     return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
