@@ -37,4 +37,6 @@ public class CyberelloConstants {
 
     public static final int LIST_QUERY_LIMIT = 10;
     public static final String PROD_STRING = "prod";
+
+    public static final String IOT_WEB_SERVICE_URL = "http://192.168.0.168:8080/KSFarm-Server/iotService";
 }

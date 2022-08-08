@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cyberello.global.CyberelloConstants;
 
 import org.json.JSONObject;
 
@@ -17,11 +18,10 @@ public class IOTService {
     public static void getIOTData(Activity activity, WebServiceResultListener listener) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        String url = "http://192.168.0.168:8080/KSFarm-Server/iotService";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,
-                        url,
+                        CyberelloConstants.IOT_WEB_SERVICE_URL,
                         null,
                         response -> {
 
