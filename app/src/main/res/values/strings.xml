@@ -13,4 +13,8 @@
     <string name="light">หลอดไฟ</string>
     <string name="relay">รีเลย์</string>
     <string name="refresh">Refresh</string>
+    <string name="overhead_lamp">ไฟเพดานโต๊ะทำงาน</string>
+    <string name="desk_lamp">โคมไฟโต๊ะทำงาน</string>
+    <string name="standing_desk_lamp">โคมไฟโต๊ะยืน</string>
+    <string name="bed_room_air_con">แอร์ห้องนอน</string>
 </resources>

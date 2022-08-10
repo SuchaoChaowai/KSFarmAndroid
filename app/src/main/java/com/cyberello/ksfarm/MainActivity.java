@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -71,75 +72,83 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
 
-            if (iotJSON.type.equals("temp")) {
+            if (iotJSON.id.equals("KSF0001")) {
 
-                IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
-
-                TextView textViewTemp = findViewById(R.id.textViewTemp);
-                TextView textViewHumid = findViewById(R.id.textViewHumid);
-                TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
-
-                String textString = iotTempJSON.temperature + " C";
-                textViewTemp.setText(textString);
-
-                textString = iotTempJSON.humidity + " %";
-                textViewHumid.setText(textString);
-
-                try {
-                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                setTempData(iotJSON);
             }
 
-            if (iotJSON.type.equals("air_con")) {
+            if (iotJSON.id.equals("KSF0002")) {
 
-                IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
-
-                TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
-                TextView textViewHumid = findViewById(R.id.textViewAirConHumid);
-                TextView textViewLastUpdate = findViewById(R.id.textViewAirConLastUpdate);
-
-                String textString = iotAirConJSON.temperature + " C";
-                textViewTemp.setText(textString);
-
-                textString = iotAirConJSON.humidity + " %";
-                textViewHumid.setText(textString);
-
-                try {
-                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
-
-                relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
-
-                relaySwitch.setOnCheckedChangeListener(
-                        (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+                setAirConData(self, iotJSON);
             }
 
-            if (iotJSON.type.equals("relay")) {
+            if (iotJSON.id.equals("KSF0003")) {
 
-                IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
+                setLampData(self, iotJSON, findViewById(R.id.switchOverHeadLampRelay));
+            }
 
-                TextView textViewLastUpdate = findViewById(R.id.textViewLightLastUpdate);
+            if (iotJSON.id.equals("KSF0005")) {
 
-                try {
-                    textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                setLampData(self, iotJSON, findViewById(R.id.switchDeskLampRelay));
+            }
 
-                SwitchMaterial relaySwitch = findViewById(R.id.switchLightRelay);
+            if (iotJSON.id.equals("KSF0006")) {
 
-                relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
-
-                relaySwitch.setOnCheckedChangeListener(
-                        (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+                setLampData(self, iotJSON, findViewById(R.id.switchStandingDeskRelay));
             }
         });
+    }
+
+    private void setLampData(MainActivity self, IOTJSON iotJSON, SwitchMaterial relaySwitch) {
+
+        IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
+
+        relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
+
+        relaySwitch.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+    }
+
+    private void setTempData(IOTJSON iotJSON) {
+
+        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+        TextView textViewTemp = findViewById(R.id.textViewTemp);
+        TextView textViewHumid = findViewById(R.id.textViewHumid);
+        TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
+
+        String textString = iotTempJSON.temperature + " C";
+        textViewTemp.setText(textString);
+
+        textString = iotTempJSON.humidity + " %";
+        textViewHumid.setText(textString);
+
+        try {
+            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setAirConData(MainActivity self, IOTJSON iotJSON) {
+
+        IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
+
+        TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
+        TextView textViewHumid = findViewById(R.id.textViewAirConHumid);
+
+        String textString = iotAirConJSON.temperature + " C";
+        textViewTemp.setText(textString);
+
+        textString = iotAirConJSON.humidity + " %";
+        textViewHumid.setText(textString);
+
+        SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
+
+        relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
+
+        relaySwitch.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
     }
 
     @Override
