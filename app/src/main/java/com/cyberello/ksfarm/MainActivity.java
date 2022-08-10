@@ -2,6 +2,7 @@ package com.cyberello.ksfarm;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 
 import android.os.Bundle;
 
@@ -9,6 +10,8 @@ import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,34 +31,29 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private static ActivityResultLauncher<ScanOptions> qrcodeLauncher;
 
+    private GestureDetectorCompat mDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initQRCodeLauncher();
+        MyGestureListener myGestureListener = new MyGestureListener();
+        myGestureListener.activity = this;
 
-        findViewById(R.id.button_qr_scan).setOnClickListener(v -> scanQR());
-        findViewById(R.id.button_refresh).setOnClickListener(v -> IOTService.getIOTData(this, this));
+        mDetector = new GestureDetectorCompat(this, myGestureListener);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.mDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         IOTService.getIOTData(this, this);
-    }
-
-    private void initQRCodeLauncher() {
-
-        if (qrcodeLauncher == null) {
-
-            qrcodeLauncher = QRCodeUtil.getQRCodeLauncher(this, this);
-        }
-    }
-
-    private void scanQR() {
-
-        qrcodeLauncher.launch(QRCodeUtil.getScanOptions());
     }
 
     public void processQRCodeString(String scannedText) {
@@ -172,5 +170,16 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void onIOTControlErrorResponse(String errorMessage) {
 
+    }
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        public MainActivity activity;
+
+        @Override
+        public boolean onDoubleTap(MotionEvent event) {
+            IOTService.getIOTData(activity, activity);
+            return true;
+        }
     }
 }
