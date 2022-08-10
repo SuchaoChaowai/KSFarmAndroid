@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                 setLampData(self, iotJSON, findViewById(R.id.switchStandingDeskRelay));
             }
+
+            if (iotJSON.id.equals("KSF0007")) {
+
+                setLampData(self, iotJSON, findViewById(R.id.switchBedSideLampRelay));
+            }
         });
     }
 
