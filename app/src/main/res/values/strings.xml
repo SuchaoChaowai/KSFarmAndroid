@@ -12,7 +12,7 @@
     <string name="humid">ความชื้น</string>
     <string name="air_con">เครื่องปรับอากาศ</string>
     <string name="light">หลอดไฟ</string>
-    <string name="relay">รีเลย์</string>
+    <string name="relay" />
     <string name="refresh">Refresh</string>
     <string name="overhead_lamp">ไฟเพดานโต๊ะทำงาน</string>
     <string name="desk_lamp">โคมไฟโต๊ะทำงาน</string>
