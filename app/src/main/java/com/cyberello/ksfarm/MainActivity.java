@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         this.mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             if (iotJSON.id.equals("KSF0001")) {
 
                 setTempData(iotJSON);
+            }
+
+            if (iotJSON.id.equals("KSF0009")) {
+
+                setSecondFloorTempData(iotJSON);
             }
 
             if (iotJSON.id.equals("KSF0002")) {
@@ -119,6 +124,27 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         TextView textViewTemp = findViewById(R.id.textViewTemp);
         TextView textViewHumid = findViewById(R.id.textViewHumid);
         TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
+
+        String textString = iotTempJSON.temperature + " C";
+        textViewTemp.setText(textString);
+
+        textString = iotTempJSON.humidity + " %";
+        textViewHumid.setText(textString);
+
+        try {
+            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setSecondFloorTempData(IOTJSON iotJSON) {
+
+        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+        TextView textViewTemp = findViewById(R.id.textViewSecondFloorTemp);
+        TextView textViewHumid = findViewById(R.id.textViewSecondFloorHumid);
+        TextView textViewLastUpdate = findViewById(R.id.textViewSecondFloorLastUpdate);
 
         String textString = iotTempJSON.temperature + " C";
         textViewTemp.setText(textString);
