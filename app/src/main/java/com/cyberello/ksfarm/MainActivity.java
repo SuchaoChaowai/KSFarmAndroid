@@ -3,8 +3,11 @@ package com.cyberello.ksfarm;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.cyberello.ksfarm.data.KSConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -24,10 +27,14 @@ import com.cyberello.ksfarm.webService.IOTService;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, IOTControl.IOTControlResultListener {
 
     private GestureDetectorCompat mDetector;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         myGestureListener.activity = this;
 
         mDetector = new GestureDetectorCompat(this, myGestureListener);
+
+        sharedPreferences = this.getSharedPreferences(KSConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -49,7 +58,25 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void onResume() {
         super.onResume();
-        IOTService.getIOTData(this, this);
+
+        String localIOTJSONWrapper = KSFarmUtil.getLocalIOTData(sharedPreferences);
+
+        if (localIOTJSONWrapper != null && !localIOTJSONWrapper.isEmpty()) {
+            IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(localIOTJSONWrapper, IOTJSONWrapper.class);
+            processIOTJSONWrapper(iotJSONWrapper, this);
+        }
+
+        MainActivity self = this;
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                IOTService.getIOTData(self, self);
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 3500);
     }
 
     public void processQRCodeString(String scannedText) {
@@ -62,7 +89,14 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
 
+        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
+
         MainActivity self = this;
+
+        processIOTJSONWrapper(iotJSONWrapper, self);
+    }
+
+    private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper, MainActivity self) {
 
         iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
 
@@ -183,6 +217,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         relaySwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+
+        findViewById(R.id.textViewAirConLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
     }
 
     @Override
@@ -207,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         IOTControl.refreshIOTData(iotJSON.deviceIP, this, this);
 
-
+        KSFarmUtil.toast(this, iotJSON.id + " Data updated!");
     }
 
     static class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
