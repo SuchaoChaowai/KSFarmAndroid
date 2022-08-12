@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.text.ParseException;
+import java.util.Objects;
 
 public class KSFarmUtil {
 
@@ -22,6 +23,6 @@ public class KSFarmUtil {
 
     public static String getServerDateTimeString(String dateTimeString) throws ParseException {
 
-        return CyberelloConstants.DATE_TIME_FORMAT.format(CyberelloConstants.SERVER_DATE_TIME_FORMAT.parse(dateTimeString));
+        return CyberelloConstants.DATE_TIME_FORMAT.format(Objects.requireNonNull(CyberelloConstants.SERVER_DATE_TIME_FORMAT.parse(dateTimeString)));
     }
 }
