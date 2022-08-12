@@ -28,7 +28,18 @@ public class IOTControl {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> updateIOTData(response, activity, listener), error -> {
+        });
 
+        queue.add(stringRequest);
+    }
+
+    public static void refreshIOTData(String ipAddress, Activity activity, IOTControlResultListener listener) {
+
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        String url = "http://" + ipAddress + "/json";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> updateIOTData(response, activity, listener), error -> {
         });
 
         queue.add(stringRequest);
@@ -38,7 +49,7 @@ public class IOTControl {
 
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, CyberelloConstants.IOT_WEB_SERVICE_URL,response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, CyberelloConstants.IOT_WEB_SERVICE_URL, response -> {
             if (listener != null) {
                 listener.processIOTControlResult(response);
             }

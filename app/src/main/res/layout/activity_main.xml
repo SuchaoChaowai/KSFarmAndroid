@@ -16,7 +16,7 @@
         android:textAlignment="textEnd"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTemp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewSecondFloorHumid" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorLabel" />
 
     <TextView
         android:id="@+id/textViewSecondFloorLastUpdate"
@@ -25,19 +25,8 @@
         android:text="@string/last_update"
         android:textAlignment="textEnd"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorHumid"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorPressure"
         app:layout_constraintTop_toBottomOf="@+id/textViewSecondFloorPressure" />
-
-    <TextView
-        android:id="@+id/textViewSecondFloorHumid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/humid"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewSecondFloorTemp"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textViewSecondFloorPressure"
@@ -46,20 +35,8 @@
         android:text="@string/pressure"
         android:textAlignment="textEnd"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorHumid"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSecondFloorHumid" />
-
-    <View
-        android:id="@+id/hr7"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr1" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorTemp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSecondFloorTemp" />
 
     <TextView
         android:id="@+id/textViewSecondFloorLabel"
