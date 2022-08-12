@@ -62,8 +62,13 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         String localIOTJSONWrapper = KSFarmUtil.getLocalIOTData(sharedPreferences);
 
         if (localIOTJSONWrapper != null && !localIOTJSONWrapper.isEmpty()) {
+
             IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(localIOTJSONWrapper, IOTJSONWrapper.class);
             processIOTJSONWrapper(iotJSONWrapper, this);
+        } else {
+
+            IOTService.getIOTData(this, this);
+            return;
         }
 
         MainActivity self = this;
