@@ -10,6 +10,7 @@
     <string name="second_floor">ระเบียงชั้นสอง</string>
     <string name="temp">อุณหภูมิ</string>
     <string name="humid">ความชื้น</string>
+    <string name="pressure">ความกดอากาศ</string>
     <string name="air_con">เครื่องปรับอากาศ</string>
     <string name="light">หลอดไฟ</string>
     <string name="relay" />
