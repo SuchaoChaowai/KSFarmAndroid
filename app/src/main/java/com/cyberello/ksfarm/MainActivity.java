@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                     if (!iotAirConJSON.relay1.equals("on") && isChecked) {
 
-                        new AlertDialog.Builder(MainActivity.this)
+                        final AlertDialog show = new AlertDialog.Builder(MainActivity.this)
                                 .setIcon(android.R.drawable.ic_input_add)
                                 .setTitle("เปิดแอร์?").setMessage("เปิดแอร์?")
                                 .setPositiveButton("เปิด", (dialog, which) -> runOnUiThread(() -> IOTControl.setRelayState(iotJSON.deviceIP, true, self, self)))
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                     if (iotAirConJSON.relay1.equals("on") && !isChecked) {
 
-                        new AlertDialog.Builder(MainActivity.this)
+                        final AlertDialog show = new AlertDialog.Builder(MainActivity.this)
                                 .setIcon(android.R.drawable.ic_input_add)
                                 .setTitle("ปิดแอร์?").setMessage("ปิดแอร์?")
                                 .setPositiveButton("ปิด", (dialog, which) -> runOnUiThread(() -> IOTControl.setRelayState(iotJSON.deviceIP, false, self, self)))
