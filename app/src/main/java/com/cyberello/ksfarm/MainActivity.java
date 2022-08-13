@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cyberello.ksfarm.data.json.IOTAirConJSON;
 import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
 import com.cyberello.ksfarm.data.json.IOTTempJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
@@ -157,13 +156,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
         TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
-        TextView textViewSecondFloorPressure = findViewById(R.id.textViewDeskPressure);
 
-        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
+        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + iotTempJSON.pressure + " hPa";
         textViewTemp.setText(textString);
-
-        textString = iotTempJSON.pressure + " hPa";
-        textViewSecondFloorPressure.setText(textString);
 
         try {
             textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
@@ -173,6 +168,13 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
         findViewById(R.id.textViewDeskLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+
+        SwitchMaterial relaySwitch = findViewById(R.id.switchDeskRelay);
+
+        relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
+
+        relaySwitch.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
     }
 
     private void setBedRoomData(IOTJSON iotJSON) {
@@ -201,9 +203,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private void setLampData(MainActivity self, IOTJSON iotJSON, SwitchMaterial relaySwitch, TextView textViewLabel) {
 
-        IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
+        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
-        relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
+        relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
 
         relaySwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
@@ -262,20 +264,16 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private void setAirConData(MainActivity self, IOTJSON iotJSON) {
 
-        IOTAirConJSON iotAirConJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTAirConJSON.class);
+        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
         TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
-        TextView textViewHumid = findViewById(R.id.textViewAirConHumid);
 
-        String textString = iotAirConJSON.temperature + " C";
+        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
         textViewTemp.setText(textString);
-
-        textString = iotAirConJSON.humidity + " %";
-        textViewHumid.setText(textString);
 
         SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
 
-        relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
+        relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
 
         relaySwitch.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
