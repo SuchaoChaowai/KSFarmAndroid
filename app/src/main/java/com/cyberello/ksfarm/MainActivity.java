@@ -1,6 +1,5 @@
 package com.cyberello.ksfarm;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         if (localIOTJSONWrapper != null && !localIOTJSONWrapper.isEmpty()) {
 
             IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(localIOTJSONWrapper, IOTJSONWrapper.class);
-            processIOTJSONWrapper(iotJSONWrapper, this);
+            processIOTJSONWrapper(iotJSONWrapper);
         } else {
 
             IOTService.getIOTData(this, this);
@@ -96,12 +95,10 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
 
-        MainActivity self = this;
-
-        processIOTJSONWrapper(iotJSONWrapper, self);
+        processIOTJSONWrapper(iotJSONWrapper);
     }
 
-    private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper, MainActivity self) {
+    private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper) {
 
         iotJSONWrapper.iotJSONs.forEach(this::setIOTData);
     }
