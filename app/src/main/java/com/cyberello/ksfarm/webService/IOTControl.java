@@ -50,8 +50,8 @@ public class IOTControl {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, CyberelloConstants.IOT_WEB_SERVICE_URL, response -> {
-            if (listener != null) {
-                listener.processIOTControlResult(response);
+            if (listener != null && response.equals("200")) {
+                listener.processIOTControlResult(iotDataString);
             }
         }, error -> {
             if (listener != null) {
