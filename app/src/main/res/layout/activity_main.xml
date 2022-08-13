@@ -8,6 +8,17 @@
     android:id="@+id/constraintLayout"
     tools:context=".MainActivity">
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchDeskRelay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/relay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hr7"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
     <TextView
         android:id="@+id/textViewDeskTemp"
         android:layout_width="wrap_content"
@@ -15,8 +26,8 @@
         android:text="@string/temp"
         android:textAlignment="textEnd"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewDeskLabel"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorLabel" />
+        app:layout_constraintEnd_toEndOf="@+id/switchDeskRelay"
+        app:layout_constraintTop_toBottomOf="@+id/switchDeskRelay" />
 
     <TextView
         android:id="@+id/textViewDeskLabel"
@@ -39,16 +50,6 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorTemp"
         app:layout_constraintTop_toBottomOf="@+id/textViewBedRoomTemp" />
-
-    <TextView
-        android:id="@+id/textViewDeskPressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pressure"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewDeskTemp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeskTemp" />
 
     <TextView
         android:id="@+id/textViewBedRoomTemp"
@@ -111,7 +112,7 @@
         android:text="@string/last_update"
         android:textAlignment="textEnd"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewDeskPressure"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDeskTemp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -266,37 +267,6 @@
         tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/textViewAirConHumidLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="@string/humid"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAirConTempLabel" />
-
-    <TextView
-        android:id="@+id/textViewAirConHumid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="@string/humid"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewAirConHumidLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewAirConTempLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="@string/temp"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchAirConRelay" />
-
-    <TextView
         android:id="@+id/textViewAirConTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -304,8 +274,8 @@
         android:text="@string/temp"
         android:textAlignment="textEnd"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewAirConTempLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchAirConRelay" />
 
     <TextView
         android:id="@+id/textViewAirConLabel"
@@ -389,7 +359,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeskPressure" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDeskTemp" />
 
     <View
         android:id="@+id/hr2"
@@ -408,11 +378,12 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAirConHumid" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAirConTemp" />
 
     <TextView
         android:id="@+id/textViewFirstFloorLabel"
