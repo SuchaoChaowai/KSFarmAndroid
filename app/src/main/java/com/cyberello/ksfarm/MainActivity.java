@@ -110,11 +110,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
                 setTempData(iotJSON);
             }
 
-            if (iotJSON.id.equals("KSF0009")) {
-
-                setSecondFloorTempData(iotJSON);
-            }
-
             if (iotJSON.id.equals("KSF0002")) {
 
                 setAirConData(self, iotJSON);
@@ -144,7 +139,41 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                 setLampData(self, iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel));
             }
+
+            if (iotJSON.id.equals("KSF0008")) {
+
+                setDeskData(iotJSON);
+            }
+
+            if (iotJSON.id.equals("KSF0009")) {
+
+                setSecondFloorTempData(iotJSON);
+            }
         });
+    }
+
+    private void setDeskData(IOTJSON iotJSON) {
+
+        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+        TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
+        TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
+        TextView textViewSecondFloorPressure = findViewById(R.id.textViewDeskPressure);
+
+        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
+        textViewTemp.setText(textString);
+
+        textString = iotTempJSON.pressure + " hPa";
+        textViewSecondFloorPressure.setText(textString);
+
+        try {
+            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
+        findViewById(R.id.textViewDeskLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
     }
 
     private void setBedRoomData(IOTJSON iotJSON) {
@@ -168,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         }
 
         textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
-        findViewById(R.id.textViewBedRoomabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+        findViewById(R.id.textViewBedRoomLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
     }
 
     private void setLampData(MainActivity self, IOTJSON iotJSON, SwitchMaterial relaySwitch, TextView textViewLabel) {
