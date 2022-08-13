@@ -20,4 +20,5 @@
     <string name="standing_desk_lamp">โคมไฟโต๊ะยืน</string>
     <string name="bed_side_lamp">โคมไฟหัวเตียง</string>
     <string name="bed_room_air_con">แอร์ห้องนอน</string>
+    <string name="bed_room">ห้องนอน</string>
 </resources>

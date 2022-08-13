@@ -9,6 +9,38 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textViewBedRoomPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pressure"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorTemp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBedRoomTemp" />
+
+    <TextView
+        android:id="@+id/textViewBedRoomTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temp"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewBedRoomabel"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorLabel" />
+
+    <TextView
+        android:id="@+id/textViewBedRoomabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/bed_room"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hr1" />
+
+    <TextView
         android:id="@+id/textViewSecondFloorTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +59,17 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorPressure"
         app:layout_constraintTop_toBottomOf="@+id/textViewSecondFloorPressure" />
+
+    <TextView
+        android:id="@+id/textViewBedRoomLastUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/last_update"
+        android:textAlignment="textEnd"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewBedRoomPressure"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textViewSecondFloorPressure"
@@ -278,6 +321,19 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLastUpdate" />
+
+    <View
+        android:id="@+id/hr7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBedRoomPressure" />
 
     <View
         android:id="@+id/hr2"
