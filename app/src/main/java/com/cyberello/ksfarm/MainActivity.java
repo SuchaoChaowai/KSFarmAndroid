@@ -103,53 +103,55 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper, MainActivity self) {
 
-        iotJSONWrapper.iotJSONs.forEach((iotJSON) -> {
+        iotJSONWrapper.iotJSONs.forEach(this::setIOTData);
+    }
 
-            if (iotJSON.id.equals("KSF0001")) {
+    private void setIOTData(IOTJSON iotJSON) {
 
-                setTempData(iotJSON);
-            }
+        if (iotJSON.id.equals("KSF0001")) {
 
-            if (iotJSON.id.equals("KSF0002")) {
+            setTempData(iotJSON);
+        }
 
-                setAirConData(self, iotJSON);
-            }
+        if (iotJSON.id.equals("KSF0002")) {
 
-            if (iotJSON.id.equals("KSF0003")) {
+            setAirConData(MainActivity.this, iotJSON);
+        }
 
-                setLampData(self, iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel));
-            }
+        if (iotJSON.id.equals("KSF0003")) {
 
-            if (iotJSON.id.equals("KSF0004")) {
+            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel));
+        }
 
-                setBedRoomData(iotJSON);
-            }
+        if (iotJSON.id.equals("KSF0004")) {
 
-            if (iotJSON.id.equals("KSF0005")) {
+            setBedRoomData(iotJSON);
+        }
 
-                setLampData(self, iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel));
-            }
+        if (iotJSON.id.equals("KSF0005")) {
 
-            if (iotJSON.id.equals("KSF0006")) {
+            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel));
+        }
 
-                setLampData(self, iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel));
-            }
+        if (iotJSON.id.equals("KSF0006")) {
 
-            if (iotJSON.id.equals("KSF0007")) {
+            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel));
+        }
 
-                setLampData(self, iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel));
-            }
+        if (iotJSON.id.equals("KSF0007")) {
 
-            if (iotJSON.id.equals("KSF0008")) {
+            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel));
+        }
 
-                setDeskData(iotJSON);
-            }
+        if (iotJSON.id.equals("KSF0008")) {
 
-            if (iotJSON.id.equals("KSF0009")) {
+            setDeskData(iotJSON);
+        }
 
-                setSecondFloorTempData(iotJSON);
-            }
-        });
+        if (iotJSON.id.equals("KSF0009")) {
+
+            setSecondFloorTempData(iotJSON);
+        }
     }
 
     private void setDeskData(IOTJSON iotJSON) {
@@ -315,9 +317,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processIOTControlResult(String response) {
 
-        if (response.equals("200")) {
-            IOTService.getIOTData(this, this);
-        }
+        IOTJSON iotJSON = KSFarmUtil.gson().fromJson(response, IOTJSON.class);
+
+        setIOTData(iotJSON);
+
+        IOTService.getIOTData(this, this);
     }
 
     @Override
