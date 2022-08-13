@@ -26,14 +26,14 @@ import com.cyberello.ksfarm.webService.IOTService;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, IOTControl.IOTControlResultListener {
 
     private GestureDetectorCompat mDetector;
 
     private SharedPreferences sharedPreferences;
+
+    private boolean isRefreshingDataMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +69,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             return;
         }
 
-        MainActivity self = this;
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                IOTService.getIOTData(self, self);
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(timerTask, 3500);
+        IOTService.getIOTData(MainActivity.this, MainActivity.this);
     }
 
     public void processQRCodeString(String scannedText) {
@@ -99,55 +89,74 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper) {
 
-        iotJSONWrapper.iotJSONs.forEach(this::setIOTData);
+        new Thread(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData)).start();
     }
 
     private void setIOTData(IOTJSON iotJSON) {
 
-        if (iotJSON.id.equals("KSF0001")) {
+        new Thread(() -> {
 
-            setTempData(iotJSON);
-        }
+            if (iotJSON.id.equals("KSF0001")) {
 
-        if (iotJSON.id.equals("KSF0002")) {
+                runOnUiThread(() -> setTempData(iotJSON));
 
-            setAirConData(MainActivity.this, iotJSON);
-        }
+                return;
+            }
 
-        if (iotJSON.id.equals("KSF0003")) {
+            if (iotJSON.id.equals("KSF0002")) {
 
-            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel));
-        }
+                runOnUiThread(() -> setAirConData(MainActivity.this, iotJSON));
 
-        if (iotJSON.id.equals("KSF0004")) {
+                return;
+            }
 
-            setBedRoomData(iotJSON);
-        }
+            if (iotJSON.id.equals("KSF0003")) {
 
-        if (iotJSON.id.equals("KSF0005")) {
+                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
 
-            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel));
-        }
+                return;
+            }
 
-        if (iotJSON.id.equals("KSF0006")) {
+            if (iotJSON.id.equals("KSF0004")) {
 
-            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel));
-        }
+                runOnUiThread(() -> setBedRoomData(iotJSON));
 
-        if (iotJSON.id.equals("KSF0007")) {
+                return;
+            }
 
-            setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel));
-        }
+            if (iotJSON.id.equals("KSF0005")) {
 
-        if (iotJSON.id.equals("KSF0008")) {
+                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
 
-            setDeskData(iotJSON);
-        }
+                return;
+            }
 
-        if (iotJSON.id.equals("KSF0009")) {
+            if (iotJSON.id.equals("KSF0006")) {
 
-            setSecondFloorTempData(iotJSON);
-        }
+                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
+
+                return;
+            }
+
+            if (iotJSON.id.equals("KSF0007")) {
+
+                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
+
+                return;
+            }
+
+            if (iotJSON.id.equals("KSF0008")) {
+
+                runOnUiThread(() -> setDeskData(iotJSON));
+
+                return;
+            }
+
+            if (iotJSON.id.equals("KSF0009")) {
+
+                runOnUiThread(() -> setSecondFloorTempData(iotJSON));
+            }
+        }).start();
     }
 
     private void setDeskData(IOTJSON iotJSON) {
@@ -293,7 +302,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         setIOTData(iotJSON);
 
-        IOTService.getIOTData(this, this);
+        if (isRefreshingDataMode) {
+
+            isRefreshingDataMode = false;
+            KSFarmUtil.toast(this, iotJSON.id + " Data updated!");
+        }
     }
 
     @Override
@@ -303,9 +316,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private void refreshIOTData(IOTJSON iotJSON) {
 
-        IOTControl.refreshIOTData(iotJSON.deviceIP, this, this);
+        isRefreshingDataMode = true;
 
-        KSFarmUtil.toast(this, iotJSON.id + " Data updated!");
+        IOTControl.refreshIOTData(iotJSON.deviceIP, this, this);
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
