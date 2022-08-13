@@ -281,30 +281,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         relaySwitch.setChecked(iotAirConJSON.relay1.equals("on"));
 
         relaySwitch.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> {
-
-                    if (!iotAirConJSON.relay1.equals("on") && isChecked) {
-
-                        final AlertDialog show = new AlertDialog.Builder(MainActivity.this)
-                                .setIcon(android.R.drawable.ic_input_add)
-                                .setTitle("เปิดแอร์?").setMessage("เปิดแอร์?")
-                                .setPositiveButton("เปิด", (dialog, which) -> runOnUiThread(() -> IOTControl.setRelayState(iotJSON.deviceIP, true, self, self)))
-                                .setNegativeButton("Cancel", (dialog, which) -> relaySwitch.setChecked(false))
-                                .show();
-
-                        return;
-                    }
-
-                    if (iotAirConJSON.relay1.equals("on") && !isChecked) {
-
-                        final AlertDialog show = new AlertDialog.Builder(MainActivity.this)
-                                .setIcon(android.R.drawable.ic_input_add)
-                                .setTitle("ปิดแอร์?").setMessage("ปิดแอร์?")
-                                .setPositiveButton("ปิด", (dialog, which) -> runOnUiThread(() -> IOTControl.setRelayState(iotJSON.deviceIP, false, self, self)))
-                                .setNegativeButton("Cancel", (dialog, which) -> relaySwitch.setChecked(true))
-                                .show();
-                    }
-                });
+                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
 
         findViewById(R.id.textViewAirConLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
     }
