@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         setContentView(R.layout.activity_main);
 
         MyGestureListener myGestureListener = new MyGestureListener();
-        myGestureListener.activity = this;
 
         mDetector = new GestureDetectorCompat(this, myGestureListener);
 
@@ -304,13 +303,13 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         KSFarmUtil.toast(this, iotJSON.id + " Data updated!");
     }
 
-    static class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        public MainActivity activity;
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onDoubleTap(MotionEvent event) {
-            IOTService.getIOTData(activity, activity);
+            IOTService.getIOTData(MainActivity.this, MainActivity.this);
+
+            KSFarmUtil.toast(MainActivity.this, "Data refreshed!");
             return true;
         }
     }
