@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0004")) {
+            if (iotJSON.id.equals("KSF0010")) {
 
                 runOnUiThread(() -> setBedRoomData(iotJSON));
 
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             String textString = iotTempJSON.temperature + " C";
             textViewTemp.setText(textString);
 
-            textString = iotTempJSON.pressure + " hPa";
+            textString = iotTempJSON.humidity + " %";
             textViewSecondFloorPressure.setText(textString);
 
             try {
