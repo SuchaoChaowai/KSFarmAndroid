@@ -161,133 +161,164 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private void setDeskData(IOTJSON iotJSON) {
 
-        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
-
-        TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
-        TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
-
-        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + iotTempJSON.pressure + " hPa";
-        textViewTemp.setText(textString);
-
         try {
-            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
+            TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
+
+            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + iotTempJSON.pressure + " hPa";
+            textViewTemp.setText(textString);
+
+            try {
+                textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
+            findViewById(R.id.textViewDeskLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+
+            SwitchMaterial relaySwitch = findViewById(R.id.switchDeskRelay);
+
+            relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
+
+            relaySwitch.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
+        } catch (NumberFormatException nex) {
+
         }
-
-        textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
-        findViewById(R.id.textViewDeskLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
-
-        SwitchMaterial relaySwitch = findViewById(R.id.switchDeskRelay);
-
-        relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
-
-        relaySwitch.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
     }
 
     private void setBedRoomData(IOTJSON iotJSON) {
 
-        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
-
-        TextView textViewTemp = findViewById(R.id.textViewBedRoomTemp);
-        TextView textViewLastUpdate = findViewById(R.id.textViewBedRoomLastUpdate);
-        TextView textViewSecondFloorPressure = findViewById(R.id.textViewBedRoomPressure);
-
-        String textString = iotTempJSON.temperature + " C";
-        textViewTemp.setText(textString);
-
-        textString = iotTempJSON.pressure + " hPa";
-        textViewSecondFloorPressure.setText(textString);
-
         try {
-            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
-        findViewById(R.id.textViewBedRoomLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewTemp = findViewById(R.id.textViewBedRoomTemp);
+            TextView textViewLastUpdate = findViewById(R.id.textViewBedRoomLastUpdate);
+            TextView textViewSecondFloorPressure = findViewById(R.id.textViewBedRoomPressure);
+
+            String textString = iotTempJSON.temperature + " C";
+            textViewTemp.setText(textString);
+
+            textString = iotTempJSON.pressure + " hPa";
+            textViewSecondFloorPressure.setText(textString);
+
+            try {
+                textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
+            findViewById(R.id.textViewBedRoomLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+
+        } catch (NumberFormatException nex) {
+
+        }
     }
 
     private void setLampData(MainActivity self, IOTJSON iotJSON, SwitchMaterial relaySwitch, TextView textViewLabel) {
 
-        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+        try {
 
-        relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
+            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
-        relaySwitch.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+            relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
 
-        textViewLabel.setOnClickListener(view -> refreshIOTData(iotJSON));
+            relaySwitch.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+
+            textViewLabel.setOnClickListener(view -> refreshIOTData(iotJSON));
+        } catch (NumberFormatException nex) {
+
+        }
     }
 
     private void setTempData(IOTJSON iotJSON) {
 
-        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
-
-        TextView textViewTemp = findViewById(R.id.textViewTemp);
-        TextView textViewHumid = findViewById(R.id.textViewHumid);
-        TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
-
-        String textString = iotTempJSON.temperature + " C";
-        textViewTemp.setText(textString);
-
-        textString = iotTempJSON.humidity + " %";
-        textViewHumid.setText(textString);
-
         try {
-            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewTemp = findViewById(R.id.textViewTemp);
+            TextView textViewHumid = findViewById(R.id.textViewHumid);
+            TextView textViewLastUpdate = findViewById(R.id.textViewLastUpdate);
+
+            String textString = iotTempJSON.temperature + " C";
+            textViewTemp.setText(textString);
+
+            textString = iotTempJSON.humidity + " %";
+            textViewHumid.setText(textString);
+
+            try {
+                textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
+
+            findViewById(R.id.textViewFirstFloorLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+        } catch (NumberFormatException nex) {
+
         }
-
-        textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
-
-        findViewById(R.id.textViewFirstFloorLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
     }
 
     private void setSecondFloorTempData(IOTJSON iotJSON) {
 
-        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
-
-        TextView textViewTemp = findViewById(R.id.textViewSecondFloorTemp);
-        TextView textViewLastUpdate = findViewById(R.id.textViewSecondFloorLastUpdate);
-        TextView textViewSecondFloorPressure = findViewById(R.id.textViewSecondFloorPressure);
-
-        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
-        textViewTemp.setText(textString);
-
-        textString = Math.round(iotTempJSON.pressure) + " hPa";
-        textViewSecondFloorPressure.setText(textString);
-
         try {
-            textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
-        findViewById(R.id.textViewSecondFloorLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewTemp = findViewById(R.id.textViewSecondFloorTemp);
+            TextView textViewLastUpdate = findViewById(R.id.textViewSecondFloorLastUpdate);
+            TextView textViewSecondFloorPressure = findViewById(R.id.textViewSecondFloorPressure);
+
+            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
+            textViewTemp.setText(textString);
+
+            textString = Math.round(iotTempJSON.pressure) + " hPa";
+            textViewSecondFloorPressure.setText(textString);
+
+            try {
+                textViewLastUpdate.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
+            findViewById(R.id.textViewSecondFloorLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+        } catch (NumberFormatException nex) {
+
+        }
     }
 
     private void setAirConData(MainActivity self, IOTJSON iotJSON) {
 
-        IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+        try {
 
-        TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
+            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
-        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
-        textViewTemp.setText(textString);
+            TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
 
-        SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
+            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
+            textViewTemp.setText(textString);
 
-        relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
+            SwitchMaterial relaySwitch = findViewById(R.id.switchAirConRelay);
 
-        relaySwitch.setOnCheckedChangeListener(
-                (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+            relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
 
-        findViewById(R.id.textViewAirConLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+            relaySwitch.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+
+            findViewById(R.id.textViewAirConLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
+        } catch (NumberFormatException nex) {
+
+        }
     }
 
     @Override
