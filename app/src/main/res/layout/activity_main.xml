@@ -45,7 +45,7 @@
         android:id="@+id/textViewBedRoomPressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pressure"
+        android:text="@string/humid"
         android:textAlignment="textEnd"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorTemp"
