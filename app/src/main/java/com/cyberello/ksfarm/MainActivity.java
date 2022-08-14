@@ -105,14 +105,14 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             if (iotJSON.id.equals("KSF0002")) {
 
-                runOnUiThread(() -> setAirConData(MainActivity.this, iotJSON));
+                runOnUiThread(() -> setAirConData(iotJSON));
 
                 return;
             }
 
             if (iotJSON.id.equals("KSF0003")) {
 
-                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
+                runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
 
                 return;
             }
@@ -126,21 +126,21 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             if (iotJSON.id.equals("KSF0005")) {
 
-                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
+                runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
 
                 return;
             }
 
             if (iotJSON.id.equals("KSF0006")) {
 
-                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
+                runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
 
                 return;
             }
 
             if (iotJSON.id.equals("KSF0007")) {
 
-                runOnUiThread(() -> setLampData(MainActivity.this, iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
+                runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
 
                 return;
             }
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         }
     }
 
-    private void setLampData(MainActivity self, IOTJSON iotJSON, SwitchMaterial relaySwitch, TextView textViewLabel) {
+    private void setLampData(IOTJSON iotJSON, SwitchMaterial relaySwitch, TextView textViewLabel) {
 
         try {
 
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
 
             relaySwitch.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
 
             textViewLabel.setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         }
     }
 
-    private void setAirConData(MainActivity self, IOTJSON iotJSON) {
+    private void setAirConData(IOTJSON iotJSON) {
 
         try {
 
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             relaySwitch.setChecked(iotTempJSON.relay1.equals("on"));
 
             relaySwitch.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, self, self));
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
 
             findViewById(R.id.textViewAirConLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
