@@ -26,6 +26,8 @@ import com.cyberello.ksfarm.webService.IOTService;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, IOTControl.IOTControlResultListener {
 
@@ -65,11 +67,19 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             processIOTJSONWrapper(iotJSONWrapper);
         } else {
 
-            IOTService.getIOTData(this, this);
+            IOTService.getIOTData(MainActivity.this, MainActivity.this);
             return;
         }
 
-        IOTService.getIOTData(MainActivity.this, MainActivity.this);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                IOTService.getIOTData(MainActivity.this, MainActivity.this);
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 0, 3500);
     }
 
     public void processQRCodeString(String scannedText) {
@@ -298,14 +308,10 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processIOTControlResult(String response) {
 
-        IOTJSON iotJSON = KSFarmUtil.gson().fromJson(response, IOTJSON.class);
-
-        setIOTData(iotJSON);
-
         if (isRefreshingDataMode) {
 
             isRefreshingDataMode = false;
-            KSFarmUtil.toast(this, iotJSON.id + " Data updated!");
+            IOTService.getIOTData(MainActivity.this, MainActivity.this);
         }
     }
 
