@@ -26,8 +26,6 @@ import com.cyberello.ksfarm.webService.IOTService;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, IOTControl.IOTControlResultListener {
 
@@ -67,19 +65,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             processIOTJSONWrapper(iotJSONWrapper);
         } else {
 
-            IOTService.getIOTData(MainActivity.this, MainActivity.this);
+            IOTService.getIOTData(this, this);
             return;
         }
 
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                IOTService.getIOTData(MainActivity.this, MainActivity.this);
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(timerTask, 0, 3500);
+        IOTService.getIOTData(MainActivity.this, MainActivity.this);
     }
 
     public void processQRCodeString(String scannedText) {
