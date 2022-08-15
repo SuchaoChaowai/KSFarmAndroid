@@ -27,13 +27,11 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, IOTControl.IOTControlResultListener {
+public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener {
 
     private GestureDetectorCompat mDetector;
 
     private SharedPreferences sharedPreferences;
-
-    private boolean isRefreshingDataMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             relaySwitch.setOnCheckedChangeListener(
                     (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
         } catch (NumberFormatException nex) {
-
+            nex.printStackTrace();
         }
     }
 
@@ -205,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             findViewById(R.id.textViewBedRoomLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
 
         } catch (NumberFormatException nex) {
-
+            nex.printStackTrace();
         }
     }
 
@@ -222,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             textViewLabel.setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
-
+            nex.printStackTrace();
         }
     }
 
@@ -252,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             findViewById(R.id.textViewFirstFloorLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
-
+            nex.printStackTrace();
         }
     }
 
@@ -281,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             textViewLastUpdate.setOnClickListener(view -> refreshIOTData(iotJSON));
             findViewById(R.id.textViewSecondFloorLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
-
+            nex.printStackTrace();
         }
     }
 
@@ -305,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             findViewById(R.id.textViewAirConLabel).setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
-
+            nex.printStackTrace();
         }
     }
 
@@ -315,23 +313,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public void processIOTControlResult(String response) {
-
-        if (isRefreshingDataMode) {
-
-            isRefreshingDataMode = false;
-            IOTService.getIOTData(MainActivity.this, MainActivity.this);
-        }
-    }
-
-    @Override
-    public void onIOTControlErrorResponse(String errorMessage) {
+    public void onErrorResponse(String status, String message) {
 
     }
 
     private void refreshIOTData(IOTJSON iotJSON) {
-
-        isRefreshingDataMode = true;
 
         IOTControl.refreshIOTData(iotJSON.deviceIP, this, this);
     }

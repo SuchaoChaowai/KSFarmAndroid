@@ -9,6 +9,10 @@ import com.cyberello.ksfarm.data.KSConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Objects;
 
@@ -44,5 +48,25 @@ public class KSFarmUtil {
     public static String getLocalIOTData(SharedPreferences sharedPreferences) {
 
         return sharedPreferences.getString(KSConstants.IOT_JSON_WRAPPER, "");
+    }
+
+    public static JSONObject getJSONObject(String jsonDataString, String type) {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("jsonData", jsonDataString);
+            jsonObject.put("type", type);
+            jsonObject.put("user", null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+    public static byte[] getJsonDataBytes(JSONObject jsonObject) {
+
+        return jsonObject.toString().getBytes(StandardCharsets.UTF_8);
     }
 }
