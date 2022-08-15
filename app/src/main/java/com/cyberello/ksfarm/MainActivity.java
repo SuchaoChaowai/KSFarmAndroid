@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
             TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
 
-            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + iotTempJSON.pressure + " hPa";
+            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + Math.round(iotTempJSON.pressure) + " hPa";
             textViewTemp.setText(textString);
 
             try {
