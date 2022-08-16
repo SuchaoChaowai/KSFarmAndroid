@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processWebServicePostDataResult(JSONObject response) {
 
-        IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
-
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
     }
 
@@ -335,9 +333,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         @Override
         public boolean onDoubleTap(MotionEvent event) {
+
             IOTService.getIOTData(MainActivity.this, MainActivity.this);
 
-            KSFarmUtil.toast(MainActivity.this, "Data refreshed!");
             return true;
         }
     }

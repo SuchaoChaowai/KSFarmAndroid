@@ -8,7 +8,7 @@ public class KSConstants {
 
     public static final String FIRST_FLOOR_IOT_DEVICE_ID = "KSF0001";
     public static final String BED_ROOM_AIR_CON_IOT_DEVICE_ID = "KSF0002";
-    public static final String OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID = "KSF0003";
+    public static final String OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID = "KSR0003";
     public static final String DESK_LAMP_IOT_DEVICE_ID = "KSF0005";
     public static final String STANDING_DESK_LAMP_IOT_DEVICE_ID = "KSF0006";
     public static final String BED_SIDE_LAMP_IOT_DEVICE_ID = "KSF0007";
