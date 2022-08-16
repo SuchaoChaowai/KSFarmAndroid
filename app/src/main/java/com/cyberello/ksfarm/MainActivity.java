@@ -64,13 +64,32 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public void processWebServiceResult(JSONObject response) {
+    public void processWebServicePostDataResult(JSONObject response) {
+
+        IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
+
+        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
+    }
+
+    @Override
+    public void processWebServiceGetIOTDataResult(JSONObject response) {
 
         IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
 
         processIOTJSONWrapper(iotJSONWrapper);
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+
+
+    }
+
+    @Override
+    public void onErrorResponse(String status, String message) {
+
     }
 
     private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper) {
@@ -82,65 +101,65 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         new Thread(() -> {
 
-            if (iotJSON.id.equals("KSF0001")) {
+            if (iotJSON.id.equals(KSConstants.FIRST_FLOOR_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setTempData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0002")) {
+            if (iotJSON.id.equals(KSConstants.BED_ROOM_AIR_CON_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setAirConData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0003")) {
+            if (iotJSON.id.equals(KSConstants.OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0010")) {
+            if (iotJSON.id.equals(KSConstants.BED_ROOM_TEMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setBedRoomData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0005")) {
+            if (iotJSON.id.equals(KSConstants.DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0006")) {
+            if (iotJSON.id.equals(KSConstants.STANDING_DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0007")) {
+            if (iotJSON.id.equals(KSConstants.BED_SIDE_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0008")) {
+            if (iotJSON.id.equals(KSConstants.DESK_TOP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setDeskData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals("KSF0009")) {
+            if (iotJSON.id.equals(KSConstants.SECOND_FLOOR_BALCONY_IOT_DEVICE_ID)) {
 
-                runOnUiThread(() -> setSecondFloorTempData(iotJSON));
+                runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
             }
         }).start();
     }
@@ -254,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         }
     }
 
-    private void setSecondFloorTempData(IOTJSON iotJSON) {
+    private void setSecondFloorBalconyTempData(IOTJSON iotJSON) {
 
         try {
 
@@ -305,16 +324,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         } catch (NumberFormatException nex) {
             nex.printStackTrace();
         }
-    }
-
-    @Override
-    public void onErrorResponse(String errorMessage) {
-
-    }
-
-    @Override
-    public void onErrorResponse(String status, String message) {
-
     }
 
     private void refreshIOTData(IOTJSON iotJSON) {

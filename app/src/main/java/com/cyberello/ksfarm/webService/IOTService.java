@@ -25,7 +25,7 @@ public class IOTService {
                         response -> {
 
                             if (listener != null) {
-                                listener.processWebServiceResult(response);
+                                listener.processWebServiceGetIOTDataResult(response);
                             }
                         },
                         error -> {
@@ -73,7 +73,7 @@ public class IOTService {
                     }
 
                     if (listener != null) {
-                        listener.processWebServiceResult(response);
+                        listener.processWebServicePostDataResult(response);
                     }
                 },
                 error -> {
@@ -95,7 +95,9 @@ public class IOTService {
 
     public interface WebServiceResultListener {
 
-        void processWebServiceResult(JSONObject response);
+        void processWebServicePostDataResult(JSONObject response);
+
+        void processWebServiceGetIOTDataResult(JSONObject response);
 
         void onErrorResponse(String errorMessage);
 
