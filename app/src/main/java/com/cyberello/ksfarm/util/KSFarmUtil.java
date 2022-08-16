@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.cyberello.global.CyberelloConstants;
 import com.cyberello.ksfarm.data.KSConstants;
+import com.cyberello.ksfarm.data.json.IOTMetaJSON;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class KSFarmUtil {
 
     private static Gson gson;
+    private static IOTMetaJSON iotMetaJSON;
 
     public static Gson gson() {
 
@@ -68,5 +70,33 @@ public class KSFarmUtil {
     public static byte[] getJsonDataBytes(JSONObject jsonObject) {
 
         return jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    public static void getIOTMetaJSON(MetaDataListener listener) {
+
+        if (iotMetaJSON != null) {
+            listener.metaDataReady();
+            return;
+        }
+
+        listener.metaDataEmpty();
+    }
+
+    public static void setIOTMetaData(JSONObject response, MetaDataListener listener) {
+
+        iotMetaJSON = KSFarmUtil.gson().fromJson(response.toString(), IOTMetaJSON.class);
+
+        listener.metaDataReady();
+    }
+
+    public static String getDeviceName(String deviceId) {
+
+        return iotMetaJSON.getDeviceName(deviceId);
+    }
+
+    public interface MetaDataListener {
+
+        void metaDataReady();
+        void metaDataEmpty();
     }
 }
