@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener {
+public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
 
     private GestureDetectorCompat mDetector;
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     public void onResume() {
         super.onResume();
 
-        IOTService.getIOTData(MainActivity.this, MainActivity.this);
+        KSFarmUtil.getIOTMetaJSON(MainActivity.this);
     }
 
     public void processQRCodeString(String scannedText) {
@@ -90,6 +90,12 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     }
 
+    @Override
+    public void processWebServiceGetIOTMetaDataResult(JSONObject response) {
+
+        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
+    }
+
     private void processIOTJSONWrapper(IOTJSONWrapper iotJSONWrapper) {
 
         new Thread(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData)).start();
@@ -99,63 +105,69 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         new Thread(() -> {
 
-            if (iotJSON.id.equals(KSConstants.FIRST_FLOOR_IOT_DEVICE_ID)) {
+            String deviceName = KSFarmUtil.getDeviceName(iotJSON.id);
+
+            if (deviceName == null) {
+                return;
+            }
+
+            if (deviceName.equals(KSConstants.FIRST_FLOOR_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setTempData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.BED_ROOM_AIR_CON_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.BED_ROOM_AIR_CON_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setAirConData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.BED_ROOM_TEMP_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.BED_ROOM_TEMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setBedRoomData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.DESK_LAMP_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.STANDING_DESK_LAMP_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.STANDING_DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.BED_SIDE_LAMP_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.BED_SIDE_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.DESK_TOP_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.DESK_TOP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setDeskData(iotJSON));
 
                 return;
             }
 
-            if (iotJSON.id.equals(KSConstants.SECOND_FLOOR_BALCONY_IOT_DEVICE_ID)) {
+            if (deviceName.equals(KSConstants.SECOND_FLOOR_BALCONY_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
             }
@@ -327,6 +339,18 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     private void refreshIOTData(IOTJSON iotJSON) {
 
         IOTControl.refreshIOTData(iotJSON.deviceIP, this, this);
+    }
+
+    @Override
+    public void metaDataReady() {
+
+        IOTService.getIOTData(MainActivity.this, MainActivity.this);
+    }
+
+    @Override
+    public void metaDataEmpty() {
+
+        IOTService.getIOTMetaData(MainActivity.this, MainActivity.this);
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {

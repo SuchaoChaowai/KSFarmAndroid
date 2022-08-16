@@ -40,6 +40,31 @@ public class IOTService {
         requestQueue.start();
     }
 
+    public static void getIOTMetaData(Activity activity, WebServiceResultListener listener) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET,
+                        KSConstants.KS_FARM_IOT_META_URL,
+                        null,
+                        response -> {
+
+                            if (listener != null) {
+                                listener.processWebServiceGetIOTMetaDataResult(response);
+                            }
+                        },
+                        error -> {
+
+                            if (listener != null) {
+                                listener.onErrorResponse(error.getMessage());
+                            }
+                        });
+
+        requestQueue.add(jsonObjectRequest);
+        requestQueue.start();
+    }
+
     public static void sendKSFarmWebServiceRequest(String jsonDataString, String type, Activity activity, WebServiceResultListener listener) {
 
         postData(jsonDataString, type, activity, listener);
@@ -103,5 +128,7 @@ public class IOTService {
         void onErrorResponse(String errorMessage);
 
         void onErrorResponse(String status, String message);
+
+        void processWebServiceGetIOTMetaDataResult(JSONObject response);
     }
 }
