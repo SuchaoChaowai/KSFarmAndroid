@@ -9,12 +9,13 @@ public class IOTMetaJSON {
     public ArrayList<IOTDevice> device_ids;
 
     public class IOTDevice {
+
         public String name;
         public String id;
         public String description;
     }
 
-    public IOTDevice getDeviceName(String deviceId) {
+    public IOTDevice getDevice(String deviceId) {
 
         return device_ids.stream().filter(device_id -> deviceId.equals(device_id.id)).findFirst().orElse(null);
     }
