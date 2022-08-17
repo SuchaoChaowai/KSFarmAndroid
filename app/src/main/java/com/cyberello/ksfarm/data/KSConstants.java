@@ -16,6 +16,7 @@ public class KSConstants {
     public static final String SECOND_FLOOR_BALCONY_IOT_DEVICE_ID = "SECOND_FLOOR_BALCONY_IOT_DEVICE_ID";
     public static final String BED_ROOM_TEMP_IOT_DEVICE_ID = "BED_ROOM_TEMP_IOT_DEVICE_ID";
     public static final String BARO_SENSOR_TEST = "BARO_SENSOR_TEST";
+    public static final String ESP_01_TEST_DEVICE_001 = "ESP_01_TEST_DEVICE_001";
 
     public static final String IOT_WEB_SERVICE_URL = "http://192.168.0.168:8080/KSFarm-Server/iotService";
     public static final String KS_FARM_WEB_SERVICE_URL = "http://192.168.0.168:8080/KSFarm-Server/ksFarmService";
