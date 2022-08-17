@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="@string/temp"
         android:textAlignment="textEnd"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/switchDeskRelay"
         app:layout_constraintTop_toBottomOf="@+id/switchDeskRelay" />
 
@@ -90,6 +90,7 @@
         android:id="@+id/textViewBedRoomTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="@string/temp"
         android:textAlignment="textEnd"
         android:textSize="14sp"

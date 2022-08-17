@@ -16,7 +16,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -192,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         textView = findViewById(R.id.textViewBaroTestReadData);
 
-        String textString = iotTempJSON.temperature + " C, " + Math.round(iotTempJSON.pressure) + " hPa";
+        String textString = iotTempJSON.temperature + " C, " + iotTempJSON.pressure + " hPa";
         textView.setText(textString);
 
         textView = findViewById(R.id.textViewBaroTestErrorCount);
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
             TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
 
-            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + Math.round(iotTempJSON.pressure) + " hPa";
+            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %, " + iotTempJSON.pressure + " hPa";
             textViewTemp.setText(textString);
 
             try {
