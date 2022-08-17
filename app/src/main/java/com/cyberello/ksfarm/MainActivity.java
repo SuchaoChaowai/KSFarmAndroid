@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         new Thread(() -> {
 
-            IOTMetaJSON.IOTDevice device = KSFarmUtil.getDeviceName(iotJSON.id);
+            IOTMetaJSON.IOTDevice device = KSFarmUtil.getDevice(iotJSON.id);
 
             if (device == null) {
                 return;
