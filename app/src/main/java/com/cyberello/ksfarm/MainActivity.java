@@ -179,6 +179,10 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                 runOnUiThread(() -> setBaroTestData(iotJSON));
             }
+            if (device.name.equals(KSConstants.ESP_01_TEST_DEVICE_001)) {
+
+                runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switcESP01TestDeviceRelay), findViewById(R.id.textViewESP01TestDeviceLabel)));
+            }
         }).start();
     }
 
