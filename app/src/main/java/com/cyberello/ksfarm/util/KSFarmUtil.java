@@ -89,7 +89,7 @@ public class KSFarmUtil {
         listener.metaDataReady();
     }
 
-    public static String getDeviceName(String deviceId) {
+    public static IOTMetaJSON.IOTDevice getDeviceName(String deviceId) {
 
         return iotMetaJSON.getDeviceName(deviceId);
     }

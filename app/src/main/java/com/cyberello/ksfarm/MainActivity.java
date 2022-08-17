@@ -9,11 +9,13 @@ import android.os.Bundle;
 
 import com.cyberello.ksfarm.data.KSConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
+import com.cyberello.ksfarm.data.json.IOTMetaJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,69 +107,71 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         new Thread(() -> {
 
-            String deviceName = KSFarmUtil.getDeviceName(iotJSON.id);
+            IOTMetaJSON.IOTDevice device = KSFarmUtil.getDeviceName(iotJSON.id);
 
-            if (deviceName == null) {
+            if (device == null) {
                 return;
             }
 
-            if (deviceName.equals(KSConstants.FIRST_FLOOR_IOT_DEVICE_ID)) {
+            iotJSON.name = device.description;
+
+            if (device.name.equals(KSConstants.FIRST_FLOOR_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setTempData(iotJSON));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.BED_ROOM_AIR_CON_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.BED_ROOM_AIR_CON_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setAirConData(iotJSON));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.BED_ROOM_TEMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.BED_ROOM_TEMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setBedRoomData(iotJSON));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.DESK_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.STANDING_DESK_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.STANDING_DESK_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.BED_SIDE_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.BED_SIDE_LAMP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.DESK_TOP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.DESK_TOP_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setDeskData(iotJSON));
 
                 return;
             }
 
-            if (deviceName.equals(KSConstants.SECOND_FLOOR_BALCONY_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.SECOND_FLOOR_BALCONY_IOT_DEVICE_ID)) {
 
                 runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
             }
@@ -179,6 +183,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         try {
 
             IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewLabel = findViewById(R.id.textViewDeskLabel);
+            textViewLabel.setText(iotJSON.name);
 
             TextView textViewTemp = findViewById(R.id.textViewDeskTemp);
             TextView textViewLastUpdate = findViewById(R.id.textViewDeskLastUpdate);
@@ -211,6 +218,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         try {
 
             IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewLabel = findViewById(R.id.textViewBedRoomLabel);
+            textViewLabel.setText(iotJSON.name);
 
             TextView textViewTemp = findViewById(R.id.textViewBedRoomTemp);
             TextView textViewLastUpdate = findViewById(R.id.textViewBedRoomLastUpdate);
@@ -247,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             relaySwitch.setOnCheckedChangeListener(
                     (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
 
+            textViewLabel.setText(iotJSON.name);
             textViewLabel.setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (NumberFormatException nex) {
             nex.printStackTrace();
@@ -258,6 +269,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         try {
 
             IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewLabel = findViewById(R.id.textViewFirstFloorLabel);
+            textViewLabel.setText(iotJSON.name);
 
             TextView textViewTemp = findViewById(R.id.textViewTemp);
             TextView textViewHumid = findViewById(R.id.textViewHumid);
@@ -289,14 +303,17 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
 
+            TextView textViewLabel = findViewById(R.id.textViewSecondFloorLabel);
+            textViewLabel.setText(iotJSON.name);
+
             TextView textViewTemp = findViewById(R.id.textViewSecondFloorTemp);
             TextView textViewLastUpdate = findViewById(R.id.textViewSecondFloorLastUpdate);
             TextView textViewSecondFloorPressure = findViewById(R.id.textViewSecondFloorPressure);
 
-            String textString = iotTempJSON.temperature + " C, " + iotTempJSON.humidity + " %";
+            String textString = iotTempJSON.temperature + " C";
             textViewTemp.setText(textString);
 
-            textString = Math.round(iotTempJSON.pressure) + " hPa";
+            textString = Math.round(iotTempJSON.humidity) + " %";
             textViewSecondFloorPressure.setText(textString);
 
             try {
@@ -317,6 +334,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         try {
 
             IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+
+            TextView textViewLabel = findViewById(R.id.textViewAirConLabel);
+            textViewLabel.setText(iotJSON.name);
 
             TextView textViewTemp = findViewById(R.id.textViewAirConTemp);
 
