@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.cyberello.ksfarm.data.KSConstants;
+import com.cyberello.ksfarm.data.json.BaroTestResultJSON;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.IOTMetaJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
@@ -175,7 +176,37 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
                 runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
             }
+            if (device.name.equals(KSConstants.BARO_SENSOR_TEST)) {
+
+                runOnUiThread(() -> setBaroTestData(iotJSON));
+            }
         }).start();
+    }
+
+    private void setBaroTestData(IOTJSON iotJSON) {
+
+        BaroTestResultJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, BaroTestResultJSON.class);
+
+        TextView textView = findViewById(R.id.textViewBaroTestLabel);
+        textView.setText(iotJSON.name);
+
+        textView = findViewById(R.id.textViewBaroTestReadData);
+
+        String textString = iotTempJSON.temperature + " C, " + Math.round(iotTempJSON.pressure) + " hPa";
+        textView.setText(textString);
+
+        textView = findViewById(R.id.textViewBaroTestErrorCount);
+
+        textString = "ReadCount: " + iotTempJSON.readCount + "/" + iotTempJSON.readErrorCount;
+        textView.setText(textString);
+
+        textView = findViewById(R.id.textViewBaroTestLastUpdate);
+
+        try {
+            textView.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setDeskData(IOTJSON iotJSON) {
