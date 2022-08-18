@@ -5,6 +5,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.cyberello.ksfarm.data.KSConstants;
@@ -199,6 +200,14 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         textView.setText(textString);
 
         textView = findViewById(R.id.textViewBaroTestErrorCount);
+
+        if (iotTempJSON.readErrorCount > 0) {
+            textView.setBackgroundColor(Color.RED);
+            textView.setTextColor(Color.WHITE);
+        } else {
+            textView.setBackgroundColor(Color.GREEN);
+            textView.setTextColor(Color.BLACK);
+        }
 
         textString = "ReadCount: " + iotTempJSON.readCount + "/" + iotTempJSON.readErrorCount;
         textView.setText(textString);
