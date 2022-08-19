@@ -116,63 +116,63 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             iotJSON.name = device.description;
 
-            if (device.name.equals(KSConstants.FIRST_FLOOR_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.FIRST_FLOOR)) {
 
                 runOnUiThread(() -> setTempData(iotJSON));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.BED_ROOM_AIR_CON_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.BED_ROOM_AIR_CON)) {
 
                 runOnUiThread(() -> setAirConData(iotJSON));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.OVER_HEAD_DESK_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.OVER_HEAD_DESK_LAMP)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadLampRelay), findViewById(R.id.textViewLightLabel)));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.BED_ROOM_TEMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.BED_ROOM_TEMP)) {
 
                 runOnUiThread(() -> setBedRoomData(iotJSON));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.DESK_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.DESK_LAMP)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLampRelay), findViewById(R.id.textViewDeskLampLabel)));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.STANDING_DESK_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.STANDING_DESK_LAMP)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskRelay), findViewById(R.id.textViewStandingDeskLabel)));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.BED_SIDE_LAMP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.BED_SIDE_LAMP)) {
 
                 runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLampRelay), findViewById(R.id.textViewBedSideLabel)));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.DESK_TOP_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.DESK_TOP)) {
 
                 runOnUiThread(() -> setDeskData(iotJSON));
 
                 return;
             }
 
-            if (device.name.equals(KSConstants.SECOND_FLOOR_BALCONY_IOT_DEVICE_ID)) {
+            if (device.name.equals(KSConstants.SECOND_FLOOR_BALCONY)) {
 
                 runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
             }
@@ -198,24 +198,30 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         String textString = iotTempJSON.temperature + " C, " + iotTempJSON.pressure + " hPa";
         textView.setText(textString);
+        textView.setOnClickListener(view -> refreshIOTData(iotJSON));
 
         textView = findViewById(R.id.textViewBaroTestErrorCount);
+
+
+        textString = "ReadCount: " + iotTempJSON.readCount;
 
         if (iotTempJSON.readErrorCount > 0) {
             textView.setBackgroundColor(Color.RED);
             textView.setTextColor(Color.WHITE);
+            textString = textString + "/" + iotTempJSON.readErrorCount;
         } else {
             textView.setBackgroundColor(Color.GREEN);
             textView.setTextColor(Color.BLACK);
         }
 
-        textString = "ReadCount: " + iotTempJSON.readCount + "/" + iotTempJSON.readErrorCount;
         textView.setText(textString);
+        textView.setOnClickListener(view -> refreshIOTData(iotJSON));
 
         textView = findViewById(R.id.textViewBaroTestLastUpdate);
 
         try {
             textView.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+            textView.setOnClickListener(view -> refreshIOTData(iotJSON));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -353,10 +359,10 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             TextView textViewLastUpdate = findViewById(R.id.textViewSecondFloorLastUpdate);
             TextView textViewSecondFloorPressure = findViewById(R.id.textViewSecondFloorPressure);
 
-            String textString = iotTempJSON.temperature + " C";
+            String textString = iotTempJSON.temperature + " C, " + Math.round(iotTempJSON.humidity) + " %";
             textViewTemp.setText(textString);
 
-            textString = Math.round(iotTempJSON.humidity) + " %";
+            textString = Math.round(iotTempJSON.pressure) + " hPa";
             textViewSecondFloorPressure.setText(textString);
 
             try {
