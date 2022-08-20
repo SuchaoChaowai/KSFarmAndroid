@@ -9,509 +9,101 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textViewESP01TestDeviceLabel"
+        android:id="@+id/textViewPressure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bed_side_lamp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr8" />
+        android:text="@string/pressure"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewHumid"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHumid" />
 
     <TextView
-        android:id="@+id/textViewBaroTestLastUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/last_update"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBaroTestLabel" />
-
-    <TextView
-        android:id="@+id/textViewBaroTestLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/desk"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr9" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchDeskRelay"
+        android:id="@+id/textViewLastUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/relay"
+        android:text="@string/last_update"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr7"
-        tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
+        app:layout_constraintTop_toTopOf="@+id/textViewKSFarmWeatherLabel" />
 
     <TextView
-        android:id="@+id/textViewDeskTemp"
+        android:id="@+id/textViewTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/temp"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/switchDeskRelay"
-        app:layout_constraintTop_toBottomOf="@+id/switchDeskRelay" />
-
-    <TextView
-        android:id="@+id/textViewDeskLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/desk"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr7" />
-
-    <TextView
-        android:id="@+id/textViewBedRoomPressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/humid"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorTemp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBedRoomTemp" />
-
-    <TextView
-        android:id="@+id/textViewBaroTestReadData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/humid"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/hr10"
-        app:layout_constraintEnd_toEndOf="@+id/textViewBaroTestErrorCount" />
-
-    <TextView
-        android:id="@+id/textViewBedRoomTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/temp"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewBedRoomLabel"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorLabel" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTempLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmWeatherLabel" />
 
     <TextView
-        android:id="@+id/textViewBedRoomLabel"
+        android:id="@+id/textViewHumid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bed_room"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr1" />
+        android:text="@string/humid"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTemp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTemp" />
 
     <TextView
-        android:id="@+id/textViewSecondFloorTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/temp"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewTemp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorLabel" />
-
-    <TextView
-        android:id="@+id/textViewBaroTestErrorCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/temp"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewBaroTestReadData"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewSecondFloorLastUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/last_update"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorPressure"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSecondFloorPressure" />
-
-    <TextView
-        android:id="@+id/textViewBedRoomLastUpdate"
+        android:id="@+id/textViewKSFarmWeatherLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/last_update"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewBedRoomPressure"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewDeskLastUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/last_update"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewDeskTemp"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewSecondFloorPressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pressure"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewSecondFloorTemp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSecondFloorTemp" />
-
-    <TextView
-        android:id="@+id/textViewSecondFloorLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/second_floor"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFirstFloorLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr6" />
-
-    <TextView
-        android:id="@+id/textViewBedSideLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/bed_side_lamp"
-        android:textSize="14sp"
-        android:textStyle="bold"
+        android:text="@string/ks_farm_weather_label"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr5" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTempLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/temp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewKSFarmWeatherLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmWeatherLabel" />
+
+    <TextView
+        android:id="@+id/textViewHumidLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/humid"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewTempLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTempLabel" />
+
+    <TextView
+        android:id="@+id/textViewPressureLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pressure"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewHumidLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHumidLabel" />
 
     <View
         android:id="@+id/hr6"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchBedSideLampRelay" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchBedSideLampRelay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/relay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr5"
-        tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switcESP01TestDeviceRelay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/relay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr8"
-        tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchStandingDeskRelay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/relay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr4"
-        tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewStandingDeskLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/standing_desk_lamp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr4" />
-
-    <View
-        android:id="@+id/hr5"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchStandingDeskRelay" />
-
-    <TextView
-        android:id="@+id/textViewDeskLampLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/desk_lamp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr3" />
-
-    <View
-        android:id="@+id/hr4"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchDeskLampRelay" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchDeskLampRelay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/relay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr3"
-        tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-
-    <View
-        android:id="@+id/hr3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchOverHeadLampRelay" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchOverHeadLampRelay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/relay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr"
-        tools:ignore="UseSwitchCompatOrMaterialXml,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewAirConTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="@string/temp"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchAirConRelay" />
-
-    <TextView
-        android:id="@+id/textViewAirConLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/bed_room_air_con"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr2" />
-
-    <TextView
-        android:id="@+id/textViewLightLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/overhead_lamp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr" />
-
-    <TextView
-        android:id="@+id/textViewTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/temp"
-        android:textAlignment="textEnd"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFirstFloorLabel" />
-
-    <TextView
-        android:id="@+id/textViewHumid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/humid"
-        android:textAlignment="textStart"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewTemp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTemp" />
-
-    <View
-        android:id="@+id/hr1"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLastUpdate" />
-
-    <View
-        android:id="@+id/hr7"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBedRoomPressure" />
-
-    <View
-        android:id="@+id/hr8"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeskTemp" />
-
-    <View
-        android:id="@+id/hr9"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switcESP01TestDeviceRelay" />
-
-    <View
-        android:id="@+id/hr10"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBaroTestLastUpdate" />
-
-    <View
-        android:id="@+id/hr2"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/hr"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAirConTemp" />
-
-    <TextView
-        android:id="@+id/textViewFirstFloorLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/first_floor"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr6" />
-
-    <TextView
-        android:id="@+id/textViewLastUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/last_update"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewHumid"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHumid" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchAirConRelay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/relay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr2"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPressureLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
