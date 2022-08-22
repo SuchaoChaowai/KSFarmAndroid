@@ -100,6 +100,8 @@ public class KSFarmUtil {
         IOTMetaJSON.IOTDevice device = getDevice(iotJSON.id);
 
         if (device == null) {
+
+            iotJSON.name = "";
             return;
         }
 
