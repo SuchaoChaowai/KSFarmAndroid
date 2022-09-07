@@ -1,6 +1,6 @@
 package com.cyberello.ksfarm.data.json;
 
-public class IOTTempJSON {
+public class IOTDataJSON {
 
     public double temperature;
     public double humidity;
