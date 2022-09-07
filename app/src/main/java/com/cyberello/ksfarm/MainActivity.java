@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.cyberello.ksfarm.data.KSConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
+import com.cyberello.ksfarm.data.json.JSONDataWrapper;
 import com.cyberello.ksfarm.webService.IOTControl;
 
 import android.view.GestureDetector;
@@ -17,10 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
-import com.cyberello.ksfarm.data.json.IOTTempJSON;
+import com.cyberello.ksfarm.data.json.IOTDataJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
 import com.cyberello.ksfarm.webService.IOTService;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.json.JSONObject;
 
@@ -54,6 +56,15 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     public void onResume() {
         super.onResume();
 
+        String jsonDataString = KSFarmUtil.getLocalWeatherData(sharedPreferences);
+
+        if (!jsonDataString.isEmpty()) {
+
+            IOTJSON iotJSON = KSFarmUtil.gson().fromJson(jsonDataString, IOTJSON.class);
+
+            setSecondFloorBalconyTempData(iotJSON);
+        }
+
         KSFarmUtil.getIOTMetaJSON(MainActivity.this);
     }
 
@@ -63,19 +74,33 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public void processWebServicePostDataResult(JSONObject response) {
+    public void processPostDataResult(JSONObject response) {
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
     }
 
     @Override
-    public void processWebServiceGetIOTDataResult(JSONObject response) {
+    public void processGetIOTDataResult(JSONObject response) {
 
         IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
 
         new Thread(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData)).start();
+    }
+
+    @Override
+    public void processGetWeatherDataResult(JSONObject response) {
+
+        JSONDataWrapper jsonDataWrapper = KSFarmUtil.gson().fromJson(response.toString(), JSONDataWrapper.class);
+
+        String jsonDataString = jsonDataWrapper.getJsonData();
+
+        KSFarmUtil.setLocalWeatherData(jsonDataString, sharedPreferences);
+
+        IOTJSON iotJSON = KSFarmUtil.gson().fromJson(jsonDataString, IOTJSON.class);
+
+        setSecondFloorBalconyTempData(iotJSON);
     }
 
     @Override
@@ -90,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public void processWebServiceGetIOTMetaDataResult(JSONObject response) {
+    public void processGetIOTMetaDataResult(JSONObject response) {
 
         KSFarmUtil.setIOTMetaData(response, MainActivity.this);
     }
@@ -102,6 +127,29 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         if (iotJSON.name.equals(KSConstants.SECOND_FLOOR_BALCONY)) {
 
             runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
+
+            return;
+        }
+
+        if (iotJSON.name.equals(KSConstants.BED_SIDE_LAMP)) {
+
+            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLamp)));
+        }
+    }
+
+    private void setLampData(IOTJSON iotJSON, SwitchMaterial relaySwitch) {
+
+        try {
+
+            IOTDataJSON iotDataJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTDataJSON.class);
+
+            relaySwitch.setChecked(iotDataJSON.relay1.equals("on"));
+
+            relaySwitch.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
+
+        } catch (NumberFormatException nex) {
+            nex.printStackTrace();
         }
     }
 
@@ -109,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         try {
 
-            IOTTempJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTTempJSON.class);
+            IOTDataJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTDataJSON.class);
 
 
             TextView textView = findViewById(R.id.textViewTemp);
@@ -154,6 +202,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     @Override
     public void metaDataReady() {
+
+        IOTService.getWeatherData(MainActivity.this, MainActivity.this);
 
         IOTService.getIOTData(MainActivity.this, MainActivity.this);
     }
