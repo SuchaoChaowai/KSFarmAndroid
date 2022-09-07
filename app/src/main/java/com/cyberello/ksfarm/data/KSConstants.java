@@ -4,6 +4,7 @@ public class KSConstants {
 
     public static final String QR_CODE_URL = "https://ksfarm.co/qr/";
     public static final String IOT_JSON_WRAPPER = "iotJSONWrapper";
+    public static final String WEATHER_DATA = "weatherData";
     public static final String SHARED_PREFERENCES_NAME = "com.cyberello.ksfarm.data";
 
     public static final String FIRST_FLOOR = "FIRST_FLOOR";

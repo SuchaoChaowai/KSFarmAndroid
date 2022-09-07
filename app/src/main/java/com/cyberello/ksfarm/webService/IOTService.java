@@ -26,7 +26,7 @@ public class IOTService {
                         response -> {
 
                             if (listener != null) {
-                                listener.processWebServiceGetIOTDataResult(response);
+                                listener.processGetIOTDataResult(response);
                             }
                         },
                         error -> {
@@ -51,7 +51,7 @@ public class IOTService {
                         response -> {
 
                             if (listener != null) {
-                                listener.processWebServiceGetIOTMetaDataResult(response);
+                                listener.processGetIOTMetaDataResult(response);
                             }
                         },
                         error -> {
@@ -99,7 +99,7 @@ public class IOTService {
                     }
 
                     if (listener != null) {
-                        listener.processWebServicePostDataResult(response);
+                        listener.processPostDataResult(response);
                     }
                 },
                 error -> {
@@ -119,16 +119,62 @@ public class IOTService {
         requestQueue.start();
     }
 
+    public static void getWeatherData(Activity activity, WebServiceResultListener listener) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+        JSONObject jsonObject = KSFarmUtil.getJSONObject("", "getWeatherInfo()");
+
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, KSConstants.KS_FARM_WEB_SERVICE_URL, jsonObject,
+                response -> {
+
+                    try {
+
+                        if (response.has("status")) {
+
+                            String status = response.getString("status");
+
+                            if (status.equals(CyberelloConstants.STATUS_CODE_ERROR)) {
+
+                                if (null != listener) {
+                                    listener.onErrorResponse(response.getString("status"), response.getString("message"));
+                                }
+
+                                return;
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (listener != null) {
+                        listener.processGetWeatherDataResult(response);
+                    }
+                },
+                error -> {
+
+                    if (listener != null) {
+                        listener.onErrorResponse(error.getMessage());
+                    }
+                }) {
+        };
+
+        requestQueue.add(jsonObjRequest);
+        requestQueue.start();
+    }
+
     public interface WebServiceResultListener {
 
-        void processWebServicePostDataResult(JSONObject response);
+        void processPostDataResult(JSONObject response);
 
-        void processWebServiceGetIOTDataResult(JSONObject response);
+        void processGetIOTDataResult(JSONObject response);
+
+        void processGetWeatherDataResult(JSONObject response);
 
         void onErrorResponse(String errorMessage);
 
         void onErrorResponse(String status, String message);
 
-        void processWebServiceGetIOTMetaDataResult(JSONObject response);
+        void processGetIOTMetaDataResult(JSONObject response);
     }
 }
