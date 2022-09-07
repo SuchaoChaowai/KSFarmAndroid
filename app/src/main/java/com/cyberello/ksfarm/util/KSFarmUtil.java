@@ -53,6 +53,16 @@ public class KSFarmUtil {
         return sharedPreferences.getString(KSConstants.IOT_JSON_WRAPPER, "");
     }
 
+    public static void setLocalWeatherData(String jsonDataString, SharedPreferences sharedPreferences) {
+
+        new Thread(() -> sharedPreferences.edit().putString(KSConstants.WEATHER_DATA, jsonDataString).apply()).start();
+    }
+
+    public static String getLocalWeatherData(SharedPreferences sharedPreferences) {
+
+        return sharedPreferences.getString(KSConstants.WEATHER_DATA, "");
+    }
+
     public static JSONObject getJSONObject(String jsonDataString, String type) {
 
         JSONObject jsonObject = new JSONObject();
@@ -111,6 +121,7 @@ public class KSFarmUtil {
     public interface MetaDataListener {
 
         void metaDataReady();
+
         void metaDataEmpty();
     }
 }
