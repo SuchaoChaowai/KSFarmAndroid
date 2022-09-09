@@ -8,6 +8,18 @@
     android:id="@+id/constraintLayout"
     tools:context=".MainActivity">
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchStandingDeskLamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:switchPadding="8dp"
+        android:text="@string/standing_desk_lamp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hr6" />
+
     <TextView
         android:id="@+id/textViewPressure"
         android:layout_width="wrap_content"
@@ -110,12 +122,11 @@
         android:id="@+id/switchBedSideLamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:switchPadding="8dp"
         android:text="@string/bed_side_lamp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr6" />
+        app:layout_constraintTop_toTopOf="@+id/switchStandingDeskLamp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

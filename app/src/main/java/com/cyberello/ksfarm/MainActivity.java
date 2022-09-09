@@ -135,6 +135,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLamp)));
         }
+
+        if (iotJSON.name.equals(KSConstants.STANDING_DESK_LAMP)) {
+
+            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskLamp)));
+        }
     }
 
     private void setLampData(IOTJSON iotJSON, SwitchMaterial relaySwitch) {
