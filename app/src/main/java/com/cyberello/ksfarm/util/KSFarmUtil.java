@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class KSFarmUtil {
@@ -31,6 +32,14 @@ public class KSFarmUtil {
         }
 
         return gson;
+    }
+
+    public static String getServerDateTimeString(long dateTime) throws ParseException {
+
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(dateTime*1000);
+
+        return CyberelloConstants.DATE_TIME_FORMAT.format(cal.getTime());
     }
 
     public static String getServerDateTimeString(String dateTimeString) throws ParseException {

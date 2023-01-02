@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.cyberello.ksfarm.data.KSConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.JSONDataWrapper;
+import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 
 import android.view.GestureDetector;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
     private SharedPreferences sharedPreferences;
 
+    private OpenWeatherJSON weatherJSON;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         MyGestureListener myGestureListener = new MyGestureListener();
 
         mDetector = new GestureDetectorCompat(this, myGestureListener);
+
+        weatherJSON = new OpenWeatherJSON();
 
         sharedPreferences = this.getSharedPreferences(KSConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
@@ -60,9 +65,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         if (!jsonDataString.isEmpty()) {
 
-            IOTJSON iotJSON = KSFarmUtil.gson().fromJson(jsonDataString, IOTJSON.class);
+            weatherJSON.setJsonString(jsonDataString);
 
-            setSecondFloorBalconyTempData(iotJSON);
+            setSecondFloorBalconyTempData(weatherJSON);
         }
 
         KSFarmUtil.getIOTMetaJSON(MainActivity.this);
@@ -98,9 +103,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         KSFarmUtil.setLocalWeatherData(jsonDataString, sharedPreferences);
 
-        IOTJSON iotJSON = KSFarmUtil.gson().fromJson(jsonDataString, IOTJSON.class);
+        weatherJSON.setJsonString(jsonDataString);
 
-        setSecondFloorBalconyTempData(iotJSON);
+        setSecondFloorBalconyTempData(weatherJSON);
     }
 
     @Override
@@ -123,13 +128,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     private void setIOTData(IOTJSON iotJSON) {
 
         KSFarmUtil.setIOTData(iotJSON);
-
-        if (iotJSON.name.equals(KSConstants.SECOND_FLOOR_BALCONY)) {
-
-            runOnUiThread(() -> setSecondFloorBalconyTempData(iotJSON));
-
-            return;
-        }
 
         if (iotJSON.name.equals(KSConstants.BED_SIDE_LAMP)) {
 
@@ -181,24 +179,21 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         }
     }
 
-    private void setSecondFloorBalconyTempData(IOTJSON iotJSON) {
+    private void setSecondFloorBalconyTempData(OpenWeatherJSON weatherJSON) {
 
         try {
 
-            IOTDataJSON iotTempJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTDataJSON.class);
-
-
             TextView textView = findViewById(R.id.textViewTemp);
 
-            String textString = Math.round(iotTempJSON.temperature) + " C";
+            String textString = Math.round(weatherJSON.temperature()) + " °C";
             textView.setText(textString);
 
             textView = findViewById(R.id.textViewHumid);
-            textString = Math.round(iotTempJSON.humidity) + " %";
+            textString = Math.round(weatherJSON.humidity()) + " %";
             textView.setText(textString);
 
             textView = findViewById(R.id.textViewPressure);
-            textString = String.valueOf(Math.round(iotTempJSON.pressure));
+            textString = String.valueOf(Math.round(weatherJSON.pressure()));
 
             if (textString.length() > 3) {
 
@@ -211,13 +206,10 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
             textView = findViewById(R.id.textViewLastUpdate);
 
             try {
-                textView.setText(KSFarmUtil.getServerDateTimeString(iotJSON.lastUpdateTimeString));
+                textView.setText(KSFarmUtil.getServerDateTimeString(weatherJSON.dt()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            textView.setOnClickListener(view -> refreshIOTData(iotJSON));
-
         } catch (NumberFormatException nex) {
             nex.printStackTrace();
         }
