@@ -32,7 +32,14 @@ public class OpenWeatherJSON {
 
     private WeatherJSON weatherJSON;
 
-    public void setJsonString(String jsonString){
+    public void setJsonString(String jsonString) {
+
+        weatherJSON = new WeatherJSON();
+
+        if (jsonString.isEmpty()) {
+
+            return;
+        }
 
         Gson G = new Gson();
         weatherJSON = G.fromJson(jsonString, WeatherJSON.class);
