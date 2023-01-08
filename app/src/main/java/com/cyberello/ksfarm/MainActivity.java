@@ -157,6 +157,12 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         if (iotJSON.name.equals(KSConstants.BED_ROOM_AIR_CON)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchAirCon)));
+            return;
+        }
+
+        if (iotJSON.name.equals(KSConstants.DESK_HATARI_FAN)) {
+
+            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchHatariFan)));
         }
     }
 

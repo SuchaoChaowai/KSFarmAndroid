@@ -22,4 +22,5 @@
     <string name="bed_room">ห้องนอน</string>
     <string name="desk">โต๊ะทำงาน</string>
     <string name="ks_farm_weather_label">สภาพอากาศ</string>
+    <string name="hatari_fan">พัดลม Hatari</string>
 </resources>
