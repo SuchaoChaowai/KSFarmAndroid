@@ -63,12 +63,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         String jsonDataString = KSFarmUtil.getLocalWeatherData(sharedPreferences);
 
-        if (!jsonDataString.isEmpty()) {
+        weatherJSON.setJsonString(jsonDataString);
 
-            weatherJSON.setJsonString(jsonDataString);
-
-            setSecondFloorBalconyTempData(weatherJSON);
-        }
+        setSecondFloorBalconyTempData(weatherJSON);
 
         KSFarmUtil.getIOTMetaJSON(MainActivity.this);
     }
@@ -183,9 +180,35 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         try {
 
-            TextView textView = findViewById(R.id.textViewTemp);
+            TextView textView = findViewById(R.id.textViewLastUpdate);
 
-            String textString = Math.round(weatherJSON.temperature()) + " °C";
+            String textString = "---";
+
+            if (weatherJSON.dt() == 0) {
+
+                textView.setText(textString);
+
+                textView = findViewById(R.id.textViewTemp);
+                textView.setText(textString);
+
+                textView = findViewById(R.id.textViewHumid);
+                textView.setText(textString);
+
+                textView = findViewById(R.id.textViewPressure);
+                textView.setText(textString);
+
+                return;
+            }
+
+            try {
+                textView.setText(KSFarmUtil.getServerDateTimeString(weatherJSON.dt()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            textView = findViewById(R.id.textViewTemp);
+
+            textString = Math.round(weatherJSON.temperature()) + " °C";
             textView.setText(textString);
 
             textView = findViewById(R.id.textViewHumid);
@@ -202,14 +225,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
             textString += " hPa";
             textView.setText(textString);
-
-            textView = findViewById(R.id.textViewLastUpdate);
-
-            try {
-                textView.setText(KSFarmUtil.getServerDateTimeString(weatherJSON.dt()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         } catch (NumberFormatException nex) {
             nex.printStackTrace();
         }
