@@ -12,6 +12,7 @@ public class KSConstants {
     public static final String OVER_HEAD_DESK_LAMP = "OVER_HEAD_DESK_LAMP";
     public static final String DESK_LAMP = "DESK_LAMP";
     public static final String STANDING_DESK_LAMP = "STANDING_DESK_LAMP";
+    public static final String DESK_HATARI_FAN = "DESK_HATARI_FAN";
     public static final String BED_SIDE_LAMP = "BED_SIDE_LAMP";
     public static final String DESK_TOP = "DESK_TOP";
     public static final String SECOND_FLOOR_BALCONY = "SECOND_FLOOR_BALCONY";
