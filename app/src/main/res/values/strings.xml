@@ -25,4 +25,6 @@
     <string name="hatari_fan">พัดลม Hatari</string>
     <string name="iot">IOT</string>
     <string name="longan_qount">นับต้นลำไย</string>
+    <string name="lat_lon">LatLon</string>
+    <string name="accuracy">Accuracy</string>
 </resources>
