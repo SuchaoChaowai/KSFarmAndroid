@@ -1,4 +1,4 @@
-package com.cyberello.ksfarm;
+package com.cyberello.ksfarm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.cyberello.ksfarm.R;
 import com.cyberello.ksfarm.data.KSConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.JSONDataWrapper;
