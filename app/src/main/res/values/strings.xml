@@ -23,4 +23,6 @@
     <string name="desk">โต๊ะทำงาน</string>
     <string name="ks_farm_weather_label">สภาพอากาศ</string>
     <string name="hatari_fan">พัดลม Hatari</string>
+    <string name="iot">IOT</string>
+    <string name="longan_qount">นับต้นลำไย</string>
 </resources>
