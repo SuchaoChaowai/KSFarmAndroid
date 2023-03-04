@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class KSFarmUtil {
@@ -31,6 +32,14 @@ public class KSFarmUtil {
         }
 
         return gson;
+    }
+
+    public static String getServerDateTimeString(long dateTime) throws ParseException {
+
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(dateTime*1000);
+
+        return CyberelloConstants.DATE_TIME_FORMAT.format(cal.getTime());
     }
 
     public static String getServerDateTimeString(String dateTimeString) throws ParseException {
@@ -51,6 +60,16 @@ public class KSFarmUtil {
     public static String getLocalIOTData(SharedPreferences sharedPreferences) {
 
         return sharedPreferences.getString(KSConstants.IOT_JSON_WRAPPER, "");
+    }
+
+    public static void setLocalWeatherData(String jsonDataString, SharedPreferences sharedPreferences) {
+
+        new Thread(() -> sharedPreferences.edit().putString(KSConstants.WEATHER_DATA, jsonDataString).apply()).start();
+    }
+
+    public static String getLocalWeatherData(SharedPreferences sharedPreferences) {
+
+        return sharedPreferences.getString(KSConstants.WEATHER_DATA, "");
     }
 
     public static JSONObject getJSONObject(String jsonDataString, String type) {
@@ -100,6 +119,8 @@ public class KSFarmUtil {
         IOTMetaJSON.IOTDevice device = getDevice(iotJSON.id);
 
         if (device == null) {
+
+            iotJSON.name = "";
             return;
         }
 
@@ -109,6 +130,7 @@ public class KSFarmUtil {
     public interface MetaDataListener {
 
         void metaDataReady();
+
         void metaDataEmpty();
     }
 }
