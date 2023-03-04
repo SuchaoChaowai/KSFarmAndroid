@@ -7,6 +7,153 @@
     tools:context=".activity.LonganQountActivity">
 
     <TextView
+        android:id="@+id/editQountLastUpdateTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/last_update"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editQountLastUpdateDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/last_update"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editQountLastUpdateTimeTextView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <EditText
+        android:id="@+id/editLonganQountTextEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/description_string"
+        android:inputType="textMultiLine"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/editQountNumberTotalEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editQountLastUpdateTimeTextView"
+        tools:ignore="Autofill,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+
+    <EditText
+        android:id="@+id/editQountNumberTotalEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:text="@string/zero"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editQountNumberFlowerEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <EditText
+        android:id="@+id/editQountNumberFlowerEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:text="@string/zero"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editQountNumberNonFlowerEditText"
+        app:layout_constraintEnd_toEndOf="@+id/plusButtonQountFlower"
+        app:layout_constraintStart_toStartOf="@+id/plusButtonQountFlower"
+        tools:ignore="LabelFor,VisualLintTextFieldSize" />
+
+    <EditText
+        android:id="@+id/editQountNumberNonFlowerEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:text="@string/zero"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/minusButtonEditQount"
+        app:layout_constraintEnd_toEndOf="@+id/plusButtonAddQountNonFlower"
+        app:layout_constraintStart_toStartOf="@+id/plusButtonAddQountNonFlower"
+        tools:ignore="LabelFor,VisualLintTextFieldSize" />
+
+
+    <ImageView
+        android:id="@+id/minusButtonEditQount2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/minusButtonEditQount"
+        app:layout_constraintEnd_toEndOf="@+id/plusButtonQountFlower"
+        app:srcCompat="@drawable/minus"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/minusButtonEditQount"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/plusButtonAddQountNonFlower"
+        app:layout_constraintStart_toStartOf="@+id/plusButtonAddQountNonFlower"
+        app:srcCompat="@drawable/minus"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/plusButtonAddQountNonFlower"
+        android:layout_width="168dp"
+        android:layout_height="168dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/plusButtonQountFlower"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/plus_brown"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/plusButtonQountFlower"
+        android:layout_width="168dp"
+        android:layout_height="168dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/hr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/plus"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <View
+        android:id="@+id/hr"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#4CAF50"
+        app:layout_constraintBottom_toTopOf="@+id/textViewLatLon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
         android:id="@+id/textViewLatLon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

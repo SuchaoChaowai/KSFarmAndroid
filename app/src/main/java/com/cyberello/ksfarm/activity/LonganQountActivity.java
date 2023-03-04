@@ -33,6 +33,8 @@ import com.google.android.gms.location.Priority;
 
 public class LonganQountActivity extends AppCompatActivity {
 
+    private Location location;
+
     private TextView textViewLatLon;
     private TextView textViewAccuracy;
 
@@ -80,7 +82,6 @@ public class LonganQountActivity extends AppCompatActivity {
         fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
                 .addOnSuccessListener(this, location -> {
                     setGPSLocation(location);
-                    showLocation(location);
                 });
 
         LocationCallback locationCallback = new LocationCallback() {
@@ -90,7 +91,6 @@ public class LonganQountActivity extends AppCompatActivity {
                 for (Location location : locationResult.getLocations()) {
 
                     setGPSLocation(location);
-                    showLocation(location);
                 }
             }
         };
@@ -161,11 +161,14 @@ public class LonganQountActivity extends AppCompatActivity {
 
     }
 
-    private void setGPSLocation(Location location) {
+    private void setGPSLocation(Location _location) {
+
+        location = _location;
+
+        showLocation();
     }
 
-
-    private void showLocation(Location location) {
+    private void showLocation() {
 
         String textString = KSFarmUtil.dfLatLon.format(location.getLatitude()) + ", " + KSFarmUtil.dfLatLon.format(location.getLongitude()) + ", Alt " + KSFarmUtil.dfAltitude.format(location.getAltitude()) + " m.";
 

@@ -27,4 +27,6 @@
     <string name="longan_qount">นับต้นลำไย</string>
     <string name="lat_lon">LatLon</string>
     <string name="accuracy">Accuracy</string>
+    <string name="zero">0</string>
+    <string name="description_string">รายละเอียด</string>
 </resources>
