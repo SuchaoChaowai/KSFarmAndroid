@@ -63,19 +63,24 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public void processWebServicePostDataResult(JSONObject response) {
+    public void processPostDataResult(JSONObject response) {
 
-        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
     }
 
     @Override
-    public void processWebServiceGetIOTDataResult(JSONObject response) {
+    public void processGetIOTDataResult(JSONObject response) {
 
         IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
 
         new Thread(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData)).start();
+    }
+
+    @Override
+    public void processGetWeatherDataResult(JSONObject response) {
+
+        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
     }
 
     @Override
@@ -90,9 +95,9 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
-    public void processWebServiceGetIOTMetaDataResult(JSONObject response) {
+    public void processGetIOTMetaDataResult(JSONObject response) {
 
-        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
+        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
     }
 
     private void setIOTData(IOTJSON iotJSON) {
