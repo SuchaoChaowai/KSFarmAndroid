@@ -1,9 +1,11 @@
 package com.cyberello.ksfarm.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,6 +17,9 @@ import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +37,6 @@ import java.text.ParseException;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
 
-    private GestureDetectorCompat mDetector;
-
     private SharedPreferences sharedPreferences;
 
     private OpenWeatherJSON weatherJSON;
@@ -43,19 +46,39 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyGestureListener myGestureListener = new MyGestureListener();
-
-        mDetector = new GestureDetectorCompat(this, myGestureListener);
-
         weatherJSON = new OpenWeatherJSON();
 
         sharedPreferences = this.getSharedPreferences(KSConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        this.mDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        super.onCreateOptionsMenu(menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.mainLonganQount) {
+
+            showLonganQountScreen();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void showLonganQountScreen() {
+
+        Intent intent = new Intent(getApplicationContext(), LonganQountActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -69,6 +92,11 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         setSecondFloorBalconyTempData(weatherJSON);
 
         KSFarmUtil.getIOTMetaJSON(MainActivity.this);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     public void processQRCodeString(String scannedText) {
