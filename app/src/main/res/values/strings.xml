@@ -31,4 +31,6 @@
     <string name="description_string">รายละเอียด</string>
     <string name="title_longan_qount">KS Farm: นับต้นลำไยออกดอก 2566</string>
     <string name="title_iot">KS Farm: IOT</string>
+    <string name="reset_zero">ล้างข้อมูล</string>
+    <string name="name">Name</string>
 </resources>

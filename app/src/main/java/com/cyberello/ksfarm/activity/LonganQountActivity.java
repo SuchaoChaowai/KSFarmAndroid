@@ -1,12 +1,5 @@
 package com.cyberello.ksfarm.activity;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +12,18 @@ import android.os.Looper;
 import android.os.Vibrator;
 import android.os.VibratorManager;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
@@ -44,6 +44,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private SharedPreferences sharedPreferences;
     private Location location;
 
+    private EditText editTextLonganQountName;
     private EditText editQountNumberNonFlowerEditText;
     private EditText editQountNumberFlowerEditText;
     private EditText editQountNumberTotalEditText;
@@ -85,6 +86,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
     private void setScreenComponents() {
 
+        editTextLonganQountName = findViewById(R.id.editTextLonganQountName);
         editQountNumberNonFlowerEditText = findViewById(R.id.editQountNumberNonFlowerEditText);
         editQountNumberNonFlowerEditText.setFocusable(false);
         editQountNumberFlowerEditText = findViewById(R.id.editQountNumberFlowerEditText);
@@ -101,6 +103,25 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         textViewAccuracy = findViewById(R.id.textViewAccuracy);
 
         textColor = textViewAccuracy.getCurrentTextColor();
+
+        editTextLonganQountName.setOnFocusChangeListener((view, hasFocus) -> {
+
+            if (!hasFocus) {
+
+                LonganQount qount = KSFarmMeta.longanQount();
+
+                if (qount.name.equals(editTextLonganQountName.getText().toString())) {
+
+                    return;
+                }
+
+                qount.name = editTextLonganQountName.getText().toString();
+
+                qount.event = "n";
+
+                saveLonganQount(qount);
+            }
+        });
 
         editLonganQountTextEditText.setOnFocusChangeListener((view, hasFocus) -> {
 
@@ -124,8 +145,6 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         ImageView plusButtonQountFlower = findViewById(R.id.plusButtonQountFlower);
 
         plusButtonQountFlower.setOnClickListener(v -> {
-
-            int count = KSFarmUtil.parseInt(editQountNumberFlowerEditText.getText().toString()) + 1;
 
             KSFarmUtil.beepPlus(vibrator);
 
@@ -163,8 +182,6 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         ImageView plusButtonAddQountNonFlower = findViewById(R.id.plusButtonAddQountNonFlower);
 
         plusButtonAddQountNonFlower.setOnClickListener(v -> {
-
-            int count = KSFarmUtil.parseInt(editQountNumberNonFlowerEditText.getText().toString()) + 1;
 
             KSFarmUtil.beepPlus(vibrator);
 
@@ -270,8 +287,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        //MenuInflater menuInflater = getMenuInflater();
-        //menuInflater.inflate(R.menu.longan_qount_menu, menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.longan_qount_menu, menu);
 
         super.onCreateOptionsMenu(menu);
 
@@ -282,14 +299,17 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        //showMainScreen();
-        return item.getItemId() == R.id.longanQountIOT;
-    }
+        if (item.getItemId() == R.id.longanQountResetZero) {
 
-    private void showMainScreen() {
+            new AlertDialog.Builder(LonganQountActivity.this)
+                    .setTitle("ล้างข้อมูลนับต้น?").setMessage("ล้างข้อมูลนับทั้งหมด").setPositiveButton("No", null)
+                    .setNegativeButton("Yes", (dialog, which) -> resetZero())
+                    .show();
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -337,6 +357,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
         LonganQount longanQount = KSFarmMeta.longanQount();
 
+        editTextLonganQountName.setText(longanQount.name);
         editQountNumberNonFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberNonFlower()));
         editQountNumberFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()));
         editQountNumberTotalEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberNonFlower() + longanQount.getNumberFlower()));
@@ -365,6 +386,15 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
     @Override
     public void saveLonganQountSuccess() {
+
+        showQount();
+    }
+
+    private void resetZero() {
+
+        KSFarmMeta.resetZero(location);
+
+        saveLonganQount(KSFarmMeta.longanQount());
 
         showQount();
     }

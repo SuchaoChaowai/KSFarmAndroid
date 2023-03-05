@@ -1,6 +1,7 @@
 package com.cyberello.ksfarm;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -70,6 +71,11 @@ public class KSFarmMeta {
     private static LonganQount getLonGanQount(String longanQountJSON) {
 
         return gson().fromJson(longanQountJSON, LonganQount.class);
+    }
+
+    public static void resetZero(Location location) {
+
+        longanQount().resetZero(location);
     }
 
     public interface KSFarmMetaListener {

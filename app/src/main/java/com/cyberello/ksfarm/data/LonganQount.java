@@ -126,4 +126,16 @@ public class LonganQount {
 
         setLastUpdateString();
     }
+
+    public void resetZero(Location location) {
+
+        numberNonFlower = 0;
+        numberFlower = 0;
+
+        event = "0";
+
+        setLocation(location);
+
+        setLastUpdateString();
+    }
 }
