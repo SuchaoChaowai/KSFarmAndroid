@@ -2,7 +2,6 @@ package com.cyberello.ksfarm.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.cyberello.ksfarm.R;
-import com.cyberello.ksfarm.data.KSConstants;
+import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.JSONDataWrapper;
 import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
@@ -34,6 +33,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
 
@@ -46,9 +46,13 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        showLonganQountScreen();
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_iot);
+
         weatherJSON = new OpenWeatherJSON();
 
-        sharedPreferences = this.getSharedPreferences(KSConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -156,41 +160,41 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
 
         KSFarmUtil.setIOTData(iotJSON);
 
-        if (iotJSON.name.equals(KSConstants.BED_SIDE_LAMP)) {
+        if (iotJSON.name.equals(KSFarmConstants.BED_SIDE_LAMP)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLamp)));
 
             return;
         }
 
-        if (iotJSON.name.equals(KSConstants.STANDING_DESK_LAMP)) {
+        if (iotJSON.name.equals(KSFarmConstants.STANDING_DESK_LAMP)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskLamp)));
 
             return;
         }
 
-        if (iotJSON.name.equals(KSConstants.DESK_LAMP)) {
+        if (iotJSON.name.equals(KSFarmConstants.DESK_LAMP)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLamp)));
 
             return;
         }
 
-        if (iotJSON.name.equals(KSConstants.OVER_HEAD_DESK_LAMP)) {
+        if (iotJSON.name.equals(KSFarmConstants.OVER_HEAD_DESK_LAMP)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadDeskLamp)));
 
             return;
         }
 
-        if (iotJSON.name.equals(KSConstants.BED_ROOM_AIR_CON)) {
+        if (iotJSON.name.equals(KSFarmConstants.BED_ROOM_AIR_CON)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchAirCon)));
             return;
         }
 
-        if (iotJSON.name.equals(KSConstants.DESK_HATARI_FAN)) {
+        if (iotJSON.name.equals(KSFarmConstants.DESK_HATARI_FAN)) {
 
             runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchHatariFan)));
         }

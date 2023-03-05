@@ -1,6 +1,6 @@
 package com.cyberello.ksfarm.data;
 
-public class KSConstants {
+public class KSFarmConstants {
 
     public static final String QR_CODE_URL = "https://ksfarm.co/qr/";
     public static final String IOT_JSON_WRAPPER = "iotJSONWrapper";
@@ -23,4 +23,5 @@ public class KSConstants {
     public static final String IOT_WEB_SERVICE_URL = "http://192.168.0.168:8080/KSFarm-Server/iotService";
     public static final String KS_FARM_WEB_SERVICE_URL = "http://192.168.0.168:8080/KSFarm-Server/ksFarmService";
     public static final String KS_FARM_IOT_META_URL = "http://192.168.0.168:8080/KSFarm-Server/iot-meta.json";
+    public static final String LONGAN_QOUNT_JSON = "longan_qount_json";
 }

@@ -82,7 +82,18 @@ public class LonganQount {
 
         numberFlower = numberFlower + 1;
 
-        event = "f";
+        event = "fa";
+
+        setLocation(location);
+
+        setLastUpdateString();
+    }
+
+    public void minusNumberFlower(Location location) {
+
+        numberFlower = numberFlower - 1;
+
+        event = "fm";
 
         setLocation(location);
 
@@ -98,7 +109,18 @@ public class LonganQount {
 
         numberNonFlower = numberNonFlower + 1;
 
-        event = "n";
+        event = "na";
+
+        setLocation(location);
+
+        setLastUpdateString();
+    }
+
+    public void minusNumberNonFlower(Location location) {
+
+        numberNonFlower = numberNonFlower - 1;
+
+        event = "nm";
 
         setLocation(location);
 

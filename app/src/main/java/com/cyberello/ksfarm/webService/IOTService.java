@@ -7,7 +7,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyberello.global.CyberelloConstants;
-import com.cyberello.ksfarm.data.KSConstants;
+import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 
 import org.json.JSONException;
@@ -21,7 +21,7 @@ public class IOTService {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,
-                        KSConstants.IOT_WEB_SERVICE_URL,
+                        KSFarmConstants.IOT_WEB_SERVICE_URL,
                         null,
                         response -> {
 
@@ -46,7 +46,7 @@ public class IOTService {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,
-                        KSConstants.KS_FARM_IOT_META_URL,
+                        KSFarmConstants.KS_FARM_IOT_META_URL,
                         null,
                         response -> {
 
@@ -76,7 +76,7 @@ public class IOTService {
 
         JSONObject jsonObject = KSFarmUtil.getJSONObject(jsonDataString, type);
 
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, KSConstants.KS_FARM_WEB_SERVICE_URL, jsonObject,
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, KSFarmConstants.KS_FARM_WEB_SERVICE_URL, jsonObject,
                 response -> {
 
                     try {
@@ -125,7 +125,7 @@ public class IOTService {
 
         JSONObject jsonObject = KSFarmUtil.getJSONObject("", "getWeatherInfo()");
 
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, KSConstants.KS_FARM_WEB_SERVICE_URL, jsonObject,
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, KSFarmConstants.KS_FARM_WEB_SERVICE_URL, jsonObject,
                 response -> {
 
                     try {

@@ -11,7 +11,7 @@ import android.os.Vibrator;
 import android.widget.Toast;
 
 import com.cyberello.global.CyberelloConstants;
-import com.cyberello.ksfarm.data.KSConstants;
+import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.IOTMetaJSON;
 import com.google.gson.Gson;
@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class KSFarmUtil {
 
     private static Gson gson;
     private static IOTMetaJSON iotMetaJSON;
+    private static final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
     private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-DD'T'HH:mm:ss.SSS'Z'";
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     private static final String TIME_FORMAT = "kk:mm:ss";
@@ -110,22 +112,22 @@ public class KSFarmUtil {
 
     public static void setLocalIOTData(String iotJSONWrapperString, SharedPreferences sharedPreferences) {
 
-        new Thread(() -> sharedPreferences.edit().putString(KSConstants.IOT_JSON_WRAPPER, iotJSONWrapperString).apply()).start();
+        new Thread(() -> sharedPreferences.edit().putString(KSFarmConstants.IOT_JSON_WRAPPER, iotJSONWrapperString).apply()).start();
     }
 
     public static String getLocalIOTData(SharedPreferences sharedPreferences) {
 
-        return sharedPreferences.getString(KSConstants.IOT_JSON_WRAPPER, "");
+        return sharedPreferences.getString(KSFarmConstants.IOT_JSON_WRAPPER, "");
     }
 
     public static void setLocalWeatherData(String jsonDataString, SharedPreferences sharedPreferences) {
 
-        new Thread(() -> sharedPreferences.edit().putString(KSConstants.WEATHER_DATA, jsonDataString).apply()).start();
+        new Thread(() -> sharedPreferences.edit().putString(KSFarmConstants.WEATHER_DATA, jsonDataString).apply()).start();
     }
 
     public static String getLocalWeatherData(SharedPreferences sharedPreferences) {
 
-        return sharedPreferences.getString(KSConstants.WEATHER_DATA, "");
+        return sharedPreferences.getString(KSFarmConstants.WEATHER_DATA, "");
     }
 
     public static JSONObject getJSONObject(String jsonDataString, String type) {
@@ -181,6 +183,29 @@ public class KSFarmUtil {
         }
 
         iotJSON.name = device.name;
+    }
+
+    public static int parseInt(String number) {
+
+        if (null == number || number.isEmpty()) return 0;
+
+        try {
+            return Objects.requireNonNull(numberFormatter.parse(number)).intValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public static String getCommaNumberFormat(int number) {
+
+        if (number < 1000) {
+            return Integer.toString(number);
+        }
+
+        numberFormatter.applyPattern("#,###");
+        return numberFormatter.format(number);
     }
 
     public interface MetaDataListener {

@@ -29,4 +29,6 @@
     <string name="accuracy">Accuracy</string>
     <string name="zero">0</string>
     <string name="description_string">รายละเอียด</string>
+    <string name="title_longan_qount">KS Farm: นับต้นลำไยออกดอก 2566</string>
+    <string name="title_iot">KS Farm: IOT</string>
 </resources>
