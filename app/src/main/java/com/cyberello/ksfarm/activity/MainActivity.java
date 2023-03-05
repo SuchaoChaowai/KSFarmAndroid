@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
 import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.json.IOTJSON;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         weatherJSON = new OpenWeatherJSON();
 
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+        KSFarmMeta.init(MainActivity.this, sharedPreferences);
     }
 
     @Override

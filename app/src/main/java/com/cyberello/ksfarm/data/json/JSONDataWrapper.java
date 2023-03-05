@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class JSONDataWrapper {
 
     @SerializedName(value = "jsonData")
-    private String jsonData;
+    public String jsonData;
 
     @SerializedName(value = "type")
-    private String type;
+    public String type;
 
     public String getJsonData() {
 

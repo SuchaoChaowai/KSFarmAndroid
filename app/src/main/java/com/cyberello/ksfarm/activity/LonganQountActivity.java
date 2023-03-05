@@ -2,7 +2,6 @@ package com.cyberello.ksfarm.activity;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -25,11 +24,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.cyberello.global.CyberelloConstants;
 import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
 import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.LonganQount;
 import com.cyberello.ksfarm.util.KSFarmUtil;
+import com.cyberello.ksfarm.webService.KSFarmWebService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -37,9 +38,10 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 
+import org.json.JSONObject;
 import java.util.Objects;
 
-public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta.KSFarmMetaListener {
+public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta.KSFarmMetaListener, KSFarmWebService.KSFarmWebServiceResultListener {
 
     private SharedPreferences sharedPreferences;
     private Location location;
@@ -79,7 +81,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     public void onResume() {
         super.onResume();
 
-        KSFarmMeta.init(sharedPreferences);
+        KSFarmMeta.getLonganQountDataFromWebService(LonganQountActivity.this, LonganQountActivity.this);
 
         showQount();
     }
@@ -397,5 +399,46 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         saveLonganQount(KSFarmMeta.longanQount());
 
         showQount();
+    }
+
+    @Override
+    public void processWebServiceResult(JSONObject response) {
+
+        LonganQount longanQount = KSFarmUtil.getLonganQountFromJSONDataWrapper(response);
+
+        if (longanQount.statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
+
+            KSFarmMeta.loadLocalLonganQount(sharedPreferences);
+
+            if (KSFarmMeta.longanQount().statusCode.equals(CyberelloConstants.STATUS_CODE_ACTIVE)) {
+
+                KSFarmMeta.setLonganQountDataToWebService(LonganQountActivity.this, null);
+            }
+
+            showQount();
+            return;
+        }
+
+        if (longanQount.equals(KSFarmMeta.longanQount())) {
+
+            return;
+        }
+
+        if (KSFarmMeta.longanQount() == null || KSFarmMeta.longanQount().lastUpdate.before(longanQount.lastUpdate) || KSFarmMeta.longanQount().statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
+
+            KSFarmMeta.saveLonganQount(KSFarmMeta.longanQount(), sharedPreferences, null);
+
+            showQount();
+        }
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+
+    }
+
+    @Override
+    public void onErrorResponse(String status, String errorMessage) {
+
     }
 }

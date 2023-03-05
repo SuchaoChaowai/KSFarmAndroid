@@ -47,6 +47,7 @@ public class LonganQount {
         lastUpdateDateString = KSFarmUtil.getDateString(currentDate);
         lastUpdateTimeString = KSFarmUtil.getTimeString(currentDate);
         lastUpdateDateTimeString = KSFarmUtil.getServerDateTimeString(currentDate);
+        statusCode = CyberelloConstants.STATUS_CODE_ACTIVE;
     }
 
     public void setLocation(Location location) {

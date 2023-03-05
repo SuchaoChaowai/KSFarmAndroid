@@ -8,12 +8,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cyberello.global.CyberelloConstants;
+import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.data.KSFarmConstants;
+import com.cyberello.ksfarm.data.LonganQount;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.IOTMetaJSON;
+import com.cyberello.ksfarm.data.json.JSONDataWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -206,6 +210,22 @@ public class KSFarmUtil {
 
         numberFormatter.applyPattern("#,###");
         return numberFormatter.format(number);
+    }
+
+    public static void log(String tag, String message) {
+
+        if (null == tag || null == message) {
+            return;
+        }
+
+        new Thread(() -> Log.d(KSFarmConstants.LOG_TAG + ": " + tag, message)).start();
+    }
+
+    public static LonganQount getLonganQountFromJSONDataWrapper(JSONObject response) {
+
+        JSONDataWrapper jsonDataWrapper = KSFarmMeta.gson().fromJson(String.valueOf(response), JSONDataWrapper.class);
+
+        return KSFarmMeta.gson().fromJson(jsonDataWrapper.jsonData, LonganQount.class);
     }
 
     public interface MetaDataListener {

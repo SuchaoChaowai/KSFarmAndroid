@@ -24,4 +24,8 @@ public class KSFarmConstants {
     public static final String KS_FARM_WEB_SERVICE_URL = "http://192.168.0.168:8080/KSFarm-Server/ksFarmService";
     public static final String KS_FARM_IOT_META_URL = "http://192.168.0.168:8080/KSFarm-Server/iot-meta.json";
     public static final String LONGAN_QOUNT_JSON = "longan_qount_json";
+    public static final String LOG_TAG = "ksFarmAppLog";
+    public static final String TYPE_WEB_SERVICE_GET = "getLonganQount()";
+    public static final String TYPE_WEB_SERVICE_SET = "setLonganQount()";
+    public static String SERVER_URL;
 }
