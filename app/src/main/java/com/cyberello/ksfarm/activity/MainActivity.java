@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processGetWeatherDataResult(JSONObject response) {
 
-<<<<<<<< HEAD:app/src/main/java/com/cyberello/ksfarm/activity/MainActivity.java
         JSONDataWrapper jsonDataWrapper = KSFarmUtil.gson().fromJson(response.toString(), JSONDataWrapper.class);
 
         String jsonDataString = jsonDataWrapper.getJsonData();
@@ -132,9 +131,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         weatherJSON.setJsonString(jsonDataString);
 
         setSecondFloorBalconyTempData(weatherJSON);
-========
+
         KSFarmUtil.setIOTMetaData(response, MainActivity.this);
->>>>>>>> origin/main:app/src/main/java/com/cyberello/ksfarm/MainActivity.java
     }
 
     @Override
