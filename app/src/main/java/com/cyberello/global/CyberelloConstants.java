@@ -5,11 +5,16 @@ import java.util.Locale;
 
 public class CyberelloConstants {
 
-    public static final String DATE_TIME_FORMAT_STRING = "dd/MM/yyyy kk:mm:ss";
+    public static final String DATE_TIME_FORMAT_STRING = "dd/MM/yyyy HH:mm:ss";
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat(DATE_TIME_FORMAT_STRING, Locale.ENGLISH);
 
-    public static final String SERVER_DATE_TIME_FORMAT_STRING = "yyyy-MM-dd'[T]'HH:mm:ss.SSS'[Z]'";
-    public static final SimpleDateFormat SERVER_DATE_TIME_FORMAT = new SimpleDateFormat(SERVER_DATE_TIME_FORMAT_STRING, Locale.ENGLISH);
+    public static final String SERVER_DATE_TIME_FORMAT_STRING = "yyyy-MM-dd'[T]'HH:mm:ss.SSSZ";
+    public static final SimpleDateFormat SERVER_DATE_TIME_FORMAT = new SimpleDateFormat(SERVER_DATE_TIME_FORMAT_STRING, Locale.US);
+
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final String TIME_FORMAT = "HH:mm:ss";
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+    public static final SimpleDateFormat SIMPLE_TIME_FORMAT = new SimpleDateFormat(TIME_FORMAT, Locale.US);
 
     public static final String STATUS_CODE_NEW = "new";
 

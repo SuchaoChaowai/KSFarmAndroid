@@ -39,12 +39,6 @@ public class KSFarmUtil {
     private static Gson gson;
     private static IOTMetaJSON iotMetaJSON;
     private static final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-    private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-DD'T'HH:mm:ss.SSS'Z'";
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
-    private static final String TIME_FORMAT = "kk:mm:ss";
-    public static final SimpleDateFormat simpleServerDateTimeFormat = new SimpleDateFormat(SERVER_DATE_TIME_FORMAT, Locale.US);
-    public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.US);
-    public static final SimpleDateFormat simpleTimeFormat = new SimpleDateFormat(TIME_FORMAT, Locale.US);
     private static final ToneGenerator toneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
     public static final DecimalFormat dfLatLon = new DecimalFormat("0.00000");
     public static final DecimalFormat dfAltitude = new DecimalFormat("0");
@@ -69,17 +63,17 @@ public class KSFarmUtil {
 
     public static String getServerDateTimeString(Date date) {
 
-        return simpleServerDateTimeFormat.format(date);
+        return CyberelloConstants.SERVER_DATE_TIME_FORMAT.format(date);
     }
 
     public static String getDateString(Date date) {
 
-        return simpleDateFormat.format(date);
+        return CyberelloConstants.SIMPLE_DATE_FORMAT.format(date);
     }
 
     public static String getTimeString(Date date) {
 
-        return simpleTimeFormat.format(date);
+        return CyberelloConstants.SIMPLE_TIME_FORMAT.format(date);
     }
 
     public static void beepPlus(Vibrator v) {

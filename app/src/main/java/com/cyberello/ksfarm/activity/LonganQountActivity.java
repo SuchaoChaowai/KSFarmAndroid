@@ -304,9 +304,12 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
         if (item.getItemId() == R.id.longanQountResetZero) {
 
+            if (KSFarmMeta.longanQount().getNumberFlower() == 0 && KSFarmMeta.longanQount().getNumberNonFlower() == 0)
+                return true;
+
             new AlertDialog.Builder(LonganQountActivity.this)
-                    .setTitle("ล้างข้อมูลนับต้น?").setMessage("ล้างข้อมูลนับทั้งหมด").setPositiveButton("No", null)
-                    .setNegativeButton("Yes", (dialog, which) -> resetZero())
+                    .setTitle("ล้างข้อมูลนับต้น?").setMessage("ล้างข้อมูลนับทั้งหมด").setPositiveButton("ไม่", null)
+                    .setNegativeButton("ล้างข้อมูล", (dialog, which) -> resetZero())
                     .show();
 
             return true;
@@ -415,6 +418,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             if (KSFarmMeta.longanQount().statusCode.equals(CyberelloConstants.STATUS_CODE_ACTIVE)) {
 
+                KSFarmMeta.longanQount().lastUpdate = null;
+
                 KSFarmMeta.setLonganQountDataToWebService(LonganQountActivity.this, null);
             }
 
@@ -422,26 +427,22 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
             return;
         }
 
-        if (longanQount.equals(KSFarmMeta.longanQount())) {
+        KSFarmMeta.saveLonganQount(longanQount, sharedPreferences, null);
 
-            return;
-        }
-
-        if (KSFarmMeta.longanQount() == null || KSFarmMeta.longanQount().lastUpdate == null || KSFarmMeta.longanQount().lastUpdate.before(longanQount.lastUpdate) || KSFarmMeta.longanQount().statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
-
-            KSFarmMeta.saveLonganQount(longanQount, sharedPreferences, null);
-
-            showQount();
-        }
+        showQount();
     }
 
     @Override
     public void onErrorResponse(String errorMessage) {
 
+        KSFarmMeta.loadLocalLonganQount(sharedPreferences);
+        showQount();
     }
 
     @Override
     public void onErrorResponse(String status, String errorMessage) {
 
+        KSFarmMeta.loadLocalLonganQount(sharedPreferences);
+        showQount();
     }
 }

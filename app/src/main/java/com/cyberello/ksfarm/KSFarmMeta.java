@@ -32,7 +32,7 @@ public class KSFarmMeta {
 
         user = new User("ksfarm1998@gmail.com", "Google", "", "");
 
-        loadLocalLonganQount(sharedPreferences);
+        longanQount = loadLocalLonganQount(sharedPreferences);
 
         if (activity.getString(R.string.environment).equals(CyberelloConstants.PROD_STRING)) {
 
@@ -127,19 +127,20 @@ public class KSFarmMeta {
         longanQount = null;
     }
 
-    public static void loadLocalLonganQount(SharedPreferences sharedPreferences) {
+    public static LonganQount loadLocalLonganQount(SharedPreferences sharedPreferences) {
 
-        LonganQount qount;
+        LonganQount qount = new LonganQount();
 
         String qountJSON = sharedPreferences.getString(KSFarmConstants.LONGAN_QOUNT_JSON, "");
 
         if (!qountJSON.isEmpty()) {
 
             qount = gson().fromJson(qountJSON, LonganQount.class);
-
-            qount.email = user.email;
-            longanQount = qount;
         }
+
+        qount.email = user.email;
+
+        return qount;
     }
 
     public static void setLonganQountDataToWebService(Activity activity, KSFarmWebService.KSFarmWebServiceResultListener listener) {
