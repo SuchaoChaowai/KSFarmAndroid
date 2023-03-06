@@ -7,7 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.VibratorManager;
 import android.view.Menu;
@@ -187,6 +189,11 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         plusButtonAddQountNonFlower.setOnClickListener(v -> {
 
             KSFarmUtil.beepPlus(vibrator);
+
+            Handler handler = new Handler(Looper.myLooper());
+
+            handler.postDelayed(() -> KSFarmUtil.beepPlus(vibrator),
+                    200);
 
             KSFarmMeta.longanQount().addNumberNonFlower(location);
 
