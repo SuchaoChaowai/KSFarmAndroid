@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class LonganQount {
 
+    public String email;
     public String lastUpdateDateTimeString;
     public Date lastUpdate;
     public String createDateTimeString;
@@ -48,6 +49,8 @@ public class LonganQount {
         lastUpdateTimeString = KSFarmUtil.getTimeString(currentDate);
         lastUpdateDateTimeString = KSFarmUtil.getServerDateTimeString(currentDate);
         statusCode = CyberelloConstants.STATUS_CODE_ACTIVE;
+
+        lastUpdate = null;
     }
 
     public void setLocation(Location location) {

@@ -30,9 +30,9 @@ public class KSFarmMeta {
 
     public static void init(Activity activity, SharedPreferences sharedPreferences) {
 
-        loadLocalLonganQount(sharedPreferences);
-
         user = new User("ksfarm1998@gmail.com", "Google", "", "");
+
+        loadLocalLonganQount(sharedPreferences);
 
         if (activity.getString(R.string.environment).equals(CyberelloConstants.PROD_STRING)) {
 
@@ -57,6 +57,7 @@ public class KSFarmMeta {
 
         if (longanQount == null) {
             longanQount = new LonganQount();
+            longanQount.email = user.email;
         }
 
         return longanQount;
@@ -135,6 +136,8 @@ public class KSFarmMeta {
         if (!qountJSON.isEmpty()) {
 
             qount = gson().fromJson(qountJSON, LonganQount.class);
+
+            qount.email = user.email;
             longanQount = qount;
         }
     }

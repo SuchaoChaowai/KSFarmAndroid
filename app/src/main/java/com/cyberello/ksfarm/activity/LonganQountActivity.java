@@ -39,6 +39,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 
 import org.json.JSONObject;
+
 import java.util.Objects;
 
 public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta.KSFarmMetaListener, KSFarmWebService.KSFarmWebServiceResultListener {
@@ -390,6 +391,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     public void saveLonganQountSuccess() {
 
         showQount();
+
+        KSFarmMeta.setLonganQountDataToWebService(LonganQountActivity.this, null);
     }
 
     private void resetZero() {
@@ -406,7 +409,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
         LonganQount longanQount = KSFarmUtil.getLonganQountFromJSONDataWrapper(response);
 
-        if (longanQount.statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
+        if (longanQount == null || longanQount.statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
 
             KSFarmMeta.loadLocalLonganQount(sharedPreferences);
 
@@ -424,9 +427,9 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
             return;
         }
 
-        if (KSFarmMeta.longanQount() == null || KSFarmMeta.longanQount().lastUpdate.before(longanQount.lastUpdate) || KSFarmMeta.longanQount().statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
+        if (KSFarmMeta.longanQount() == null || KSFarmMeta.longanQount().lastUpdate == null || KSFarmMeta.longanQount().lastUpdate.before(longanQount.lastUpdate) || KSFarmMeta.longanQount().statusCode.equals(CyberelloConstants.STATUS_CODE_NEW)) {
 
-            KSFarmMeta.saveLonganQount(KSFarmMeta.longanQount(), sharedPreferences, null);
+            KSFarmMeta.saveLonganQount(longanQount, sharedPreferences, null);
 
             showQount();
         }

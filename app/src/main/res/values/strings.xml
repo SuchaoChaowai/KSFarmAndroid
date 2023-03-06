@@ -2,7 +2,7 @@
     <string name="app_name">KS Farm</string>
     <string name="environment">dev</string>
     <string name="prod_server_url">https://syncqount.com</string>
-    <string name="dev_server_url">http://192.168.0.112:8080/SyncQountServer</string>
+    <string name="dev_server_url">http://192.168.0.138:8080/SyncQountServer</string>
     <string name="scan_qr">Scan QR</string>
     <string name="iot_id">IOT ID</string>
     <string name="ip_address">IP Address</string>
