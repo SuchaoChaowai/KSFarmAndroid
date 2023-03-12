@@ -190,11 +190,6 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             KSFarmUtil.beepPlus(vibrator);
 
-            Handler handler = new Handler(Looper.myLooper());
-
-            handler.postDelayed(() -> KSFarmUtil.beepPlus(vibrator),
-                    200);
-
             KSFarmMeta.longanQount().addNumberNonFlower(location);
 
             saveLonganQount(KSFarmMeta.longanQount());
