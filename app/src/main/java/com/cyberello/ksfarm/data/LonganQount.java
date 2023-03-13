@@ -97,7 +97,7 @@ public class LonganQount {
 
         numberFlower = numberFlower - 1;
 
-        event = "fm";
+        event = "fr";
 
         setLocation(location);
 
@@ -124,7 +124,7 @@ public class LonganQount {
 
         numberNonFlower = numberNonFlower - 1;
 
-        event = "nm";
+        event = "nr";
 
         setLocation(location);
 
