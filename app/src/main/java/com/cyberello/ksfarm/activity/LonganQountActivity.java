@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Vibrator;
 import android.os.VibratorManager;
+import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ import com.google.android.gms.location.Priority;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta.KSFarmMetaListener, KSFarmWebService.KSFarmWebServiceResultListener {
@@ -59,6 +61,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private TextView textViewAccuracy;
 
     private Vibrator vibrator;
+    private TextToSpeech textToSpeech;
     int textColor;
 
     @Override
@@ -76,6 +79,14 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         setScreenComponents();
 
         setGPS();
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(Locale.US);
+            }
+        });
+
+        KSFarmUtil.hideSoftKeyboard(LonganQountActivity.this);
     }
 
     @Override
@@ -151,6 +162,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             KSFarmUtil.beepPlus(vibrator);
 
+            KSFarmUtil.speak(textToSpeech, KSFarmConstants.FLOWER_ADDED);
+
             KSFarmMeta.longanQount().addNumberFlower(location);
 
             saveLonganQount(KSFarmMeta.longanQount());
@@ -187,6 +200,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         plusButtonAddQountNonFlower.setOnClickListener(v -> {
 
             KSFarmUtil.beepPlus(vibrator);
+
+            KSFarmUtil.speak(textToSpeech, KSFarmConstants.NO_FLOWER_ADDED);
 
             KSFarmMeta.longanQount().addNumberNonFlower(location);
 

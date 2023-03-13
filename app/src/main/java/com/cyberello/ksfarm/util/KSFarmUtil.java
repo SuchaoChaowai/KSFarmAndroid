@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cyberello.global.CyberelloConstants;
@@ -28,7 +30,6 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -85,22 +86,11 @@ public class KSFarmUtil {
         v.vibrate(VibrationEffect.createOneShot(110L, VibrationEffect.DEFAULT_AMPLITUDE));
     }
 
-    public static void beepMinus(Vibrator v) {
-
-        toneGen.startTone(ToneGenerator.TONE_PROP_BEEP, 250);
+    public static void speak(TextToSpeech textToSpeech, String text) {
 
         Handler handler = new Handler(Looper.myLooper());
 
-        handler.postDelayed(() -> toneGen.startTone(ToneGenerator.TONE_PROP_BEEP, 250), 200);
-
-        if (v == null) return;
-
-        v.vibrate(VibrationEffect.createOneShot(110L, VibrationEffect.DEFAULT_AMPLITUDE));
-
-        Handler handlerVibrate = new Handler(Looper.myLooper());
-
-        handlerVibrate.postDelayed(() -> v.vibrate(VibrationEffect.createOneShot(110L, VibrationEffect.DEFAULT_AMPLITUDE)),
-                200);
+        handler.postDelayed(() -> textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null), 100);
     }
 
     public static void toast(Activity activity, String toastText) {
@@ -220,6 +210,13 @@ public class KSFarmUtil {
         JSONDataWrapper jsonDataWrapper = KSFarmMeta.gson().fromJson(String.valueOf(response), JSONDataWrapper.class);
 
         return KSFarmMeta.gson().fromJson(jsonDataWrapper.jsonData, LonganQount.class);
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+
+        activity.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
     }
 
     public interface MetaDataListener {

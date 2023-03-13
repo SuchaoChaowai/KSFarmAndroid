@@ -27,5 +27,7 @@ public class KSFarmConstants {
     public static final String LOG_TAG = "ksFarmAppLog";
     public static final String TYPE_WEB_SERVICE_GET = "getLonganQount()";
     public static final String TYPE_WEB_SERVICE_SET = "setLonganQount()";
+    public static final String FLOWER_ADDED = "Flower added";
+    public static final String NO_FLOWER_ADDED = "No flower added";
     public static String SERVER_URL;
 }
