@@ -36,26 +36,9 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editQountNumberTotalEditText"
-        app:layout_constraintEnd_toStartOf="@+id/editQountNumberTotalEditTextPercentage3"
+        app:layout_constraintEnd_toEndOf="@+id/editQountNumberTotalEditText"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <EditText
-        android:id="@+id/editQountNumberTotalEditTextPercentage3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:text="@string/zero"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/editQountNumberTotalEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/editQountNumberFlowerEditText"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck,DuplicateClickableBoundsCheck,VisualLintOverlap" />
 
     <EditText
         android:id="@+id/editTextLonganQountName"
@@ -83,7 +66,7 @@
         android:minHeight="48dp"
         android:text="@string/zero"
         android:textAlignment="viewStart"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editQountNumberNonFlowerEditText"
         app:layout_constraintEnd_toEndOf="@+id/editQountNumberNonFlowerEditText"
@@ -162,6 +145,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/editQountNumberTotalEditText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editQountNumberFlowerEditText"
         tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
