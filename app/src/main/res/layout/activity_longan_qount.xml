@@ -7,6 +7,57 @@
     tools:context=".activity.LonganQountActivity">
 
     <EditText
+        android:id="@+id/editQountTotalSellEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editQountrTotalProductionEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editQountNumberFlowerEditText"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <EditText
+        android:id="@+id/editQountrTotalProductionEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editQountNumberTotalEditText"
+        app:layout_constraintEnd_toStartOf="@+id/editQountNumberTotalEditTextPercentage3"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <EditText
+        android:id="@+id/editQountNumberTotalEditTextPercentage3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editQountNumberTotalEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editQountNumberFlowerEditText"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck,DuplicateClickableBoundsCheck,VisualLintOverlap" />
+
+    <EditText
         android:id="@+id/editTextLonganQountName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,12 +80,31 @@
         android:layout_marginStart="16dp"
         android:importantForAutofill="no"
         android:inputType="number"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editQountNumberNonFlowerEditText"
+        app:layout_constraintEnd_toEndOf="@+id/editQountNumberNonFlowerEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <EditText
+        android:id="@+id/editQountLapNonFlowerNumberlEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
         android:text="@string/zero"
         android:textAlignment="viewStart"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editQountNumberNonFlowerEditText"
-        app:layout_constraintEnd_toEndOf="@+id/editQountNumberNonFlowerEditText"
+        app:layout_constraintBottom_toTopOf="@+id/minusButtonNonFlowerLonganQount"
+        app:layout_constraintEnd_toEndOf="@+id/plusButtonAddQountNonFlower"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
@@ -70,7 +140,7 @@
         android:hint="@string/description_string"
         android:inputType="textMultiLine"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/editQountNumberTotalEditText"
+        app:layout_constraintBottom_toTopOf="@+id/editQountrTotalProductionEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,12 +155,30 @@
         android:layout_marginEnd="16dp"
         android:importantForAutofill="no"
         android:inputType="number"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editQountNumberTotalEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editQountNumberFlowerEditText"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <EditText
+        android:id="@+id/editQountLapNumberFlowerEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
         android:text="@string/zero"
         android:textAlignment="textEnd"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editQountNumberFlowerEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/editQountLapNonFlowerNumberlEditText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editQountNumberFlowerEditText"
         tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
@@ -104,10 +192,11 @@
         android:inputType="number"
         android:text="@string/zero"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/editQountNumberNonFlowerEditText"
+        app:layout_constraintBottom_toTopOf="@+id/editQountLapNonFlowerNumberlEditText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/plusButtonQountFlower"
         tools:ignore="LabelFor,VisualLintTextFieldSize" />
 
@@ -116,15 +205,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
         android:importantForAutofill="no"
         android:inputType="number"
         android:text="@string/zero"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/minusButtonNonFlowerLonganQount"
-        app:layout_constraintEnd_toEndOf="@+id/plusButtonAddQountNonFlower"
+        app:layout_constraintBottom_toTopOf="@+id/editQountLapNonFlowerNumberlEditText"
+        app:layout_constraintEnd_toEndOf="@+id/editQountLapNonFlowerNumberlEditText"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="LabelFor,VisualLintTextFieldSize" />
 
@@ -152,8 +240,8 @@
 
     <ImageView
         android:id="@+id/plusButtonAddQountNonFlower"
-        android:layout_width="168dp"
-        android:layout_height="168dp"
+        android:layout_width="190dp"
+        android:layout_height="186dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/plusButtonQountFlower"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,8 +250,8 @@
 
     <ImageView
         android:id="@+id/plusButtonQountFlower"
-        android:layout_width="168dp"
-        android:layout_height="168dp"
+        android:layout_width="190dp"
+        android:layout_height="186dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/hr"
