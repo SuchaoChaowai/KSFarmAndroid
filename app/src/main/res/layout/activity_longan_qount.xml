@@ -157,7 +157,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/plusButtonQountFlower"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/plus_brown"
+        app:srcCompat="@drawable/black_yellow"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <ImageView
@@ -168,7 +168,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/hr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/plus"
+        app:srcCompat="@drawable/red_white"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <View
