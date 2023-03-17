@@ -50,19 +50,27 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private Location location;
 
     private EditText editTextLonganQountName;
-    private EditText editQountNumberNonFlowerEditText;
-    private EditText editQountNumberFlowerEditText;
-    private EditText editQountNumberTotalEditText;
-    private EditText editQountNumberTotalEditTextPercentage;
     private EditText editLonganQountTextEditText;
-    private TextView editQountLastUpdateDateTextView;
-    private TextView editQountLastUpdateTimeTextView;
+    private TextView editQountNumberNonFlowerEditText;
+    private TextView textViewQountNumberFlowerEditText;
+    private TextView textViewQountNumberTotalEditText;
+    private TextView textViewQountNumberTotalEditTextPercentage;
+    private TextView textViewQountLastUpdateDateTextView;
+    private TextView textViewQountLastUpdateTimeTextView;
     private TextView textViewLatLon;
     private TextView textViewAccuracy;
 
+    private TextView textViewQountTotalProductionEditText;
+    private TextView textViewQountTotalSellEditText;
+    private TextView textViewQountLapNonFlowerNumberEditText;
+    private TextView textViewQountLapNumberFlowerEditText;
+
     private Vibrator vibrator;
     private TextToSpeech textToSpeech;
-    int textColor;
+    private int textColor;
+
+    private int lapFlowerQount = 0;
+    private int lapNonFlowerQount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,20 +109,25 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private void setScreenComponents() {
 
         editTextLonganQountName = findViewById(R.id.editTextLonganQountName);
-        editQountNumberNonFlowerEditText = findViewById(R.id.editQountNumberNonFlowerEditText);
+        editQountNumberNonFlowerEditText = findViewById(R.id.textViewQountNumberNonFlowerEditText);
         editQountNumberNonFlowerEditText.setFocusable(false);
-        editQountNumberFlowerEditText = findViewById(R.id.editQountNumberFlowerEditText);
-        editQountNumberFlowerEditText.setFocusable(false);
-        editQountNumberTotalEditText = findViewById(R.id.editQountNumberTotalEditText);
-        editQountNumberTotalEditTextPercentage = findViewById(R.id.editQountNumberTotalEditTextPercentage);
-        editQountNumberTotalEditTextPercentage.setFocusable(false);
-        editQountNumberTotalEditText.setFocusable(false);
+        textViewQountNumberFlowerEditText = findViewById(R.id.textViewQountNumberFlowerEditText);
+        textViewQountNumberFlowerEditText.setFocusable(false);
+        textViewQountNumberTotalEditText = findViewById(R.id.textViewQountNumberTotalEditText);
+        textViewQountNumberTotalEditTextPercentage = findViewById(R.id.textViewQountNumberTotalEditTextPercentage);
+        textViewQountNumberTotalEditTextPercentage.setFocusable(false);
+        textViewQountNumberTotalEditText.setFocusable(false);
         editLonganQountTextEditText = findViewById(R.id.editLonganQountTextEditText);
-        editQountLastUpdateDateTextView = findViewById(R.id.editQountLastUpdateDateTextView);
-        editQountLastUpdateTimeTextView = findViewById(R.id.editQountLastUpdateTimeTextView);
+        textViewQountLastUpdateDateTextView = findViewById(R.id.textViewQountLastUpdateDateTextView);
+        textViewQountLastUpdateTimeTextView = findViewById(R.id.textViewQountLastUpdateTimeTextView);
 
         textViewLatLon = findViewById(R.id.textViewLatLon);
         textViewAccuracy = findViewById(R.id.textViewAccuracy);
+
+        textViewQountTotalProductionEditText = findViewById(R.id.textViewQountTotalProductionEditText);
+        textViewQountTotalSellEditText = findViewById(R.id.textViewQountTotalSellEditText);
+        textViewQountLapNonFlowerNumberEditText = findViewById(R.id.textViewQountLapNonFlowerNumberEditText);
+        textViewQountLapNumberFlowerEditText = findViewById(R.id.textViewQountLapNumberFlowerEditText);
 
         textColor = textViewAccuracy.getCurrentTextColor();
 
@@ -167,13 +180,15 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
             KSFarmMeta.longanQount().addNumberFlower(location);
 
             saveLonganQount(KSFarmMeta.longanQount());
+
+            lapFlowerQount = lapFlowerQount + 1;
         });
 
         ImageView minusButtonFlowerLonganQount = findViewById(R.id.minusButtonFlowerLonganQount);
 
         minusButtonFlowerLonganQount.setOnClickListener(v -> {
 
-            int count = KSFarmUtil.parseInt(editQountNumberFlowerEditText.getText().toString());
+            int count = KSFarmUtil.parseInt(textViewQountNumberFlowerEditText.getText().toString());
 
             count -= 1;
 
@@ -191,6 +206,11 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
                         KSFarmMeta.longanQount().minusNumberFlower(location);
 
                         saveLonganQount(KSFarmMeta.longanQount());
+
+                        if (lapFlowerQount > 0) {
+
+                            lapFlowerQount = lapFlowerQount - 1;
+                        }
                     })
                     .show();
         });
@@ -206,6 +226,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
             KSFarmMeta.longanQount().addNumberNonFlower(location);
 
             saveLonganQount(KSFarmMeta.longanQount());
+
+            lapNonFlowerQount = lapNonFlowerQount + 1;
         });
 
         ImageView minusButtonNonFlowerLonganQount = findViewById(R.id.minusButtonNonFlowerLonganQount);
@@ -230,6 +252,11 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
                         KSFarmMeta.longanQount().minusNumberNonFlower(location);
 
                         saveLonganQount(KSFarmMeta.longanQount());
+
+                        if (lapNonFlowerQount > 0) {
+
+                            lapNonFlowerQount = lapNonFlowerQount - 1;
+                        }
                     })
                     .show();
         });
@@ -379,16 +406,30 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         LonganQount longanQount = KSFarmMeta.longanQount();
 
         editTextLonganQountName.setText(longanQount.name);
+        editLonganQountTextEditText.setText(longanQount.text);
+
         editQountNumberNonFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberNonFlower()));
-        editQountNumberFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()));
-        editQountNumberTotalEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberNonFlower() + longanQount.getNumberFlower()));
+        textViewQountNumberFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()));
+
+        String totalQount = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberNonFlower() + longanQount.getNumberFlower()) + " ต้น";
+
+        textViewQountNumberTotalEditText.setText(totalQount);
 
         String percentageString = getFlowerPercentage(longanQount) + " %";
 
-        editQountNumberTotalEditTextPercentage.setText(percentageString);
-        editLonganQountTextEditText.setText(longanQount.text);
-        editQountLastUpdateDateTextView.setText(longanQount.lastUpdateDateString);
-        editQountLastUpdateTimeTextView.setText(longanQount.lastUpdateTimeString);
+        textViewQountNumberTotalEditTextPercentage.setText(percentageString);
+
+        String totalProduction = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80) + " kg.";
+        textViewQountTotalProductionEditText.setText(totalProduction);
+
+        String totalSell = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80 * 15) + " บาท";
+        textViewQountTotalSellEditText.setText(totalSell);
+
+        textViewQountLapNumberFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(lapFlowerQount));
+        textViewQountLapNonFlowerNumberEditText.setText(KSFarmUtil.getCommaNumberFormat(lapNonFlowerQount));
+
+        textViewQountLastUpdateDateTextView.setText(longanQount.lastUpdateDateString);
+        textViewQountLastUpdateTimeTextView.setText(longanQount.lastUpdateTimeString);
     }
 
     private String getFlowerPercentage(LonganQount longanQount) {
