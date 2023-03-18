@@ -2,6 +2,7 @@ package com.cyberello.ksfarm.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +37,9 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
+public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
+
+    private GestureDetectorCompat mDetector;
 
     private SharedPreferences sharedPreferences;
 
@@ -47,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        showLonganQountScreen();
+        mDetector = new GestureDetectorCompat(this, this);
+        mDetector.setOnDoubleTapListener(this);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_iot);
 
@@ -89,6 +93,35 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        if (this.mDetector.onTouchEvent(event)) {
+            return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(@NonNull MotionEvent motionEvent) {
+
+        IOTService.getWeatherData(MainActivity.this, MainActivity.this);
+
+        IOTService.getIOTData(MainActivity.this, MainActivity.this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(@NonNull MotionEvent motionEvent) {
+        return true;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -114,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     @Override
     public void processPostDataResult(JSONObject response) {
 
+        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
     }
 
     @Override
@@ -157,6 +191,8 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     public void processGetIOTMetaDataResult(JSONObject response) {
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
+
+        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
     }
 
     private void setIOTData(IOTJSON iotJSON) {
@@ -290,6 +326,36 @@ public class MainActivity extends AppCompatActivity implements QRCodeUtil.QRCode
     public void metaDataEmpty() {
 
         IOTService.getIOTMetaData(MainActivity.this, MainActivity.this);
+    }
+
+    @Override
+    public boolean onDown(@NonNull MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(@NonNull MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(@NonNull MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(@NonNull MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(@NonNull MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(@NonNull MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
+        return false;
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
