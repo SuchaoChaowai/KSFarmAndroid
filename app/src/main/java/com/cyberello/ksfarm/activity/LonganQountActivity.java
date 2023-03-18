@@ -69,9 +69,6 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private TextToSpeech textToSpeech;
     private int textColor;
 
-    private int lapFlowerQount = 0;
-    private int lapNonFlowerQount = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +178,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             saveLonganQount(KSFarmMeta.longanQount());
 
-            lapFlowerQount = lapFlowerQount + 1;
+            KSFarmMeta.addLapFlowerQount();
         });
 
         ImageView minusButtonFlowerLonganQount = findViewById(R.id.minusButtonFlowerLonganQount);
@@ -207,10 +204,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
                         saveLonganQount(KSFarmMeta.longanQount());
 
-                        if (lapFlowerQount > 0) {
-
-                            lapFlowerQount = lapFlowerQount - 1;
-                        }
+                        KSFarmMeta.removeLapFlowerQount();
                     })
                     .show();
         });
@@ -227,7 +221,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             saveLonganQount(KSFarmMeta.longanQount());
 
-            lapNonFlowerQount = lapNonFlowerQount + 1;
+            KSFarmMeta.addLapNonFlowerQount();
         });
 
         ImageView minusButtonNonFlowerLonganQount = findViewById(R.id.minusButtonNonFlowerLonganQount);
@@ -253,10 +247,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
                         saveLonganQount(KSFarmMeta.longanQount());
 
-                        if (lapNonFlowerQount > 0) {
-
-                            lapNonFlowerQount = lapNonFlowerQount - 1;
-                        }
+                        KSFarmMeta.removeLapNonFlowerQount();
                     })
                     .show();
         });
@@ -425,8 +416,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         String totalSell = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80 * 15) + " บาท";
         textViewQountTotalSellEditText.setText(totalSell);
 
-        textViewQountLapNumberFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(lapFlowerQount));
-        textViewQountLapNonFlowerNumberEditText.setText(KSFarmUtil.getCommaNumberFormat(lapNonFlowerQount));
+        textViewQountLapNumberFlowerEditText.setText(KSFarmUtil.getCommaNumberFormat(KSFarmMeta.lapFlowerQount()));
+        textViewQountLapNonFlowerNumberEditText.setText(KSFarmUtil.getCommaNumberFormat(KSFarmMeta.lapNonFlowerQount()));
 
         textViewQountLastUpdateDateTextView.setText(longanQount.lastUpdateDateString);
         textViewQountLastUpdateTimeTextView.setText(longanQount.lastUpdateTimeString);

@@ -23,10 +23,11 @@ import java.util.HashMap;
 public class KSFarmMeta {
 
     private static LonganQount longanQount;
-
     private static Gson gson;
-
     private static User user;
+
+    private static int lapFlowerQount = 0;
+    private static int lapNonFlowerQount = 0;
 
     public static void init(Activity activity, SharedPreferences sharedPreferences) {
 
@@ -146,6 +147,42 @@ public class KSFarmMeta {
     public static void setLonganQountDataToWebService(Activity activity, KSFarmWebService.KSFarmWebServiceResultListener listener) {
 
         KSFarmWebService.sendRequest(gson().toJson(longanQount()), KSFarmConstants.TYPE_WEB_SERVICE_SET, activity, listener);
+    }
+
+    public static int lapFlowerQount() {
+
+        return lapFlowerQount;
+    }
+
+    public static void addLapFlowerQount() {
+
+        lapFlowerQount = lapFlowerQount + 1;
+    }
+
+    public static void removeLapFlowerQount() {
+
+        if (lapFlowerQount > 0) {
+
+            lapFlowerQount = lapFlowerQount - 1;
+        }
+    }
+
+    public static int lapNonFlowerQount() {
+
+        return lapNonFlowerQount;
+    }
+
+    public static void addLapNonFlowerQount() {
+
+        lapNonFlowerQount = lapNonFlowerQount + 1;
+    }
+
+    public static void removeLapNonFlowerQount() {
+
+        if (lapNonFlowerQount > 0) {
+
+            lapNonFlowerQount = lapNonFlowerQount - 1;
+        }
     }
 
     public interface KSFarmMetaListener {
