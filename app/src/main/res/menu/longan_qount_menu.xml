@@ -5,8 +5,7 @@
 
         <item
             android:id="@+id/longanQountIOT"
-            android:title="@string/iot"
-            android:visible="false"></item>
+            android:title="@string/iot"></item>
         <item
             android:id="@+id/longanQountResetZero"
             android:title="@string/reset_lap"></item>
