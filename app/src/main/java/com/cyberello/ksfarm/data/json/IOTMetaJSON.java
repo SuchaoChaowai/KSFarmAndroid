@@ -17,6 +17,16 @@ public class IOTMetaJSON {
 
     public IOTDevice getDevice(String deviceId) {
 
-        return device_ids.stream().filter(device_id -> deviceId.equals(device_id.id)).findFirst().orElse(null);
+        IOTDevice iotDevice = null;
+
+        try {
+
+            iotDevice = device_ids.stream().filter(device_id -> deviceId.equals(device_id.id)).findFirst().orElse(null);
+        } catch (NullPointerException nex) {
+
+            return null;
+        }
+
+        return iotDevice;
     }
 }
