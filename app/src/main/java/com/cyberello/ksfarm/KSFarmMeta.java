@@ -42,6 +42,9 @@ public class KSFarmMeta {
 
             KSFarmConstants.SERVER_URL = activity.getString(R.string.dev_server_url);
         }
+
+        lapFlowerQount = sharedPreferences.getInt(KSFarmConstants.LAP_FLOWER_QOUNT, 0);
+        lapNonFlowerQount = sharedPreferences.getInt(KSFarmConstants.LAP_NON_FLOWER_QOUNT, 0);
     }
 
     public static Gson gson() {
@@ -154,16 +157,18 @@ public class KSFarmMeta {
         return lapFlowerQount;
     }
 
-    public static void addLapFlowerQount() {
+    public static void addLapFlowerQount(SharedPreferences sharedPreferences) {
 
         lapFlowerQount = lapFlowerQount + 1;
+        saveLapQount(sharedPreferences);
     }
 
-    public static void removeLapFlowerQount() {
+    public static void removeLapFlowerQount(SharedPreferences sharedPreferences) {
 
         if (lapFlowerQount > 0) {
 
             lapFlowerQount = lapFlowerQount - 1;
+            saveLapQount(sharedPreferences);
         }
     }
 
@@ -172,17 +177,46 @@ public class KSFarmMeta {
         return lapNonFlowerQount;
     }
 
-    public static void addLapNonFlowerQount() {
+    public static void addLapNonFlowerQount(SharedPreferences sharedPreferences) {
 
         lapNonFlowerQount = lapNonFlowerQount + 1;
+
+        saveLapQount(sharedPreferences);
     }
 
-    public static void removeLapNonFlowerQount() {
+    public static void removeLapNonFlowerQount(SharedPreferences sharedPreferences) {
 
         if (lapNonFlowerQount > 0) {
 
             lapNonFlowerQount = lapNonFlowerQount - 1;
+
+            saveLapQount(sharedPreferences);
         }
+    }
+
+    private static void saveLapQount(SharedPreferences sharedPreferences) {
+
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> {
+
+            sharedPreferences.edit().putInt(KSFarmConstants.LAP_FLOWER_QOUNT, lapFlowerQount).apply();
+            sharedPreferences.edit().putInt(KSFarmConstants.LAP_NON_FLOWER_QOUNT, lapNonFlowerQount).apply();
+        }, 200);
+    }
+
+    public static void resetLapQount(SharedPreferences sharedPreferences) {
+
+        lapFlowerQount = 0;
+        lapNonFlowerQount = 0;
+
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> {
+
+            sharedPreferences.edit().putInt(KSFarmConstants.LAP_FLOWER_QOUNT, lapFlowerQount).apply();
+            sharedPreferences.edit().putInt(KSFarmConstants.LAP_NON_FLOWER_QOUNT, lapNonFlowerQount).apply();
+        }, 200);
     }
 
     public interface KSFarmMetaListener {

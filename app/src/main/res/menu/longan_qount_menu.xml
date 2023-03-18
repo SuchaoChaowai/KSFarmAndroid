@@ -9,6 +9,6 @@
             android:visible="false"></item>
         <item
             android:id="@+id/longanQountResetZero"
-            android:title="@string/reset_zero"></item>
+            android:title="@string/reset_lap"></item>
     </group>
 </menu>

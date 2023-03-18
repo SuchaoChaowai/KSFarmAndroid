@@ -178,7 +178,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             saveLonganQount(KSFarmMeta.longanQount());
 
-            KSFarmMeta.addLapFlowerQount();
+            KSFarmMeta.addLapFlowerQount(sharedPreferences);
         });
 
         ImageView minusButtonFlowerLonganQount = findViewById(R.id.minusButtonFlowerLonganQount);
@@ -204,7 +204,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
                         saveLonganQount(KSFarmMeta.longanQount());
 
-                        KSFarmMeta.removeLapFlowerQount();
+                        KSFarmMeta.removeLapFlowerQount(sharedPreferences);
                     })
                     .show();
         });
@@ -221,7 +221,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
             saveLonganQount(KSFarmMeta.longanQount());
 
-            KSFarmMeta.addLapNonFlowerQount();
+            KSFarmMeta.addLapNonFlowerQount(sharedPreferences);
         });
 
         ImageView minusButtonNonFlowerLonganQount = findViewById(R.id.minusButtonNonFlowerLonganQount);
@@ -247,7 +247,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
                         saveLonganQount(KSFarmMeta.longanQount());
 
-                        KSFarmMeta.removeLapNonFlowerQount();
+                        KSFarmMeta.removeLapNonFlowerQount(sharedPreferences);
                     })
                     .show();
         });
@@ -341,8 +341,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
                 return true;
 
             new AlertDialog.Builder(LonganQountActivity.this)
-                    .setTitle("ล้างข้อมูลนับต้น?").setMessage("ล้างข้อมูลนับทั้งหมด").setPositiveButton("ไม่", null)
-                    .setNegativeButton("ล้างข้อมูล", (dialog, which) -> resetZero())
+                    .setTitle("ล้างข้อมูลนับ?").setMessage("ล้างข้อมูลนับรอบนี้").setPositiveButton("ไม่", null)
+                    .setNegativeButton("ล้างข้อมูล", (dialog, which) -> resetLapQount())
                     .show();
 
             return true;
@@ -445,13 +445,9 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         KSFarmMeta.setLonganQountDataToWebService(LonganQountActivity.this, null);
     }
 
-    private void resetZero() {
+    private void resetLapQount() {
 
-        KSFarmMeta.resetZero(location);
-
-        saveLonganQount(KSFarmMeta.longanQount());
-
-        showQount();
+        KSFarmMeta.resetLapQount(sharedPreferences);
     }
 
     @Override
