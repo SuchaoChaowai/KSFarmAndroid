@@ -100,7 +100,9 @@ public class KSFarmUtil {
 
     public static void setLocalIOTData(String iotJSONWrapperString, SharedPreferences sharedPreferences) {
 
-        new Thread(() -> sharedPreferences.edit().putString(KSFarmConstants.IOT_JSON_WRAPPER, iotJSONWrapperString).apply()).start();
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> sharedPreferences.edit().putString(KSFarmConstants.IOT_JSON_WRAPPER, iotJSONWrapperString).apply(), 100);
     }
 
     public static String getLocalIOTData(SharedPreferences sharedPreferences) {
@@ -110,7 +112,9 @@ public class KSFarmUtil {
 
     public static void setLocalWeatherData(String jsonDataString, SharedPreferences sharedPreferences) {
 
-        new Thread(() -> sharedPreferences.edit().putString(KSFarmConstants.WEATHER_DATA, jsonDataString).apply()).start();
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> sharedPreferences.edit().putString(KSFarmConstants.WEATHER_DATA, jsonDataString).apply(), 100);
     }
 
     public static String getLocalWeatherData(SharedPreferences sharedPreferences) {
@@ -202,7 +206,9 @@ public class KSFarmUtil {
             return;
         }
 
-        new Thread(() -> Log.d(KSFarmConstants.LOG_TAG + ": " + tag, message)).start();
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> Log.d(KSFarmConstants.LOG_TAG + ": " + tag, message), 100);
     }
 
     public static LonganQount getLonganQountFromJSONDataWrapper(JSONObject response) {
