@@ -17,6 +17,8 @@ import com.cyberello.ksfarm.data.json.JSONDataWrapper;
 import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
 import com.cyberello.ksfarm.webService.IOTControl;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -109,9 +111,13 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onDoubleTap(@NonNull MotionEvent motionEvent) {
 
-        IOTService.getWeatherData(MainActivity.this, MainActivity.this);
+        Handler handler = new Handler(Looper.myLooper());
 
-        IOTService.getIOTData(MainActivity.this, MainActivity.this);
+        handler.postDelayed(() -> IOTService.getWeatherData(MainActivity.this, MainActivity.this), 200);
+
+        handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> KSFarmUtil.getIOTMetaJSON(MainActivity.this), 200);
 
         return true;
     }
@@ -157,7 +163,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
 
-        new Thread(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData)).start();
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData), 200);
     }
 
     @Override
@@ -172,8 +180,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         weatherJSON.setJsonString(jsonDataString);
 
         setSecondFloorBalconyTempData(weatherJSON);
-
-        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
     }
 
     @Override
