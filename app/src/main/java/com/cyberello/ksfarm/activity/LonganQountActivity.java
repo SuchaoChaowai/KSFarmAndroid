@@ -2,6 +2,7 @@ package com.cyberello.ksfarm.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -335,6 +336,13 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
+        if (item.getItemId() == R.id.longanQountIOT) {
+
+            showIOTScreen();
+
+            return true;
+        }
+
         if (item.getItemId() == R.id.longanQountResetZero) {
 
             if (KSFarmMeta.longanQount().getNumberFlower() == 0 && KSFarmMeta.longanQount().getNumberNonFlower() == 0)
@@ -435,6 +443,12 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private void saveLonganQount(LonganQount qount) {
 
         KSFarmMeta.saveLonganQount(qount, sharedPreferences, LonganQountActivity.this);
+    }
+
+    private void showIOTScreen() {
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
