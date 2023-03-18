@@ -448,6 +448,8 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     private void resetLapQount() {
 
         KSFarmMeta.resetLapQount(sharedPreferences);
+
+        showQount();
     }
 
     @Override
