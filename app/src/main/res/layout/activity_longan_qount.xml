@@ -218,9 +218,9 @@
 
     <ImageView
         android:id="@+id/plusButtonAddQountNonFlower"
-        android:layout_width="190dp"
-        android:layout_height="186dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="178dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/plusButtonQountFlower"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/black_yellow"
@@ -228,9 +228,9 @@
 
     <ImageView
         android:id="@+id/plusButtonQountFlower"
-        android:layout_width="190dp"
-        android:layout_height="186dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="178dp"
+        android:layout_height="178dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/hr"
         app:layout_constraintEnd_toEndOf="parent"
