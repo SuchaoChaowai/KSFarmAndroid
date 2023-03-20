@@ -32,6 +32,7 @@ import com.cyberello.ksfarm.data.json.IOTDataJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
 import com.cyberello.ksfarm.webService.IOTService;
+import com.cyberello.ksfarm.webService.OpenWeatherAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.json.JSONObject;
@@ -42,9 +43,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
 
     private GestureDetectorCompat mDetector;
-
     private SharedPreferences sharedPreferences;
-
     private OpenWeatherJSON weatherJSON;
 
     @Override
@@ -132,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         super.onResume();
 
         String jsonDataString = KSFarmUtil.getLocalWeatherData(sharedPreferences);
+
+        OpenWeatherAPI.makeJsonRequest(MainActivity.this);
 
         weatherJSON.setJsonString(jsonDataString);
 
