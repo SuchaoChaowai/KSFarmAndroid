@@ -35,12 +35,14 @@ import com.cyberello.ksfarm.webService.IOTService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener {
+public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener {
 
     private GestureDetectorCompat mDetector;
     private SharedPreferences sharedPreferences;
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         String jsonDataString = KSFarmUtil.getLocalWeatherData(sharedPreferences);
 
-        OpenWeatherAPI.makeJsonRequest(MainActivity.this);
+        OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this);
 
         weatherJSON.setJsonString(jsonDataString);
 
@@ -365,14 +367,25 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         return false;
     }
 
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+    @Override
+    public void openWeatherDataReady(JSONObject openWeatherJsonObject) {
 
-        @Override
-        public boolean onDoubleTap(MotionEvent event) {
+        JSONArray array;
 
-            IOTService.getIOTData(MainActivity.this, MainActivity.this);
+        try {
 
-            return true;
+            array = openWeatherJsonObject.getJSONArray("weather");
+
+            for (int i = 0; i < array.length(); i++) {
+
+                JSONObject weather = array.getJSONObject(i);
+
+                String main = weather.getString("main");
+                String desc = weather.getString("description");
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 }
