@@ -2,54 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="4dp"
-    android:id="@+id/constraintLayout"
     tools:context=".activity.MainActivity">
 
     <TextView
-        android:id="@+id/textViewSun"
+        android:id="@+id/textViewKSFarmWeatherLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/pressure"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewWind"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWind" />
-
-    <TextView
-        android:id="@+id/textViewWind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/pressure"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewMainWeather"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMainWeather" />
-
-    <TextView
-        android:id="@+id/textViewMainWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/pressure"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewPressure"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPressure" />
-
-    <TextView
-        android:id="@+id/textViewPressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/pressure"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewHumid"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHumid" />
+        android:text="@string/ks_farm_weather_label"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewLastUpdate"
@@ -61,6 +29,17 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewKSFarmWeatherLabel" />
+
+    <TextView
+        android:id="@+id/textViewTempLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/temp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewKSFarmWeatherLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmWeatherLabel" />
 
     <TextView
         android:id="@+id/textViewTemp"
@@ -75,38 +54,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmWeatherLabel" />
 
     <TextView
-        android:id="@+id/textViewHumid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/humid"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTemp"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTemp" />
-
-    <TextView
-        android:id="@+id/textViewKSFarmWeatherLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/ks_farm_weather_label"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewTempLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/temp"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewKSFarmWeatherLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmWeatherLabel" />
-
-    <TextView
         android:id="@+id/textViewHumidLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,6 +62,16 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/textViewTempLabel"
         app:layout_constraintTop_toBottomOf="@+id/textViewTempLabel" />
+
+    <TextView
+        android:id="@+id/textViewHumid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/humid"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTemp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTemp" />
 
     <TextView
         android:id="@+id/textViewPressureLabel"
@@ -126,16 +83,179 @@
         app:layout_constraintStart_toStartOf="@+id/textViewHumidLabel"
         app:layout_constraintTop_toBottomOf="@+id/textViewHumidLabel" />
 
+    <TextView
+        android:id="@+id/textViewPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pressure"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewHumid"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHumid" />
+
     <View
-        android:id="@+id/hr6"
+        android:id="@+id/hr1"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="#000000"
+        android:background="#4CAF50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPressure" />
+
+    <TextView
+        android:id="@+id/textViewMainWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pressure"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewPressure"
+        app:layout_constraintTop_toBottomOf="@+id/hr1" />
+
+    <TextView
+        android:id="@+id/textViewWind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pressure"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewMainWeather"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainWeather" />
+
+    <TextView
+        android:id="@+id/textViewSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pressure"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewWind"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWind" />
+
+    <View
+        android:id="@+id/hr2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="#4CAF50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSun" />
+
+    <TextView
+        android:id="@+id/textViewKSFarmLonganLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/title_longan_qount_label"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hr2" />
+
+    <TextView
+        android:id="@+id/textViewMainQountTotalWeightLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:importantForAutofill="no"
+        android:minHeight="48dp"
+        android:text="@string/title_longan_total_weight"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmLonganLabel"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/textViewMainTotalSellLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:minHeight="48dp"
+        android:text="@string/title_longan_total_sell"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewMainQountTotalWeightLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainQountTotalWeightLabel"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/textViewMainTotalWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:importantForAutofill="no"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMainQountTotalWeightLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/textViewMainTotalSell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMainTotalSellLabel"
+        app:layout_constraintEnd_toEndOf="@+id/textViewMainTotalWeight"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalWeight"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/textViewMainTotalFlowerLabel"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:importantForAutofill="no"
+        android:minHeight="48dp"
+        android:text="@string/title_longan_total_flower"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewMainTotalSellLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalSellLabel"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/textViewMainTotalFlower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:minHeight="48dp"
+        android:text="@string/zero"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMainTotalFlowerLabel"
+        app:layout_constraintEnd_toEndOf="@+id/textViewMainTotalSell"
+        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
+
+    <View
+        android:id="@+id/hr3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#4CAF50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalFlowerLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

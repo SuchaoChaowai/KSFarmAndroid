@@ -31,9 +31,12 @@
     <string name="accuracy">Accuracy</string>
     <string name="zero">0</string>
     <string name="description_string">รายละเอียด</string>
-    <string name="title_longan_qount">KS Farm: นับต้นลำไยออกดอก 2566</string>
     <string name="title_iot">KS Farm: IOT</string>
     <string name="reset_lap">ล้างข้อมูลรอบนี้</string>
     <string name="name">Name</string>
     <string name="main">Main</string>
+    <string name="title_longan_qount_label">นับต้นลำไยออกดอก 2566</string>
+    <string name="title_longan_total_weight">น้ำหนักรวม (กก.)</string>
+    <string name="title_longan_total_sell">ยอดขายรวม (บาท)</string>
+    <string name="title_longan_total_flower">จำนวนต้นออกดอก</string>
 </resources>

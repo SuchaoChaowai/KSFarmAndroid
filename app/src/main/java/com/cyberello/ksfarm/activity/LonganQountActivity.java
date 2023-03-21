@@ -75,7 +75,9 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_longan_qount);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_longan_qount);
+        String title = "KS Farm: " + R.string.title_longan_qount_label;
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
 
         sharedPreferences = LonganQountActivity.this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
@@ -338,7 +340,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
 
         if (item.getItemId() == R.id.longanQountIOT) {
 
-            showIOTScreen();
+            showMainScreen();
 
             return true;
         }
@@ -445,7 +447,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
         KSFarmMeta.saveLonganQount(qount, sharedPreferences, LonganQountActivity.this);
     }
 
-    private void showIOTScreen() {
+    private void showMainScreen() {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);

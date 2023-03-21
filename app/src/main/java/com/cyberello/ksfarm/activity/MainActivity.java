@@ -21,8 +21,10 @@ import androidx.core.view.GestureDetectorCompat;
 import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
 import com.cyberello.ksfarm.data.KSFarmConstants;
+import com.cyberello.ksfarm.data.LonganQount;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
+import com.cyberello.ksfarm.webService.KSFarmWebService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
 
 import org.json.JSONArray;
@@ -31,7 +33,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener {
+public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener, KSFarmWebService.KSFarmWebServiceResultListener {
 
     private GestureDetectorCompat mDetector;
     private SharedPreferences sharedPreferences;
@@ -96,9 +98,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onDoubleTap(@NonNull MotionEvent motionEvent) {
 
-        Handler handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
+        getWebserviceData();
 
         return true;
     }
@@ -112,11 +112,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public void onResume() {
         super.onResume();
 
-        Handler handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
-
-        KSFarmUtil.getIOTMetaJSON(MainActivity.this);
+        getWebserviceData();
     }
 
     @Override
@@ -245,5 +241,62 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public void openWeatherDataReady(JSONObject openWeatherJsonObject) {
 
         setWeatherData(openWeatherJsonObject);
+    }
+
+    @Override
+    public void processWebServiceResult(JSONObject response) {
+
+        LonganQount longanQount = KSFarmUtil.getLonganQountFromJSONDataWrapper(response);
+
+        if (longanQount == null) {
+            return;
+        }
+
+        KSFarmMeta.saveLonganQount(longanQount, sharedPreferences, null);
+
+        showQount();
+    }
+
+    private void showQount() {
+
+        LonganQount longanQount = KSFarmMeta.longanQount();
+
+        String text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80) + " ตัน";
+
+        TextView textView = findViewById(R.id.textViewMainTotalWeight);
+
+        textView.setText(text);
+
+        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80 * 15) + " บาท";
+
+        textView = findViewById(R.id.textViewMainTotalSell);
+
+        textView.setText(text);
+
+        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()) + " ต้น";
+
+        textView = findViewById(R.id.textViewMainTotalFlower);
+
+        textView.setText(text);
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+
+    }
+
+    @Override
+    public void onErrorResponse(String status, String errorMessage) {
+
+    }
+
+
+    private void getWebserviceData() {
+
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 100);
+
+        KSFarmMeta.getLonganQountDataFromWebService(MainActivity.this, MainActivity.this);
     }
 }
