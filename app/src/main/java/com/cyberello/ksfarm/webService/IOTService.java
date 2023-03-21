@@ -119,57 +119,13 @@ public class IOTService {
         requestQueue.start();
     }
 
-    public static void getWeatherData(Activity activity, WebServiceResultListener listener) {
 
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-
-        JSONObject jsonObject = KSFarmUtil.getJSONObject("", "getWeatherInfo()");
-
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.POST, KSFarmConstants.KS_FARM_WEB_SERVICE_URL, jsonObject,
-                response -> {
-
-                    try {
-
-                        if (response.has("status")) {
-
-                            String status = response.getString("status");
-
-                            if (status.equals(CyberelloConstants.STATUS_CODE_ERROR)) {
-
-                                if (null != listener) {
-                                    listener.onErrorResponse(response.getString("status"), response.getString("message"));
-                                }
-
-                                return;
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (listener != null) {
-                        listener.processGetWeatherDataResult(response);
-                    }
-                },
-                error -> {
-
-                    if (listener != null) {
-                        listener.onErrorResponse(error.getMessage());
-                    }
-                }) {
-        };
-
-        requestQueue.add(jsonObjRequest);
-        requestQueue.start();
-    }
 
     public interface WebServiceResultListener {
 
         void processPostDataResult(JSONObject response);
 
         void processGetIOTDataResult(JSONObject response);
-
-        void processGetWeatherDataResult(JSONObject response);
 
         void onErrorResponse(String errorMessage);
 

@@ -110,18 +110,6 @@ public class KSFarmUtil {
         return sharedPreferences.getString(KSFarmConstants.IOT_JSON_WRAPPER, "");
     }
 
-    public static void setLocalWeatherData(String jsonDataString, SharedPreferences sharedPreferences) {
-
-        Handler handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> sharedPreferences.edit().putString(KSFarmConstants.WEATHER_DATA, jsonDataString).apply(), 100);
-    }
-
-    public static String getLocalWeatherData(SharedPreferences sharedPreferences) {
-
-        return sharedPreferences.getString(KSFarmConstants.WEATHER_DATA, "");
-    }
-
     public static JSONObject getJSONObject(String jsonDataString, String type) {
 
         JSONObject jsonObject = new JSONObject();
@@ -223,6 +211,20 @@ public class KSFarmUtil {
         activity.getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
+    }
+
+    public static String getWindDirection(double deg) {
+
+        if (337.5 <= deg && deg <= 22.5) return "เหนือ";
+        if (22.5 <= deg && deg <= 67.5) return "ตะวันออกเฉียงเหนือ";
+        if (67.5 <= deg && deg <= 112.5) return "ตะวันออก";
+        if (112.5 <= deg && deg <= 157.5) return "ตะวันออกเฉียงใต";
+        if (157.5 <= deg && deg <= 202.5) return "ใต้";
+        if (202.5 <= deg && deg <= 247.5) return "ตะวันตกเฉียงใต้";
+        if (247.5 <= deg && deg <= 292.5) return "ตะวันตก";
+        if (292.5 <= deg && deg <= 337.5) return "ตะวันตกเฉียงเหนือ";
+
+        return "";
     }
 
     public interface MetaDataListener {

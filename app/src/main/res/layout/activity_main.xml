@@ -8,6 +8,27 @@
     android:id="@+id/constraintLayout"
     tools:context=".activity.MainActivity">
 
+    <TextView
+        android:id="@+id/textViewWind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pressure"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewMainWeather"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainWeather" />
+
+    <TextView
+        android:id="@+id/textViewMainWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pressure"
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewPressure"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPressure" />
+
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switchHatariFan"
         android:layout_width="wrap_content"
@@ -119,7 +140,7 @@
         android:id="@+id/textViewKSFarmWeatherLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/ks_farm_weather_label"
         android:textSize="20sp"
@@ -130,7 +151,7 @@
         android:id="@+id/textViewTempLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/temp"
         android:textSize="16sp"
@@ -162,13 +183,11 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPressureLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewWind" />
 
     <View
         android:id="@+id/hr"

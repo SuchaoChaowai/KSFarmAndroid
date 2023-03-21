@@ -1,22 +1,9 @@
 package com.cyberello.ksfarm.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.cyberello.ksfarm.KSFarmMeta;
-import com.cyberello.ksfarm.R;
-import com.cyberello.ksfarm.data.KSFarmConstants;
-import com.cyberello.ksfarm.data.json.IOTJSON;
-import com.cyberello.ksfarm.data.json.JSONDataWrapper;
-import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
-import com.cyberello.ksfarm.webService.IOTControl;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.view.GestureDetector;
@@ -27,10 +14,20 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
+
+import com.cyberello.ksfarm.KSFarmMeta;
+import com.cyberello.ksfarm.R;
+import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.json.IOTDataJSON;
+import com.cyberello.ksfarm.data.json.IOTJSON;
+import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
+import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
+import com.cyberello.ksfarm.webService.IOTControl;
 import com.cyberello.ksfarm.webService.IOTService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -46,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     private GestureDetectorCompat mDetector;
     private SharedPreferences sharedPreferences;
-    private OpenWeatherJSON weatherJSON;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         mDetector.setOnDoubleTapListener(this);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_iot);
-
-        weatherJSON = new OpenWeatherJSON();
 
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
@@ -114,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         Handler handler = new Handler(Looper.myLooper());
 
-        handler.postDelayed(() -> IOTService.getWeatherData(MainActivity.this, MainActivity.this), 200);
+        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
 
         handler = new Handler(Looper.myLooper());
 
@@ -132,13 +126,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public void onResume() {
         super.onResume();
 
-        String jsonDataString = KSFarmUtil.getLocalWeatherData(sharedPreferences);
+        Handler handler = new Handler(Looper.myLooper());
 
-        OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this);
-
-        weatherJSON.setJsonString(jsonDataString);
-
-        setSecondFloorBalconyTempData(weatherJSON);
+        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
 
         KSFarmUtil.getIOTMetaJSON(MainActivity.this);
     }
@@ -169,20 +159,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         Handler handler = new Handler(Looper.myLooper());
 
         handler.postDelayed(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData), 200);
-    }
-
-    @Override
-    public void processGetWeatherDataResult(JSONObject response) {
-
-        JSONDataWrapper jsonDataWrapper = KSFarmUtil.gson().fromJson(response.toString(), JSONDataWrapper.class);
-
-        String jsonDataString = jsonDataWrapper.getJsonData();
-
-        KSFarmUtil.setLocalWeatherData(jsonDataString, sharedPreferences);
-
-        weatherJSON.setJsonString(jsonDataString);
-
-        setSecondFloorBalconyTempData(weatherJSON);
     }
 
     @Override
@@ -264,57 +240,62 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         }
     }
 
-    private void setSecondFloorBalconyTempData(OpenWeatherJSON weatherJSON) {
+    private void setSecondFloorBalconyWeatherData(JSONObject openWeatherJsonObject) {
+
+        JSONArray array;
+
+        TextView textView = findViewById(R.id.textViewMainWeather);
 
         try {
 
-            TextView textView = findViewById(R.id.textViewLastUpdate);
+            array = openWeatherJsonObject.getJSONArray("weather");
 
-            String textString = "---";
+            for (int i = 0; i < array.length(); i++) {
 
-            if (weatherJSON.dt() == 0) {
+                JSONObject weather = array.getJSONObject(i);
 
-                textView.setText(textString);
+                String main = weather.getString("main") + ", " + weather.getString("description");
 
-                textView = findViewById(R.id.textViewTemp);
-                textView.setText(textString);
-
-                textView = findViewById(R.id.textViewHumid);
-                textView.setText(textString);
-
-                textView = findViewById(R.id.textViewPressure);
-                textView.setText(textString);
-
-                return;
+                textView.setText(main);
             }
 
+            JSONObject main = openWeatherJsonObject.getJSONObject("main");
+
+            textView = findViewById(R.id.textViewTemp);
+
+            String textString = Math.round(main.getDouble("temp")) + " °C";
+            textView.setText(textString);
+
+            textView = findViewById(R.id.textViewHumid);
+            textString = Math.round(main.getDouble("humidity")) + " %";
+            textView.setText(textString);
+
+            textView = findViewById(R.id.textViewPressure);
+
+            textString = Math.round(main.getDouble("pressure")) + " hPa";
+            textView.setText(textString);
+
+            JSONObject wind = openWeatherJsonObject.getJSONObject("wind");
+
+            textString = "ลม" + KSFarmUtil.getWindDirection(wind.getDouble("deg"));
+
+            textString = textString + ", ความเร็ว " + wind.getDouble("speed") + "-" + wind.getDouble("gust") + " กม./ชม.";
+
+            textView = findViewById(R.id.textViewWind);
+
+            textView.setText(textString);
+
             try {
-                textView.setText(KSFarmUtil.getServerDateTimeString(weatherJSON.dt()));
+
+                textView = findViewById(R.id.textViewLastUpdate);
+                textView.setText(KSFarmUtil.getServerDateTimeString(openWeatherJsonObject.getLong("dt")));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            textView = findViewById(R.id.textViewTemp);
+        } catch (JSONException e) {
 
-            textString = Math.round(weatherJSON.temperature()) + " °C";
-            textView.setText(textString);
 
-            textView = findViewById(R.id.textViewHumid);
-            textString = Math.round(weatherJSON.humidity()) + " %";
-            textView.setText(textString);
-
-            textView = findViewById(R.id.textViewPressure);
-            textString = String.valueOf(Math.round(weatherJSON.pressure()));
-
-            if (textString.length() > 3) {
-
-                textString = textString.charAt(0) + "," + textString.substring(1);
-            }
-
-            textString += " hPa";
-            textView.setText(textString);
-        } catch (NumberFormatException nex) {
-            nex.printStackTrace();
         }
     }
 
@@ -326,7 +307,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void metaDataReady() {
 
-        IOTService.getWeatherData(MainActivity.this, MainActivity.this);
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
 
         IOTService.getIOTData(MainActivity.this, MainActivity.this);
     }
@@ -370,22 +353,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void openWeatherDataReady(JSONObject openWeatherJsonObject) {
 
-        JSONArray array;
-
-        try {
-
-            array = openWeatherJsonObject.getJSONArray("weather");
-
-            for (int i = 0; i < array.length(); i++) {
-
-                JSONObject weather = array.getJSONObject(i);
-
-                String main = weather.getString("main");
-                String desc = weather.getString("description");
-            }
-
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        setSecondFloorBalconyWeatherData(openWeatherJsonObject);
     }
 }
