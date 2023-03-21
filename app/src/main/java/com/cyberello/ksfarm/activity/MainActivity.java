@@ -21,24 +21,17 @@ import androidx.core.view.GestureDetectorCompat;
 import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
 import com.cyberello.ksfarm.data.KSFarmConstants;
-import com.cyberello.ksfarm.data.json.IOTDataJSON;
-import com.cyberello.ksfarm.data.json.IOTJSON;
-import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
-import com.cyberello.ksfarm.webService.IOTControl;
-import com.cyberello.ksfarm.webService.IOTService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, IOTService.WebServiceResultListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener {
+public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener {
 
     private GestureDetectorCompat mDetector;
     private SharedPreferences sharedPreferences;
@@ -50,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         mDetector = new GestureDetectorCompat(this, this);
         mDetector.setOnDoubleTapListener(this);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_iot);
 
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
@@ -109,10 +100,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
 
-        handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> KSFarmUtil.getIOTMetaJSON(MainActivity.this), 200);
-
         return true;
     }
 
@@ -142,104 +129,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         Toast.makeText(MainActivity.this, "Scanned: " + QRCodeUtil.getKSFarmQRString(scannedText), Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void processPostDataResult(JSONObject response) {
-
-        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
-    }
-
-    @Override
-    public void processGetIOTDataResult(JSONObject response) {
-
-        IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
-
-        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
-
-        Handler handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> iotJSONWrapper.iotJSONs.forEach(this::setIOTData), 200);
-    }
-
-    @Override
-    public void onErrorResponse(String errorMessage) {
-
-
-    }
-
-    @Override
-    public void onErrorResponse(String status, String message) {
-
-    }
-
-    @Override
-    public void processGetIOTMetaDataResult(JSONObject response) {
-
-        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
-
-        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
-    }
-
-    private void setIOTData(IOTJSON iotJSON) {
-
-        KSFarmUtil.setIOTData(iotJSON);
-
-        if (iotJSON.name.equals(KSFarmConstants.BED_SIDE_LAMP)) {
-
-            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchBedSideLamp)));
-
-            return;
-        }
-
-        if (iotJSON.name.equals(KSFarmConstants.STANDING_DESK_LAMP)) {
-
-            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchStandingDeskLamp)));
-
-            return;
-        }
-
-        if (iotJSON.name.equals(KSFarmConstants.DESK_LAMP)) {
-
-            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchDeskLamp)));
-
-            return;
-        }
-
-        if (iotJSON.name.equals(KSFarmConstants.OVER_HEAD_DESK_LAMP)) {
-
-            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchOverHeadDeskLamp)));
-
-            return;
-        }
-
-        if (iotJSON.name.equals(KSFarmConstants.BED_ROOM_AIR_CON)) {
-
-            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchAirCon)));
-            return;
-        }
-
-        if (iotJSON.name.equals(KSFarmConstants.DESK_HATARI_FAN)) {
-
-            runOnUiThread(() -> setLampData(iotJSON, findViewById(R.id.switchHatariFan)));
-        }
-    }
-
-    private void setLampData(IOTJSON iotJSON, SwitchMaterial relaySwitch) {
-
-        try {
-
-            IOTDataJSON iotDataJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTDataJSON.class);
-
-            relaySwitch.setChecked(iotDataJSON.relay1.equals("on"));
-
-            relaySwitch.setOnCheckedChangeListener(
-                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
-
-        } catch (NumberFormatException nex) {
-            nex.printStackTrace();
-        }
-    }
-
-    private void setSecondFloorBalconyWeatherData(JSONObject openWeatherJsonObject) {
+    private void setWeatherData(JSONObject openWeatherJsonObject) {
 
         JSONArray array;
 
@@ -314,14 +204,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         Handler handler = new Handler(Looper.myLooper());
 
         handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
-
-        IOTService.getIOTData(MainActivity.this, MainActivity.this);
     }
 
     @Override
     public void metaDataEmpty() {
 
-        IOTService.getIOTMetaData(MainActivity.this, MainActivity.this);
     }
 
     @Override
@@ -357,6 +244,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void openWeatherDataReady(JSONObject openWeatherJsonObject) {
 
-        setSecondFloorBalconyWeatherData(openWeatherJsonObject);
+        setWeatherData(openWeatherJsonObject);
     }
 }

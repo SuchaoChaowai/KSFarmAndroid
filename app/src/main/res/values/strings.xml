@@ -35,4 +35,5 @@
     <string name="title_iot">KS Farm: IOT</string>
     <string name="reset_lap">ล้างข้อมูลรอบนี้</string>
     <string name="name">Name</string>
+    <string name="main">Main</string>
 </resources>
