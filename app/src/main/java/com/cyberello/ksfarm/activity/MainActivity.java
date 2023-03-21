@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             textString = "ลม" + KSFarmUtil.getWindDirection(wind.getDouble("deg"));
 
-            textString = textString + ", ความเร็ว " + wind.getDouble("speed") + "-" + wind.getDouble("gust") + " กม./ชม.";
+            textString = textString + ", " + wind.getDouble("speed") + "-" + wind.getDouble("gust") + " กม./ชม.";
 
             textView = findViewById(R.id.textViewWind);
 
