@@ -119,8 +119,6 @@ public class IOTService {
         requestQueue.start();
     }
 
-
-
     public interface WebServiceResultListener {
 
         void processPostDataResult(JSONObject response);
