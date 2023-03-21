@@ -24,7 +24,6 @@ import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.json.IOTDataJSON;
 import com.cyberello.ksfarm.data.json.IOTJSON;
 import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
-import com.cyberello.ksfarm.data.json.OpenWeatherJSON;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
 import com.cyberello.ksfarm.webService.IOTControl;
@@ -279,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             textString = "ลม" + KSFarmUtil.getWindDirection(wind.getDouble("deg"));
 
-            textString = textString + ", " + wind.getDouble("speed") + "-" + wind.getDouble("gust") + " กม./ชม.";
+            textString = textString + ", " + wind.getDouble("speed") * 3.6 + "-" + wind.getDouble("gust") * 3.6 + " กม./ชม.";
 
             textView = findViewById(R.id.textViewWind);
 
@@ -297,11 +296,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
 
         }
-    }
-
-    private void refreshIOTData(IOTJSON iotJSON) {
-
-        IOTControl.refreshIOTData(iotJSON.deviceIP, this, this);
     }
 
     @Override
