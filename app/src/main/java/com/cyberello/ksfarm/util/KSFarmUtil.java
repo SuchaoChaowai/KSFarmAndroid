@@ -27,9 +27,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -43,6 +45,7 @@ public class KSFarmUtil {
     private static final ToneGenerator toneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
     public static final DecimalFormat dfLatLon = new DecimalFormat("0.00000");
     public static final DecimalFormat dfAltitude = new DecimalFormat("0");
+    private static final DateFormat formatter = new SimpleDateFormat(CyberelloConstants.TIME_FORMAT_SHORT, Locale.US);
 
     public static Gson gson() {
 
@@ -224,6 +227,11 @@ public class KSFarmUtil {
         if (247.5 <= deg && deg <= 292.5) return "ตะวันตก";
 
         return "ตะวันตกเฉียงเหนือ";
+    }
+
+    public static String getSunTime(long sunTime) {
+
+        return formatter.format(new Date(sunTime * 1000));
     }
 
     public interface MetaDataListener {

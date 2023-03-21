@@ -278,9 +278,19 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             textString = "ลม" + KSFarmUtil.getWindDirection(wind.getDouble("deg"));
 
-            textString = textString + ", " + wind.getDouble("speed") * 3.6 + "-" + wind.getDouble("gust") * 3.6 + " กม./ชม.";
+            textString = textString + ", " + Math.round(wind.getDouble("speed") * 3.6) + "-" + Math.round(wind.getDouble("gust") * 3.6) + " กม./ชม.";
 
             textView = findViewById(R.id.textViewWind);
+
+            textView.setText(textString);
+
+            JSONObject sun = openWeatherJsonObject.getJSONObject("sys");
+
+            textString = "พระอาทิตย์  ";
+
+            textString = textString + KSFarmUtil.getSunTime(sun.getLong("sunrise")) + "-" + KSFarmUtil.getSunTime(sun.getLong("sunset"));
+
+            textView = findViewById(R.id.textViewSun);
 
             textView.setText(textString);
 
