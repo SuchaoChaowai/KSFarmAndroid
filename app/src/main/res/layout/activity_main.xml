@@ -292,7 +292,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/temp"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewRoomTemp"
         app:layout_constraintStart_toStartOf="@+id/textViewRoomTemp" />
 
@@ -303,7 +303,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:text="@string/temp"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/switchBedRoomAirCon"
         app:layout_constraintStart_toStartOf="parent" />
 

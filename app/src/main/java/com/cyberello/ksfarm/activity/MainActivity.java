@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             TemperatureData temperatureData = KSFarmUtil.gson().fromJson(iotJSON.jsonString, TemperatureData.class);
 
-            String text = temperatureData.temperature + " °C";
+            String text = temperatureData.temperature + " °C, " + Math.round(temperatureData.humidity) + " %";
 
             textViewRoomTemp.setText(text);
 
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             TemperatureData temperatureData = KSFarmUtil.gson().fromJson(iotJSON.jsonString, TemperatureData.class);
 
-            String text = temperatureData.temperature + " °C";
+            String text = temperatureData.temperature + " °C, " + Math.round(temperatureData.humidity) + " %";
 
             textViewOutSideTemp.setText(text);
         }
