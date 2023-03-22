@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
 import com.cyberello.ksfarm.webService.KSFarmWebService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         super.onResume();
 
         getWebserviceData();
+
+        setIOTElementsVisible(View.INVISIBLE);
     }
 
     @Override
@@ -298,5 +302,24 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 100);
 
         KSFarmMeta.getLonganQountDataFromWebService(MainActivity.this, MainActivity.this);
+    }
+
+    private void setIOTElementsVisible(int visible) {
+
+        TextView textViewKSFarmIOTLabel = findViewById(R.id.textViewKSFarmIOTLabel);
+
+        textViewKSFarmIOTLabel.setVisibility(visible);
+
+        SwitchMaterial relaySwitch = findViewById(R.id.switchBedLamp);
+
+        relaySwitch.setVisibility(visible);
+
+        relaySwitch = findViewById(R.id.switchStandingDeskLamp);
+
+        relaySwitch.setVisibility(visible);
+
+        relaySwitch = findViewById(R.id.switchBedRoomAirCon);
+
+        relaySwitch.setVisibility(visible);
     }
 }
