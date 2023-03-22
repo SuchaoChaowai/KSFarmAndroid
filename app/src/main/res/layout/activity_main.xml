@@ -8,6 +8,16 @@
     android:padding="4dp"
     tools:context=".activity.MainActivity">
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchBedRoomAirCon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:switchPadding="8dp"
+        android:text="@string/air_con"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/switchBedLamp"
+        app:layout_constraintTop_toBottomOf="@+id/switchStandingDeskLamp" />
+
     <TextView
         android:id="@+id/textViewKSFarmIOTLabel"
         android:layout_width="wrap_content"
@@ -24,7 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:text="@string/ks_farm_weather_label"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,12 +43,11 @@
         android:id="@+id/textViewLastUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/last_update"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewKSFarmWeatherLabel" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewKSFarmWeatherLabel"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textViewTempLabel"
@@ -268,5 +276,27 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalFlowerLabel" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchBedLamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:switchPadding="8dp"
+        android:text="@string/bed_side_lamp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmIOTLabel" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchStandingDeskLamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:switchPadding="8dp"
+        android:text="@string/standing_desk_lamp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/switchBedLamp"
+        app:layout_constraintTop_toBottomOf="@+id/switchBedLamp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
