@@ -39,4 +39,5 @@
     <string name="title_longan_total_weight">น้ำหนักรวม (กก.)</string>
     <string name="title_longan_total_sell">ยอดขายรวม (บาท)</string>
     <string name="title_longan_total_flower">จำนวนต้นออกดอก</string>
+    <string name="iot_label">อุปกรณ์ IOT</string>
 </resources>
