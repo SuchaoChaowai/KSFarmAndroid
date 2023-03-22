@@ -23,8 +23,14 @@ import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
 import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.LonganQount;
+import com.cyberello.ksfarm.data.json.IOTDataJSON;
+import com.cyberello.ksfarm.data.json.IOTJSON;
+import com.cyberello.ksfarm.data.json.IOTJSONWrapper;
+import com.cyberello.ksfarm.data.json.TemperatureData;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
+import com.cyberello.ksfarm.webService.IOTControl;
+import com.cyberello.ksfarm.webService.IOTService;
 import com.cyberello.ksfarm.webService.KSFarmWebService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -35,7 +41,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener, KSFarmWebService.KSFarmWebServiceResultListener {
+public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener, KSFarmWebService.KSFarmWebServiceResultListener, IOTService.WebServiceResultListener {
 
     private GestureDetectorCompat mDetector;
     private SharedPreferences sharedPreferences;
@@ -51,6 +57,13 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         KSFarmMeta.init(MainActivity.this, sharedPreferences);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getWebserviceData();
     }
 
     @Override
@@ -111,17 +124,208 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onBackPressed() {
 
-        getWebserviceData();
+    }
+
+    @Override
+    public boolean onDown(@NonNull MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(@NonNull MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(@NonNull MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(@NonNull MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(@NonNull MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(@NonNull MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void openWeatherDataReady(JSONObject openWeatherJsonObject) {
+
+        setWeatherData(openWeatherJsonObject);
+    }
+
+    @Override
+    public void processWebServiceResult(JSONObject response) {
+
+        LonganQount longanQount = KSFarmUtil.getLonganQountFromJSONDataWrapper(response);
+
+        if (longanQount == null) {
+            return;
+        }
+
+        KSFarmMeta.saveLonganQount(longanQount, sharedPreferences, null);
+
+        showQount();
+    }
+
+    private void showQount() {
+
+        LonganQount longanQount = KSFarmMeta.longanQount();
+
+        String text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80) + " ตัน";
+
+        TextView textView = findViewById(R.id.textViewMainTotalWeight);
+
+        textView.setText(text);
+
+        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80 * 15) + " บาท";
+
+        textView = findViewById(R.id.textViewMainTotalSell);
+
+        textView.setText(text);
+
+        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()) + " ต้น";
+
+        textView = findViewById(R.id.textViewMainTotalFlower);
+
+        textView.setText(text);
+    }
+
+    @Override
+    public void processPostDataResult(JSONObject response) {
+
+
+    }
+
+    @Override
+    public void processGetIOTDataResult(JSONObject response) {
+
+        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
+
+        IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
+
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> {
+
+            iotJSONWrapper.iotJSONs.forEach(this::setIOTData);
+            setIOTElementsVisible(View.VISIBLE);
+        }, 100);
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
 
         setIOTElementsVisible(View.INVISIBLE);
     }
 
     @Override
-    public void onBackPressed() {
+    public void onErrorResponse(String status, String errorMessage) {
 
+        setIOTElementsVisible(View.INVISIBLE);
+    }
+
+    @Override
+    public void processGetIOTMetaDataResult(JSONObject response) {
+
+        KSFarmUtil.setLocalIOTData(response.toString(), sharedPreferences);
+
+        KSFarmUtil.setIOTMetaData(response, MainActivity.this);
+    }
+
+    private void setIOTData(IOTJSON iotJSON) {
+
+        KSFarmUtil.setIOTData(iotJSON);
+
+        if (iotJSON.name.equals(KSFarmConstants.BED_SIDE_LAMP)) {
+
+            runOnUiThread(() -> setSwitchData(iotJSON, findViewById(R.id.switchBedLamp)));
+            return;
+        }
+
+        if (iotJSON.name.equals(KSFarmConstants.STANDING_DESK_LAMP)) {
+
+            runOnUiThread(() -> setSwitchData(iotJSON, findViewById(R.id.switchStandingDeskLamp)));
+            return;
+        }
+
+        if (iotJSON.name.equals(KSFarmConstants.BED_ROOM_AIR_CON)) {
+
+            runOnUiThread(() -> setSwitchData(iotJSON, findViewById(R.id.switchBedRoomAirCon)));
+        }
+
+        if (iotJSON.name.equals(KSFarmConstants.DESK_TOP)) {
+
+            TextView textViewRoomTemp = findViewById(R.id.textViewRoomTemp);
+
+            TemperatureData temperatureData = KSFarmUtil.gson().fromJson(iotJSON.jsonString, TemperatureData.class);
+
+            String text = temperatureData.temperature + " °C";
+
+            textViewRoomTemp.setText(text);
+        }
+    }
+
+    private void setSwitchData(IOTJSON iotJSON, SwitchMaterial relaySwitch) {
+
+        try {
+
+            IOTDataJSON iotDataJSON = KSFarmUtil.gson().fromJson(iotJSON.jsonString, IOTDataJSON.class);
+
+            relaySwitch.setChecked(iotDataJSON.relay1.equals("on"));
+
+            relaySwitch.setOnCheckedChangeListener(
+                    (buttonView, isChecked) -> IOTControl.setRelayState(iotJSON.deviceIP, isChecked, MainActivity.this, MainActivity.this));
+
+        } catch (NumberFormatException nex) {
+            nex.printStackTrace();
+        }
+    }
+
+    private void getWebserviceData() {
+
+        Handler handler = new Handler(Looper.myLooper());
+
+        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 100);
+
+        KSFarmMeta.getLonganQountDataFromWebService(MainActivity.this, MainActivity.this);
+
+        setIOTElementsVisible(View.INVISIBLE);
+
+        KSFarmUtil.getIOTMetaJSON(MainActivity.this);
+    }
+
+    private void setIOTElementsVisible(int visible) {
+
+        TextView textView = findViewById(R.id.textViewKSFarmIOTLabel);
+
+        textView.setVisibility(visible);
+
+        textView = findViewById(R.id.textViewRoomTemp);
+
+        textView.setVisibility(visible);
+
+        SwitchMaterial relaySwitch = findViewById(R.id.switchBedLamp);
+
+        relaySwitch.setVisibility(visible);
+
+        relaySwitch = findViewById(R.id.switchStandingDeskLamp);
+
+        relaySwitch.setVisibility(visible);
+
+        relaySwitch = findViewById(R.id.switchBedRoomAirCon);
+
+        relaySwitch.setVisibility(visible);
     }
 
     public void processQRCodeString(String scannedText) {
@@ -201,125 +405,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void metaDataReady() {
 
-        Handler handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 200);
+        IOTService.getIOTData(MainActivity.this, MainActivity.this);
     }
 
     @Override
     public void metaDataEmpty() {
 
-    }
-
-    @Override
-    public boolean onDown(@NonNull MotionEvent motionEvent) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(@NonNull MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(@NonNull MotionEvent motionEvent) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(@NonNull MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(@NonNull MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public boolean onFling(@NonNull MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
-        return false;
-    }
-
-    @Override
-    public void openWeatherDataReady(JSONObject openWeatherJsonObject) {
-
-        setWeatherData(openWeatherJsonObject);
-    }
-
-    @Override
-    public void processWebServiceResult(JSONObject response) {
-
-        LonganQount longanQount = KSFarmUtil.getLonganQountFromJSONDataWrapper(response);
-
-        if (longanQount == null) {
-            return;
-        }
-
-        KSFarmMeta.saveLonganQount(longanQount, sharedPreferences, null);
-
-        showQount();
-    }
-
-    private void showQount() {
-
-        LonganQount longanQount = KSFarmMeta.longanQount();
-
-        String text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80) + " ตัน";
-
-        TextView textView = findViewById(R.id.textViewMainTotalWeight);
-
-        textView.setText(text);
-
-        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80 * 15) + " บาท";
-
-        textView = findViewById(R.id.textViewMainTotalSell);
-
-        textView.setText(text);
-
-        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()) + " ต้น";
-
-        textView = findViewById(R.id.textViewMainTotalFlower);
-
-        textView.setText(text);
-    }
-
-    @Override
-    public void onErrorResponse(String errorMessage) {
-
-    }
-
-    @Override
-    public void onErrorResponse(String status, String errorMessage) {
-
-    }
-
-
-    private void getWebserviceData() {
-
-        Handler handler = new Handler(Looper.myLooper());
-
-        handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 100);
-
-        KSFarmMeta.getLonganQountDataFromWebService(MainActivity.this, MainActivity.this);
-    }
-
-    private void setIOTElementsVisible(int visible) {
-
-        TextView textViewKSFarmIOTLabel = findViewById(R.id.textViewKSFarmIOTLabel);
-
-        textViewKSFarmIOTLabel.setVisibility(visible);
-
-        SwitchMaterial relaySwitch = findViewById(R.id.switchBedLamp);
-
-        relaySwitch.setVisibility(visible);
-
-        relaySwitch = findViewById(R.id.switchStandingDeskLamp);
-
-        relaySwitch.setVisibility(visible);
-
-        relaySwitch = findViewById(R.id.switchBedRoomAirCon);
-
-        relaySwitch.setVisibility(visible);
+        IOTService.getIOTMetaData(MainActivity.this, MainActivity.this);
     }
 }
