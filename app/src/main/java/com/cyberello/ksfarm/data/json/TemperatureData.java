@@ -4,5 +4,5 @@ public class TemperatureData {
 
     public double temperature;
     public double humidity;
-    public int pressure;
+    public double pressure;
 }

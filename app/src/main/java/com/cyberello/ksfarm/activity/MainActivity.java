@@ -273,6 +273,19 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             String text = temperatureData.temperature + " °C";
 
             textViewRoomTemp.setText(text);
+
+            return;
+        }
+
+        if (iotJSON.name.equals(KSFarmConstants.SECOND_FLOOR_BALCONY)) {
+
+            TextView  textViewOutSideTemp = findViewById(R.id. textViewOutSideTemp);
+
+            TemperatureData temperatureData = KSFarmUtil.gson().fromJson(iotJSON.jsonString, TemperatureData.class);
+
+            String text = temperatureData.temperature + " °C";
+
+            textViewOutSideTemp.setText(text);
         }
     }
 
