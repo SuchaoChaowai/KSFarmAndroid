@@ -292,7 +292,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
             }
         };
 
-        long updateInterval = 3000;
+        long updateInterval = KSFarmConstants.GPS_UPDATE_INTERVAL;
 
         LocationRequest.Builder builder = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, updateInterval);
 

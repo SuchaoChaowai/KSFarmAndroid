@@ -31,6 +31,7 @@ public class KSFarmConstants {
     public static final String NO_FLOWER_ADDED = "No flower added";
     public static final String LAP_FLOWER_QOUNT = "lapFlowerQount";
     public static final String LAP_NON_FLOWER_QOUNT = "lapNonFlowerQount";
+    public static final long GPS_UPDATE_INTERVAL = 2000;
     public static String SERVER_URL;
     public static final String OPEN_WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?lat=16.545152667173905&lon=101.87108803003824&lang=th&units=metric&appid=36c9bd4d6075c4a1a0ca87132c18d9c6";
 }
