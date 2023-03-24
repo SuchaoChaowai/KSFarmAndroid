@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         KSFarmMeta.init(MainActivity.this, sharedPreferences);
+
+        findViewById(R.id.textViewKSFarmLonganLabel).setOnClickListener(view -> showLonganQountScreen());
     }
 
     @Override
