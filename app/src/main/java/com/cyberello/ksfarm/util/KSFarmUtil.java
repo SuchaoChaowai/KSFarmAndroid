@@ -221,7 +221,7 @@ public class KSFarmUtil {
         if (337.5 <= deg || deg <= 22.5) return "เหนือ";
         if (22.5 <= deg && deg <= 67.5) return "ตะวันออกเฉียงเหนือ";
         if (67.5 <= deg && deg <= 112.5) return "ตะวันออก";
-        if (112.5 <= deg && deg <= 157.5) return "ตะวันออกเฉียงใต";
+        if (112.5 <= deg && deg <= 157.5) return "ตะวันออกเฉียงใต้";
         if (157.5 <= deg && deg <= 202.5) return "ใต้";
         if (202.5 <= deg && deg <= 247.5) return "ตะวันตกเฉียงใต้";
         if (247.5 <= deg && deg <= 292.5) return "ตะวันตก";
