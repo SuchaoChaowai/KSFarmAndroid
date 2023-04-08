@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             runOnUiThread(() -> setSwitchData(iotJSON, findViewById(R.id.switchBedRoomAirCon)));
         }
 
-        if (iotJSON.name.equals(KSFarmConstants.DESK_TOP)) {
+        if (iotJSON.name.equals(KSFarmConstants.BED_ROOM_TEMPERATURE)) {
 
             TextView textViewRoomTemp = findViewById(R.id.textViewRoomTemp);
 

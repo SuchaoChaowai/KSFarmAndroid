@@ -16,7 +16,7 @@ public class KSFarmConstants {
     public static final String BED_SIDE_LAMP = "BED_SIDE_LAMP";
     public static final String DESK_TOP = "DESK_TOP";
     public static final String SECOND_FLOOR_BALCONY = "SECOND_FLOOR_BALCONY";
-    public static final String BED_ROOM_TEMP = "BED_ROOM_TEMP";
+    public static final String BED_ROOM_TEMPERATURE = "BED_ROOM_TEMPERATURE";
     public static final String BARO_SENSOR_TEST = "BARO_SENSOR_TEST";
     public static final String ESP_01_TEST_DEVICE_001 = "ESP_01_TEST_DEVICE_001";
 
