@@ -8,6 +8,19 @@
     android:padding="4dp"
     tools:context=".activity.MainActivity">
 
+    <View
+        android:id="@+id/hr3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#4CAF50"
+        app:layout_constraintBottom_toTopOf="@+id/textViewKSFarmIOTLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textViewKSFarmWeatherLabel"
         android:layout_width="wrap_content"
@@ -149,112 +162,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSun" />
-
-    <TextView
-        android:id="@+id/textViewKSFarmLonganLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/title_longan_qount_label"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr2" />
-
-    <TextView
-        android:id="@+id/textViewMainQountTotalWeightLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:text="@string/title_longan_total_weight"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmLonganLabel"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewMainTotalSellLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:text="@string/title_longan_total_sell"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewMainQountTotalWeightLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMainQountTotalWeightLabel"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewMainTotalWeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:text="@string/zero"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewMainQountTotalWeightLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewMainTotalSell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:text="@string/zero"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewMainTotalSellLabel"
-        app:layout_constraintEnd_toEndOf="@+id/textViewMainTotalWeight"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalWeight"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewMainTotalFlowerLabel"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:text="@string/title_longan_total_flower"
-        android:textAlignment="viewStart"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewMainTotalSellLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalSellLabel"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <TextView
-        android:id="@+id/textViewMainTotalFlower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:text="@string/zero"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewMainTotalFlowerLabel"
-        app:layout_constraintEnd_toEndOf="@+id/textViewMainTotalSell"
-        tools:ignore="LabelFor,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
-
-    <View
-        android:id="@+id/hr3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#4CAF50"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMainTotalFlowerLabel" />
 
     <TextView
         android:id="@+id/textViewKSFarmIOTLabel"

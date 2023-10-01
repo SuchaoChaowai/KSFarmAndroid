@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, QRCodeUtil.QRCodeListener, KSFarmUtil.MetaDataListener, OpenWeatherAPI.OpenWeatherAPIListener, KSFarmWebService.KSFarmWebServiceResultListener, IOTService.WebServiceResultListener {
 
@@ -57,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         KSFarmMeta.init(MainActivity.this, sharedPreferences);
-
-        findViewById(R.id.textViewKSFarmLonganLabel).setOnClickListener(view -> showLonganQountScreen());
     }
 
     @Override
@@ -182,25 +181,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     private void showQount() {
 
-        LonganQount longanQount = KSFarmMeta.longanQount();
-
-        String text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80) + " ตัน";
-
-        TextView textView = findViewById(R.id.textViewMainTotalWeight);
-
-        textView.setText(text);
-
-        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower() * 80 * 15) + " บาท";
-
-        textView = findViewById(R.id.textViewMainTotalSell);
-
-        textView.setText(text);
-
-        text = KSFarmUtil.getCommaNumberFormat(longanQount.getNumberFlower()) + " ต้น";
-
-        textView = findViewById(R.id.textViewMainTotalFlower);
-
-        textView.setText(text);
     }
 
     @Override
@@ -216,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         IOTJSONWrapper iotJSONWrapper = KSFarmUtil.gson().fromJson(response.toString(), IOTJSONWrapper.class);
 
-        Handler handler = new Handler(Looper.myLooper());
+        Handler handler = new Handler(Objects.requireNonNull(Looper.myLooper()));
 
         handler.postDelayed(() -> {
 
@@ -309,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     private void getWebserviceData() {
 
-        Handler handler = new Handler(Looper.myLooper());
+        Handler handler = new Handler(Objects.requireNonNull(Looper.myLooper()));
 
         handler.postDelayed(() -> OpenWeatherAPI.getOpenWeatherData(MainActivity.this, MainActivity.this), 100);
 
