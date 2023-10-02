@@ -41,4 +41,5 @@
     <string name="title_longan_total_flower">จำนวนต้นออกดอก</string>
     <string name="iot_label">อุปกรณ์ IOT</string>
     <string name="off">Off</string>
+    <string name="menu1Name">ตรวจดิน</string>
 </resources>

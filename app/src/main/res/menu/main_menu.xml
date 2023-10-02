@@ -4,7 +4,7 @@
     <group android:id="@+id/grp">
 
         <item
-            android:id="@+id/mainLonganQount"
-            android:title="@string/longan_qount"></item>
+            android:id="@+id/mainMenu1"
+            android:title="@string/menu1Name" />
     </group>
 </menu>

@@ -1,7 +1,6 @@
 package com.cyberello.ksfarm.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,19 +71,17 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        if (item.getItemId() == R.id.mainLonganQount) {
+        if (item.getItemId() == R.id.mainMenu1) {
 
-            showLonganQountScreen();
+            processMenu1Selected();
             return true;
         }
 
         return false;
     }
 
-    private void showLonganQountScreen() {
+    private void processMenu1Selected() {
 
-        Intent intent = new Intent(getApplicationContext(), LonganQountActivity.class);
-        startActivity(intent);
     }
 
     @Override
