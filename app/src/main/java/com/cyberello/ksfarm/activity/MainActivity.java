@@ -72,16 +72,16 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        if (item.getItemId() == R.id.mainMenu1) {
+        if (item.getItemId() == R.id.fertilizerMenu) {
 
-            processMenu1Selected();
+            processfertilizerMenuSelected();
             return true;
         }
 
         return false;
     }
 
-    private void processMenu1Selected() {
+    private void processfertilizerMenuSelected() {
 
         Intent intent = new Intent(getApplicationContext(), FertilizerActivity.class);
         startActivity(intent);

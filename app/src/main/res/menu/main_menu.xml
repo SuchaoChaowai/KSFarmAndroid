@@ -4,7 +4,7 @@
     <group android:id="@+id/grp">
 
         <item
-            android:id="@+id/mainMenu1"
-            android:title="@string/menu1Name" />
+            android:id="@+id/fertilizerMenu"
+            android:title="@string/fertilizerMenuText" />
     </group>
 </menu>
