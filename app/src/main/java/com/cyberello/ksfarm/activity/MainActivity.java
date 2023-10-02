@@ -1,6 +1,7 @@
 package com.cyberello.ksfarm.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     private void processMenu1Selected() {
 
+        Intent intent = new Intent(getApplicationContext(), FertilizerActivity.class);
+        startActivity(intent);
     }
 
     @Override
