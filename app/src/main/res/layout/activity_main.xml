@@ -14,9 +14,9 @@
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="#4CAF50"
-        app:layout_constraintBottom_toTopOf="@+id/textViewKSFarmIOTLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -162,78 +162,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSun" />
-
-    <TextView
-        android:id="@+id/textViewKSFarmIOTLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/iot_label"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/switchBedLamp"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchBedLamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:switchPadding="8dp"
-        android:text="@string/bed_side_lamp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/switchStandingDeskLamp"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchStandingDeskLamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:switchPadding="8dp"
-        android:text="@string/standing_desk_lamp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/switchBedRoomAirCon"
-        app:layout_constraintEnd_toEndOf="@+id/switchBedLamp" />
-
-    <TextView
-        android:id="@+id/textViewOutSideTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/temp"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewRoomTemp"
-        app:layout_constraintStart_toStartOf="@+id/textViewRoomTemp" />
-
-    <TextView
-        android:id="@+id/textViewRoomTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/temp"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/switchBedRoomAirCon"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchBedRoomAirCon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:switchPadding="8dp"
-        android:text="@string/air_con"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/switchBedLamp" />
-
-    <Button
-        android:id="@+id/buttonOff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/off"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewKSFarmIOTLabel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
