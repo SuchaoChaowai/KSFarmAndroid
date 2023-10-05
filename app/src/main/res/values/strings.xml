@@ -42,4 +42,6 @@
     <string name="iot_label">อุปกรณ์ IOT</string>
     <string name="off">Off</string>
     <string name="fertilizerMenuText">ตรวจดิน</string>
+    <string name="npk">NPK</string>
+    <string name="fertilizer_scrren_header">วัดค่าปุ๋ยในดิน</string>
 </resources>
