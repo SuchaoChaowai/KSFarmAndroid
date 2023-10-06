@@ -15,12 +15,12 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:text="@string/ip_address"
-        app:layout_constraintBottom_toTopOf="@+id/textViewAccuracy2"
+        app:layout_constraintBottom_toTopOf="@+id/textViewKSAccuracy"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="LabelFor" />
 
     <TextView
-        android:id="@+id/textViewAltitude"
+        android:id="@+id/textViewKSAltitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,12 +30,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewAccuracy2"
+        android:id="@+id/textViewKSAccuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:text="@string/accuracy"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewAltitude"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewKSAltitude"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <View
@@ -57,16 +57,16 @@
         android:layout_marginBottom="8dp"
         android:text="@string/sensor_status"
         app:layout_constraintBottom_toBottomOf="@+id/textViewServerAddress"
-        app:layout_constraintStart_toStartOf="@+id/textViewAltitude" />
+        app:layout_constraintStart_toStartOf="@+id/textViewKSAltitude" />
 
     <TextView
-        android:id="@+id/textViewLatLon2"
+        android:id="@+id/textViewKSLatLon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/lat_lon"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewKSDateTime"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -101,10 +101,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewKSDateTime" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewKSDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

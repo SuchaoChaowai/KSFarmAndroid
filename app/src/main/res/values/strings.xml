@@ -46,4 +46,7 @@
     <string name="fertilizer_scrren_header">วัดค่าปุ๋ยในดิน</string>
     <string name="reset">Reset</string>
     <string name="sensor_status">Sensor Status</string>
+    <string name="sensor_on_line">Sensor OnLine</string>
+    <string name="sensor_off_line">Sensor OffLine!!!</string>
+    <string name="npk_sensor_ip">192.168.4.1</string>
 </resources>
