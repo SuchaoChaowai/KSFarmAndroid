@@ -143,6 +143,7 @@ public class FertilizerActivity extends AppCompatActivity {
 
         textViewDateTime = findViewById(R.id.textViewKSDateTime);
         textViewLatLon = findViewById(R.id.textViewKSLatLon);
+        textViewLatLon.setTextColor(Color.RED);
         textViewAltitude = findViewById(R.id.textViewKSAltitude);
         textViewAccuracy = findViewById(R.id.textViewKSAccuracy);
         textViewSenSorStatus = findViewById(R.id.textViewSenSorStatus);
@@ -218,8 +219,7 @@ public class FertilizerActivity extends AppCompatActivity {
 
             textViewSenSorStatus.setText(R.string.sensor_on_line);
             textViewSenSorStatus.setTextColor(Color.GREEN);
-            textViewNPK.setTextColor(Color.BLACK);
-            textViewServerAddress.setTextColor(Color.BLACK);
+            textViewServerAddress.setTextColor(Color.GREEN);
 
             return;
         }
@@ -252,6 +252,14 @@ public class FertilizerActivity extends AppCompatActivity {
 
         textString = "Acc: " + dfAltitude.format(npk_json.accuracy) + " m.";
         textViewAccuracy.setText(textString);
+
+        if (npk_json.accuracy > 10.0) {
+            textViewLatLon.setTextColor(Color.RED);
+            textViewNPK.setTextColor(Color.RED);
+        } else {
+            textViewLatLon.setTextColor(Color.GREEN);
+            textViewNPK.setTextColor(Color.GREEN);
+        }
 
         textViewNPK.setText(NPKUtil.getNPKString());
     }

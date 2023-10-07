@@ -1,6 +1,5 @@
 package com.cyberello.ksfarm.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import androidx.core.view.GestureDetectorCompat;
 
 import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
-import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.LonganQount;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
@@ -44,10 +42,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDetector = new GestureDetectorCompat(this, this);
-        mDetector.setOnDoubleTapListener(this);
+        processfertilizerMenuSelected();
 
-        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+//        mDetector = new GestureDetectorCompat(this, this);
+//        mDetector.setOnDoubleTapListener(this);
+//
+//        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
