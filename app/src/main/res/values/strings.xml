@@ -43,10 +43,12 @@
     <string name="off">Off</string>
     <string name="fertilizerMenuText">ตรวจดิน</string>
     <string name="npk">NPK</string>
-    <string name="fertilizer_scrren_header">วัดค่าปุ๋ยในดิน</string>
+    <string name="fertilizer_screen_header">วัดค่าปุ๋ยในดิน</string>
     <string name="reset">Reset</string>
     <string name="sensor_status">Sensor Status</string>
     <string name="sensor_on_line">Sensor OnLine</string>
     <string name="sensor_off_line">Sensor OffLine!!!</string>
     <string name="npk_sensor_ip">192.168.4.1</string>
+    <string name="fertilizer_need_label">ปุ๋ยที่ต้องการ (mg/kg)</string>
+    <string name="fertilizer_add_label">ปุ่ยที่ต้องใส่ (กรัม)</string>
 </resources>

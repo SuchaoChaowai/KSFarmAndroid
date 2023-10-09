@@ -6,6 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".activity.FertilizerActivity">
 
+    <TextView
+        android:id="@+id/textViewPAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/npk"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNAdd"
+        app:layout_constraintEnd_toStartOf="@+id/textViewKAdd"
+        app:layout_constraintStart_toEndOf="@+id/textViewNNeeded" />
+
+    <TextView
+        android:id="@+id/textViewNAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/npk"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewNNeeded"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFertilizerLabel" />
+
+    <TextView
+        android:id="@+id/textViewFertilizerNeedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fertilizer_need_label"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hr5" />
+
     <EditText
         android:id="@+id/textViewServerAddress"
         android:layout_width="wrap_content"
@@ -49,6 +80,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/hr5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonResetPlotAverage" />
+
+    <View
+        android:id="@+id/hr6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNNeeded" />
+
+    <View
+        android:id="@+id/hr7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNAdd" />
 
     <TextView
         android:id="@+id/textViewSenSorStatus"
@@ -110,7 +180,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/fertilizer_scrren_header"
+        android:text="@string/fertilizer_screen_header"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -136,4 +206,56 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fertilizer_hr1" />
+
+    <TextView
+        android:id="@+id/textViewFertilizerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fertilizer_add_label"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hr6" />
+
+    <TextView
+        android:id="@+id/textViewNNeeded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/npk"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFertilizerNeedLabel" />
+
+    <TextView
+        android:id="@+id/textViewPNeeded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/npk"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewNNeeded"
+        app:layout_constraintEnd_toStartOf="@+id/textViewKNeeded"
+        app:layout_constraintStart_toEndOf="@+id/textViewNNeeded" />
+
+    <TextView
+        android:id="@+id/textViewKNeeded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="@string/npk"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPNeeded"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewKAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="@string/npk"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPAdd"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
