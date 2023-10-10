@@ -185,15 +185,15 @@ public class FertilizerActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.textViewNNeeded);
 
-        textView.setText(NPKUtil.n);
+        textView.setText(Integer.toString(NPKUtil.n));
 
         textView = findViewById(R.id.textViewPNeeded);
 
-        textView.setText(NPKUtil.p);
+        textView.setText(Integer.toString(NPKUtil.p));
 
         textView = findViewById(R.id.textViewKNeeded);
 
-        textView.setText(NPKUtil.k);
+        textView.setText(Integer.toString(NPKUtil.k));
     }
 
     private void setNPKUrl() {
@@ -291,18 +291,18 @@ public class FertilizerActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.textViewNAdd);
 
-        textView.setText(calAddValue);
+        textView.setText(Integer.toString(calAddValue));
 
         calAddValue = NPKUtil.p - NPKUtil.potassium;
 
         textView = findViewById(R.id.textViewPAdd);
 
-        textView.setText(calAddValue);
+        textView.setText(Integer.toString(calAddValue));
 
         calAddValue = NPKUtil.k - NPKUtil.phosphorus;
 
         textView = findViewById(R.id.textViewKAdd);
 
-        textView.setText(calAddValue);
+        textView.setText(Integer.toString(calAddValue));
     }
 }
