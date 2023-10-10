@@ -68,6 +68,8 @@ public class FertilizerActivity extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences(NPKConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
+        initNPK();
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityResultLauncher<String[]> locationPermissionRequest =
@@ -177,6 +179,23 @@ public class FertilizerActivity extends AppCompatActivity {
         showData();
     }
 
+    private void initNPK() {
+
+        NPKUtil.init();
+
+        TextView textView = findViewById(R.id.textViewNNeeded);
+
+        textView.setText(NPKUtil.n);
+
+        textView = findViewById(R.id.textViewPNeeded);
+
+        textView.setText(NPKUtil.p);
+
+        textView = findViewById(R.id.textViewKNeeded);
+
+        textView.setText(NPKUtil.k);
+    }
+
     private void setNPKUrl() {
 
         String npkSensorUrl = NPKUtil.getLocalNPKSensorURLData(sharedPreferences);
@@ -262,5 +281,28 @@ public class FertilizerActivity extends AppCompatActivity {
         }
 
         textViewNPK.setText(NPKUtil.getNPKString());
+
+        processNPKData();
+    }
+
+    private void processNPKData() {
+
+        int calAddValue = NPKUtil.n - NPKUtil.nitrogen;
+
+        TextView textView = findViewById(R.id.textViewNAdd);
+
+        textView.setText(calAddValue);
+
+        calAddValue = NPKUtil.p - NPKUtil.potassium;
+
+        textView = findViewById(R.id.textViewPAdd);
+
+        textView.setText(calAddValue);
+
+        calAddValue = NPKUtil.k - NPKUtil.phosphorus;
+
+        textView = findViewById(R.id.textViewKAdd);
+
+        textView.setText(calAddValue);
     }
 }

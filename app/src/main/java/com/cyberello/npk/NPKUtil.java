@@ -14,13 +14,24 @@ public class NPKUtil {
 
     private static Gson gson;
 
-    private static int nitrogen;
-    private static int potassium;
-    private static int phosphorus;
+    public static int nitrogen;
+    public static int potassium;
+    public static int phosphorus;
+
+    public static int n;
+    public static int p;
+    public static int k;
 
     private static final ArrayList<Integer> ns = new ArrayList<>();
     private static final ArrayList<Integer> ps = new ArrayList<>();
     private static final ArrayList<Integer> ks = new ArrayList<>();
+
+    public static void init() {
+
+        n = 100;
+        p = 20;
+        k = 100;
+    }
 
     public static Gson gson() {
 
