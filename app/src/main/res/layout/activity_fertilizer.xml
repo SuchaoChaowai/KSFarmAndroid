@@ -253,9 +253,8 @@
         android:id="@+id/textViewKAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:text="@string/npk"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewPAdd"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewKNeeded" />
 </androidx.constraintlayout.widget.ConstraintLayout>
