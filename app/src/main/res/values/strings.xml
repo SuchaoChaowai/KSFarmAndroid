@@ -50,5 +50,7 @@
     <string name="sensor_off_line">Sensor OffLine!!!</string>
     <string name="npk_sensor_ip">192.168.4.1</string>
     <string name="fertilizer_need_label">ปุ๋ยที่ต้องการ (mg/kg)</string>
-    <string name="fertilizer_add_label">ปุ่ยที่ต้องใส่เพิ่ม (mg/kg)</string>
+    <string name="fertilizer_npk_add_label">ปุ่ยที่ต้องใส่เพิ่ม (mg/kg)</string>
+    <string name="fertilizer_add_label">ปุ่ยที่ต้องใส่เพิ่ม (กรัม)</string>
+    <string name="fertilizer_instruction">การใส่ปุ๋ย</string>
 </resources>

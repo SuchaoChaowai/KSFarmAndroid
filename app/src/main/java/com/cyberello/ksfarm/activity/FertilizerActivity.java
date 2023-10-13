@@ -17,6 +17,7 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -24,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cyberello.ksfarm.R;
+import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.npk.NPKConstants;
 import com.cyberello.npk.NPKUtil;
 import com.cyberello.npk.NPK_JSON;
@@ -289,6 +291,8 @@ public class FertilizerActivity extends AppCompatActivity {
 
         int calAddValue = NPKUtil.n - NPKUtil.nitrogen;
 
+        double npkNeed = calAddValue;
+
         TextView textView = findViewById(R.id.textViewNAdd);
 
         textView.setText(Integer.toString(calAddValue));
@@ -304,5 +308,17 @@ public class FertilizerActivity extends AppCompatActivity {
         textView = findViewById(R.id.textViewKAdd);
 
         textView.setText(Integer.toString(calAddValue));
+
+        textView = findViewById(R.id.textViewFertilizerAddValue);
+
+        int fetilizerNeeded = (int) Math.round(NPKUtil.fetilizerNeeded(npkNeed, 160));
+
+        textView.setText(KSFarmUtil.getCommaNumberFormat(fetilizerNeeded));
+
+        EditText editTextFertilizerInstruction = findViewById(R.id.editTextFertilizerInstruction);
+
+        String instruction = "ใส่ปุ๋ย 16-16-16 ครั้งละ 2 กำมือ\nโปรยรอบๆโคนต้น ทุก 15 วัน\nฉีดพ่น 16-16-16 100 กรัมต่อน้ำ 20 ลิตร ทุก 7 วัน";
+
+        editTextFertilizerInstruction.setText(instruction);
     }
 }

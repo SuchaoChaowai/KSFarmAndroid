@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 public class NPKUtil {
 
+    private static final int N = 90;
+    private static final int P = 20;
+    private static final int K = 90;
+    private static final double SOIL_WEIGHT_PER_M3 = 1500;
+    public static double radius, dept;
     private static Gson gson;
 
     public static int nitrogen;
@@ -28,9 +33,12 @@ public class NPKUtil {
 
     public static void init() {
 
-        n = 100;
-        p = 20;
-        k = 100;
+        n = N;
+        p = P;
+        k = K;
+
+        radius = 1.5;
+        dept = 2;
     }
 
     public static Gson gson() {
@@ -110,5 +118,27 @@ public class NPKUtil {
         result = result / npks.size();
 
         return result;
+    }
+
+    private static double soilVolume() {
+
+        return (22.0 / 7.0) * (radius / 2) * (radius / 2) * dept;
+    }
+
+    private static double treeSoilWeight() {
+
+        return soilVolume() * SOIL_WEIGHT_PER_M3;
+    }
+
+    public static double npkAmountInSoil(double npk) {
+
+        return treeSoilWeight() * npk;
+    }
+
+    public static double fetilizerNeeded(double npkNeed, double npkFertilizer) {
+
+        double npk = npkAmountInSoil(npkNeed);
+
+        return npk / npkFertilizer;
     }
 }
