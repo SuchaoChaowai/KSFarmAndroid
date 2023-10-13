@@ -253,7 +253,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hr6" />
 
-    <TextView
+    <EditText
         android:id="@+id/textViewNNeeded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFertilizerNeedLabel" />
 
-    <TextView
+    <EditText
         android:id="@+id/textViewPNeeded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textViewKNeeded"
         app:layout_constraintStart_toEndOf="@+id/textViewNNeeded" />
 
-    <TextView
+    <EditText
         android:id="@+id/textViewKNeeded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

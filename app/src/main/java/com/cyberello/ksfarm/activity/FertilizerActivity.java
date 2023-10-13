@@ -289,36 +289,55 @@ public class FertilizerActivity extends AppCompatActivity {
 
     private void processNPKData() {
 
-        int calAddValue = NPKUtil.n - NPKUtil.nitrogen;
+        try {
 
-        double npkNeed = calAddValue;
+            TextView textView = findViewById(R.id.textViewNNeeded);
 
-        TextView textView = findViewById(R.id.textViewNAdd);
+            int n = Integer.parseInt(textView.getText().toString());
 
-        textView.setText(Integer.toString(calAddValue));
+            textView = findViewById(R.id.textViewPNeeded);
 
-        calAddValue = NPKUtil.p - NPKUtil.potassium;
+            textView.setText(Integer.toString(NPKUtil.p));
 
-        textView = findViewById(R.id.textViewPAdd);
+            textView = findViewById(R.id.textViewKNeeded);
 
-        textView.setText(Integer.toString(calAddValue));
+            textView.setText(Integer.toString(NPKUtil.k));
 
-        calAddValue = NPKUtil.k - NPKUtil.phosphorus;
+            int calAddValue = n - NPKUtil.nitrogen;
 
-        textView = findViewById(R.id.textViewKAdd);
+            double npkNeed = calAddValue;
 
-        textView.setText(Integer.toString(calAddValue));
+            textView = findViewById(R.id.textViewNAdd);
 
-        textView = findViewById(R.id.textViewFertilizerAddValue);
+            textView.setText(Integer.toString(calAddValue));
 
-        int fetilizerNeeded = (int) Math.round(NPKUtil.fetilizerNeeded(npkNeed, 160));
+            calAddValue = NPKUtil.p - NPKUtil.potassium;
 
-        textView.setText(KSFarmUtil.getCommaNumberFormat(fetilizerNeeded));
+            textView = findViewById(R.id.textViewPAdd);
 
-        EditText editTextFertilizerInstruction = findViewById(R.id.editTextFertilizerInstruction);
+            textView.setText(Integer.toString(calAddValue));
 
-        String instruction = "ใส่ปุ๋ย 16-16-16 ครั้งละ 2 กำมือ\nโปรยรอบๆโคนต้น ทุก 15 วัน\nฉีดพ่น 16-16-16 100 กรัมต่อน้ำ 20 ลิตร ทุก 7 วัน";
+            calAddValue = NPKUtil.k - NPKUtil.phosphorus;
 
-        editTextFertilizerInstruction.setText(instruction);
+            textView = findViewById(R.id.textViewKAdd);
+
+            textView.setText(Integer.toString(calAddValue));
+
+            textView = findViewById(R.id.textViewFertilizerAddValue);
+
+            int fetilizerNeeded = (int) Math.round(NPKUtil.fetilizerNeeded(npkNeed, 160));
+
+            textView.setText(KSFarmUtil.getCommaNumberFormat(fetilizerNeeded));
+
+            EditText editTextFertilizerInstruction = findViewById(R.id.editTextFertilizerInstruction);
+
+            String instruction = "ใส่ปุ๋ย 16-16-16 ครั้งละ 1 กำมือ\nโปรยรอบๆโคนต้น ทุก 30 วัน\nฉีดพ่น 16-16-16 100 กรัมต่อน้ำ 20 ลิตร ทุก 7 วัน";
+
+            editTextFertilizerInstruction.setText(instruction);
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
     }
 }
