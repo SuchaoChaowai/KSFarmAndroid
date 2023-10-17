@@ -37,6 +37,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,6 +59,8 @@ public class FertilizerActivity extends AppCompatActivity {
 
     private static final DecimalFormat dfLatLon = new DecimalFormat("0.00000");
     private static final DecimalFormat dfAltitude = new DecimalFormat("0");
+
+    private static final NumberFormat nf = NumberFormat.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,15 +190,15 @@ public class FertilizerActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.textViewNNeeded);
 
-        textView.setText(Integer.toString(NPKUtil.n));
+        textView.setText(nf.format(NPKUtil.n));
 
         textView = findViewById(R.id.textViewPNeeded);
 
-        textView.setText(Integer.toString(NPKUtil.p));
+        textView.setText(nf.format(NPKUtil.p));
 
         textView = findViewById(R.id.textViewKNeeded);
 
-        textView.setText(Integer.toString(NPKUtil.k));
+        textView.setText(nf.format(NPKUtil.k));
     }
 
     private void setNPKUrl() {
@@ -241,6 +244,7 @@ public class FertilizerActivity extends AppCompatActivity {
             textViewSenSorStatus.setText(R.string.sensor_on_line);
             textViewSenSorStatus.setTextColor(Color.GREEN);
             textViewServerAddress.setTextColor(Color.GREEN);
+            textViewNPK.setTextColor(Color.GREEN);
 
             return;
         }
@@ -276,10 +280,8 @@ public class FertilizerActivity extends AppCompatActivity {
 
         if (npk_json.accuracy > 10.0) {
             textViewLatLon.setTextColor(Color.RED);
-            textViewNPK.setTextColor(Color.RED);
         } else {
             textViewLatLon.setTextColor(Color.GREEN);
-            textViewNPK.setTextColor(Color.GREEN);
         }
 
         textViewNPK.setText(NPKUtil.getNPKString());
@@ -297,11 +299,11 @@ public class FertilizerActivity extends AppCompatActivity {
 
             textView = findViewById(R.id.textViewPNeeded);
 
-            textView.setText(Integer.toString(NPKUtil.p));
+            textView.setText(nf.format(NPKUtil.p));
 
             textView = findViewById(R.id.textViewKNeeded);
 
-            textView.setText(Integer.toString(NPKUtil.k));
+            textView.setText(nf.format(NPKUtil.k));
 
             int calAddValue = n - NPKUtil.nitrogen;
 
@@ -309,19 +311,19 @@ public class FertilizerActivity extends AppCompatActivity {
 
             textView = findViewById(R.id.textViewNAdd);
 
-            textView.setText(Integer.toString(calAddValue));
+            textView.setText(nf.format(calAddValue));
 
             calAddValue = NPKUtil.p - NPKUtil.potassium;
 
             textView = findViewById(R.id.textViewPAdd);
 
-            textView.setText(Integer.toString(calAddValue));
+            textView.setText(nf.format(calAddValue));
 
             calAddValue = NPKUtil.k - NPKUtil.phosphorus;
 
             textView = findViewById(R.id.textViewKAdd);
 
-            textView.setText(Integer.toString(calAddValue));
+            textView.setText(nf.format(calAddValue));
 
             textView = findViewById(R.id.textViewFertilizerAddValue);
 
