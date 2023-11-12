@@ -1,5 +1,6 @@
 package com.cyberello.ksfarm.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import com.cyberello.ksfarm.KSFarmMeta;
 import com.cyberello.ksfarm.R;
+import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.LonganQount;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
@@ -42,12 +44,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        processfertilizerMenuSelected();
+        mDetector = new GestureDetectorCompat(this, this);
+        mDetector.setOnDoubleTapListener(this);
 
-//        mDetector = new GestureDetectorCompat(this, this);
-//        mDetector.setOnDoubleTapListener(this);
-//
-//        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         textString = "ลม" + KSFarmUtil.getWindDirection(wind.getDouble("deg"));
 
-        textString = textString + ", " + Math.round(wind.getDouble("speed") * 3.6) + "-" + Math.round(wind.getDouble("gust") * 3.6) + " กม./ชม.";
+        textString = textString + ", " + Math.round(wind.getDouble("speed") * 3.6) + " - " + Math.round(wind.getDouble("gust") * 3.6) + " กม./ชม.";
 
         textView = findViewById(R.id.textViewWind);
 
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         textString = "พระอาทิตย์  ";
 
-        textString = textString + KSFarmUtil.getSunTime(sun.getLong("sunrise")) + "-" + KSFarmUtil.getSunTime(sun.getLong("sunset"));
+        textString = textString + KSFarmUtil.getSunTime(sun.getLong("sunrise")) + " - " + KSFarmUtil.getSunTime(sun.getLong("sunset"));
 
         textView = findViewById(R.id.textViewSun);
 
