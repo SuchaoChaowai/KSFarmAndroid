@@ -15,6 +15,11 @@
         android:theme="@style/Theme.KSFarm"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.QodeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".activity.FertilizerActivity"
             android:exported="false"
             android:screenOrientation="portrait"

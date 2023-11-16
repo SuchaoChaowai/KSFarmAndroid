@@ -53,4 +53,5 @@
     <string name="fertilizer_npk_add_label">ปุ่ยที่ต้องใส่เพิ่ม (mg/kg)</string>
     <string name="fertilizer_add_label">ปุ่ยที่ต้องใส่เพิ่ม (กรัม)</string>
     <string name="fertilizer_instruction">การใส่ปุ๋ย</string>
+    <string name="qode">Qode</string>
 </resources>

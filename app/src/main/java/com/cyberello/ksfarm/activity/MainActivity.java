@@ -74,14 +74,26 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         if (item.getItemId() == R.id.fertilizerMenu) {
 
-            processfertilizerMenuSelected();
+            fertilizerMenuSelected();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.qodeMainMenu) {
+
+            qodeMenuSelected();
             return true;
         }
 
         return false;
     }
 
-    private void processfertilizerMenuSelected() {
+    private void qodeMenuSelected() {
+
+        Intent intent = new Intent(getApplicationContext(), QodeActivity.class);
+        startActivity(intent);
+    }
+
+    private void fertilizerMenuSelected() {
 
         Intent intent = new Intent(getApplicationContext(), FertilizerActivity.class);
         startActivity(intent);
