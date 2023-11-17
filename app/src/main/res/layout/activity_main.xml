@@ -8,13 +8,23 @@
     android:padding="4dp"
     tools:context=".activity.MainActivity">
 
+    <Button
+        android:id="@+id/buttonScanQodeMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:icon="@android:drawable/ic_menu_search"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toTopOf="@+id/hr3"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <View
         android:id="@+id/hr3"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
         android:background="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

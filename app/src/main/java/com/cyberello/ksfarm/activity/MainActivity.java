@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             }
         });
+
+        Button button = findViewById(R.id.buttonScanQodeMain);
+
+        button.setOnClickListener(v -> barcodeLauncher.launch(QRCodeUtil.getScanOptions()));
     }
 
     @Override
