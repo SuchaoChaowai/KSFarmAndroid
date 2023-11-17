@@ -29,6 +29,8 @@ public class KSFarmMeta {
     private static int lapFlowerQount = 0;
     private static int lapNonFlowerQount = 0;
 
+    public static String qodeID;
+
     public static void init(Activity activity, SharedPreferences sharedPreferences) {
 
         user = new User("ksfarm1998@gmail.com", "Google", "", "");

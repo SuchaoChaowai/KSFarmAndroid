@@ -12,8 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
@@ -26,6 +27,7 @@ import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
 import com.cyberello.ksfarm.webService.KSFarmWebService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private GestureDetectorCompat mDetector;
     private SharedPreferences sharedPreferences;
 
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = QRCodeUtil.getQRCodeLauncher(MainActivity.this, MainActivity.this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,13 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         mDetector.setOnDoubleTapListener(this);
 
         sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+            }
+        });
     }
 
     @Override
@@ -84,7 +95,18 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             return true;
         }
 
+        if (item.getItemId() == R.id.scanQRMainMenuItem) {
+
+            scanQR();
+            return true;
+        }
+
         return false;
+    }
+
+    private void scanQR() {
+
+        barcodeLauncher.launch(QRCodeUtil.getScanOptions());
     }
 
     private void qodeMenuSelected() {
@@ -124,11 +146,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onDoubleTapEvent(@NonNull MotionEvent motionEvent) {
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 
     @Override
@@ -208,7 +225,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     public void processQRCodeString(String scannedText) {
 
-        Toast.makeText(MainActivity.this, "Scanned: " + QRCodeUtil.getKSFarmQRString(scannedText), Toast.LENGTH_LONG).show();
+        KSFarmMeta.qodeID = QRCodeUtil.getKSFarmQRString(scannedText);
+
+        qodeMenuSelected();
     }
 
     private void setWeatherData(JSONObject openWeatherJsonObject) throws JSONException {
