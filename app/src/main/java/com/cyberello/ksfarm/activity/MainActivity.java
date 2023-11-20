@@ -26,6 +26,7 @@ import com.cyberello.ksfarm.data.KSFarmConstants;
 import com.cyberello.ksfarm.data.LonganQount;
 import com.cyberello.ksfarm.util.KSFarmUtil;
 import com.cyberello.ksfarm.util.QRCodeUtil;
+import com.cyberello.ksfarm.util.QodeUtil;
 import com.cyberello.ksfarm.webService.KSFarmWebService;
 import com.cyberello.ksfarm.webService.OpenWeatherAPI;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -230,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     public void processQRCodeString(String scannedText) {
 
-        KSFarmMeta.qodeID = QRCodeUtil.getKSFarmQRString(scannedText);
+        QodeUtil.setQR(QRCodeUtil.getKSFarmQRString(scannedText));
 
         qodeMenuSelected();
     }
