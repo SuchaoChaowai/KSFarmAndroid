@@ -89,6 +89,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
+        if (item.getItemId() == R.id.mainPapayaMenu) {
+
+            papayaMenuSelected();
+            return true;
+        }
+
         if (item.getItemId() == R.id.fertilizerMenu) {
 
             fertilizerMenuSelected();
@@ -108,6 +114,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         }
 
         return false;
+    }
+
+    private void papayaMenuSelected() {
+
+        Intent intent = new Intent(getApplicationContext(), PapayaCountActivity.class);
+        startActivity(intent);
     }
 
     private void scanQR() {

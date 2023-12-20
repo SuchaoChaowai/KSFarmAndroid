@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/mainPapayaMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/papaya" />
+    <item
         android:id="@+id/fertilizerMenu"
         android:title="@string/fertilizerMenuText" />
     <item
