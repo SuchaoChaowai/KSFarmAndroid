@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         Button button = findViewById(R.id.buttonScanQodeMain);
 
         button.setOnClickListener(v -> barcodeLauncher.launch(QRCodeUtil.getScanOptions()));
+
+        button = findViewById(R.id.buttonPapayaCount);
+
+        button.setOnClickListener(v -> papayaMenuSelected());
     }
 
     @Override

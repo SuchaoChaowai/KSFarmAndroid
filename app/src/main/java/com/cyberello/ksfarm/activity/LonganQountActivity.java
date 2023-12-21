@@ -338,7 +338,7 @@ public class LonganQountActivity extends AppCompatActivity implements KSFarmMeta
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        if (item.getItemId() == R.id.longanQountIOT) {
+        if (item.getItemId() == R.id.longanQountMain) {
 
             showMainScreen();
 

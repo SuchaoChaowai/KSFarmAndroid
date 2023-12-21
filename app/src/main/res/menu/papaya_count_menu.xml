@@ -4,10 +4,8 @@
     <group android:id="@+id/grp">
 
         <item
-            android:id="@+id/longanQountMain"
+            android:id="@+id/papayaQountMain"
             android:title="@string/main"></item>
-        <item
-            android:id="@+id/longanQountResetZero"
-            android:title="@string/reset_lap"></item>
     </group>
+
 </menu>

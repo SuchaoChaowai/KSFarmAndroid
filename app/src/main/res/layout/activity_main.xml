@@ -17,7 +17,8 @@
         app:icon="@android:drawable/ic_menu_search"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toTopOf="@+id/hr3"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <View
         android:id="@+id/hr3"
@@ -172,6 +173,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSun" />
+
+    <Button
+        android:id="@+id/buttonPapayaCount"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/papaya"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonScanQodeMain"
+        app:layout_constraintStart_toStartOf="@+id/textViewPressureLabel"
+        app:layout_constraintTop_toTopOf="@+id/buttonScanQodeMain" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
