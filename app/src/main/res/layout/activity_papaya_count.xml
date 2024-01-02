@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activity.PapayaCountActivity">
 
-    <TextView
-        android:id="@+id/textViewPapayaCountRowName"
+    <EditText
+        android:id="@+id/editTextPapayaCountPlotName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextPapayaCountRowName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextPapayaCountRowName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
