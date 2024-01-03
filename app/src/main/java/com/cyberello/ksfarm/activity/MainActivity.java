@@ -50,21 +50,23 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDetector = new GestureDetectorCompat(this, this);
-        mDetector.setOnDoubleTapListener(this);
+        papayaMenuSelected();
 
-        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-
-            }
-        });
-
-        Button button = findViewById(R.id.buttonScanQodeMain);
-
-        button.setOnClickListener(v -> barcodeLauncher.launch(QRCodeUtil.getScanOptions()));
+//        mDetector = new GestureDetectorCompat(this, this);
+//        mDetector.setOnDoubleTapListener(this);
+//
+//        sharedPreferences = this.getSharedPreferences(KSFarmConstants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+//
+//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//
+//            }
+//        });
+//
+//        Button button = findViewById(R.id.buttonScanQodeMain);
+//
+//        button.setOnClickListener(v -> barcodeLauncher.launch(QRCodeUtil.getScanOptions()));
     }
 
     @Override
