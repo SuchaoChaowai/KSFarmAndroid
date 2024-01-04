@@ -17,6 +17,8 @@ public class PapayaCountActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+    Spinner spinnerRowName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +33,20 @@ public class PapayaCountActivity extends AppCompatActivity {
             }
         });
 
+        PapayaMeta papayaMeta = PapayaMeta.getPapayaMeta();
+
         Spinner spinner = (Spinner) findViewById(R.id.spinnerPapayaCountPlotName);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, PapayaMeta.getPapayaMeta().plotNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, papayaMeta.plotNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        spinner = (Spinner) findViewById(R.id.spinnerPapayaCountRowName);
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, papayaMeta.plotRows.get(0));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinnerRowName = spinner;
     }
 }
